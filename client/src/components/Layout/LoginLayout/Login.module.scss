@@ -1,0 +1,142 @@
+div.wrapper{
+  display:flex;
+  width:100%;
+  height: 100vh;
+  background-image: url("https://previews.123rf.com/images/peshkov/peshkov2211/peshkov221100220/193732408-blogging-and-streaming-concept-with-many-digital-life-style-screens-on-abstract-blue-background.jpg");
+  background-color: #cccccc;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  div.imgBx{
+    position: relative;
+    margin:20px 20px;
+    width: 40%;
+    max-height: 800px;
+  }
+}
+.bgrImg{
+  height: 94vh;
+  margin: 0 12%;
+  object-fit: fill;
+}
+.form {
+    width: 40%;
+    height: 80%;
+    margin: auto;
+    padding: 32px 24px;
+    text-align: center;
+    background: #fff;
+    border-radius: 4px;
+    align-self: center;
+    box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+  }
+.form .heading {
+  font-family: cursive;
+    font-size: 5.2rem;
+  }
+.form .desc {
+    text-align: center;
+    color: #636d77;
+    font-size: 1.6rem;
+    font-weight: lighter;
+    line-height: 2.4rem;
+    margin-top: 16px;
+    font-weight: 300;
+  }
+  
+.form-group {
+    display: flex;
+    margin-bottom: 16px;
+    margin-left: 10%;
+    flex-direction: column;
+    width: 80%;
+  }
+  
+.form-label,
+.form-message {
+    text-align: left;
+  }
+  
+.form-label {
+    font-weight: 700;
+    padding-bottom: 6px;
+    line-height: 1.8rem;
+    font-size: 1.4rem;
+  }
+  
+.form-control {
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    outline: none;
+    font-size: 1.4rem;
+  }
+  
+.form-control:hover {
+    border-color: #1dbfaf;
+  }
+  
+.form-group.invalid .form-control {
+    border-color: #f33a58;
+  }
+  
+.form-message {
+    display: none;
+    color: #f33a58;
+  }
+  
+.form-message {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    padding: 4px 0 0;
+  }
+  
+.form-submit {
+    height: 40px;
+    outline: none;
+    background-color: #1dbfaf;
+    margin-top: 12px;
+    // padding: 20px 16px;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    width: 60%;
+    font-size: 1.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  
+.form-submit:hover {
+    opacity: 0.7;
+  }
+  
+.spacer {
+    margin-top: 36px;
+  }
+div.form-register{
+  margin: 20px 20%;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a.register{
+    padding: 10px 20px;
+    text-decoration: revert;
+    color: #03a9f4;
+    font-size: 1.8rem;
+  }
+  a.forgot-password{
+    padding: 10px 20px;
+    text-decoration: revert;
+    color: #03a9f4;
+    font-size: 1.8rem;
+  }
+}
+.loginError{
+  display: none;
+  color: red;
+}
+.error{
+  display: block;
+}

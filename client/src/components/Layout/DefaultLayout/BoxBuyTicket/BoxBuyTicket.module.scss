@@ -1,0 +1,60 @@
+.box-buy-ticket{
+    width: 360px;
+    height: 360px;
+    padding-bottom: 14px;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+.wrapper{
+  height: 100%;
+  position: relative;
+}
+div.btn-Buy{
+  position: absolute;
+  bottom: 0;
+  right: 24px;
+  a.btn-muave{
+    display: block;
+    color: white;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f26b38;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+}
+.box-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 170px;
+  background-color: #f26b38;
+}
+.radio-select{
+  height: 38px;
+  margin: 0 0 8px 0;
+}
+.sub-option{
+  font-size: 1.6rem;
+}
+.box-title>h3{
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.menu-Select{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search{
+  display: none;
+}
+.search.activeSearch{
+  display: inline-block;
+  margin:20px 20px;
+}

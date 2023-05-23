@@ -1,0 +1,119 @@
+.wrapper {
+    height: 80px;
+    min-height: 80px;
+}
+.container {
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    z-index: 10;
+}
+.row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+}
+.row .logo-web {
+    // width: 30%;
+    height: 80px;
+    object-fit: scale-down;
+    margin-bottom: 17px;
+    border-radius: 12px;
+}
+.row .search {
+    position: relative;
+    height: 100%;
+}
+.search .input-search {
+    border: 1px solid #ced0da;
+    font-size: 1.4rem;
+    padding: 6px 25px 6px 10px;
+    color: #43464b;
+    width: 250px;
+    margin: auto 0 auto 100px;
+}
+.search .icon-Search {
+    position: absolute;
+    display: inline-block;
+    padding: 4px;
+    right: 0;
+}
+
+.search .icon-Search:hover .icon {
+    color: black;
+    cursor: pointer;
+}
+
+.row .login-wrapper {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // width: 40%;
+    height: 100%;
+    .user-login{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.login-wrapper .login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // margin-left: 400px;
+    .avatar{
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        object-fit: cover;
+    }
+    .btn-login {
+        padding-left: 8px;
+        text-decoration: none;
+        font-size: 1.6rem;
+        font-family: cursive;
+        font-weight: 700;
+        color: #333;
+        width: 156px;
+    }
+}
+.login-wrapper .login:hover .icon,
+.login-wrapper .login:hover .btn-login,
+.login-wrapper .language .vn:hover,
+.login-wrapper .language .en:hover {
+    color: #f26b38;
+    cursor: pointer;
+}
+.login-wrapper .language a {
+    text-decoration: none;
+    margin: 4px;
+    color: #a0a3a7;
+}
+.login-wrapper .language span {
+    color: #a0a3a7;
+}
+
+.logout{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 40px;
+    .btn-logout{
+        padding: 0 8px;
+        padding-right: 16px;
+        text-decoration: none;
+        font-size: 1.6rem;
+        font-family: cursive;
+        font-weight: 700;
+        color: #333;
+        width: 100%;
+        &:hover{
+            color: #f26b38;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+div.layout_main{
+    position: relative;
+    display: flex;
+    // align-items: center
+    div.layout_right{
+        position: absolute;
+        right: -60px;
+    }
+}

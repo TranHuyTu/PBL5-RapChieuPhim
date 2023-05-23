@@ -1,0 +1,55 @@
+div.wrapper{
+    margin-top: 50px;
+    width: 100%
+}
+.table-food{
+    width: 100%;
+}
+.header-table{
+    margin-right: 20px;
+}
+.title-header{
+    width: 400px;
+}
+.icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p.SLFood{
+        padding-top: 12px;
+    }
+}
+.row-table{
+}
+.main-food{
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+}
+.desc-food{
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+.table-food{
+    background-color: aliceblue;
+}
+.head-table{
+    height: 40px;
+    background-color: brown;
+}
+.body-table{
+    background-color: aliceblue;
+    height: 40px;
+}
+.body-row{
+    height: 60px;
+}
+.img-food{
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+}
+.desc{
+    font-size: 1.6rem;
+    font-weight: 500;
+}

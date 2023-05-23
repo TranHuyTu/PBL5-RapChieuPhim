@@ -1,0 +1,121 @@
+div.wrapper{
+    display: flex;
+    align-items: center;
+    width: 95%;
+    margin: 40px auto;
+    div.content{
+        width: 75%;
+        margin: 20px auto;
+        margin-right: 0;
+        min-height: 600px;
+        background-color: #f26b38;
+        div.title{
+            display: flex;
+            align-items: center;
+            margin: 20px 40px;
+            h3.cinema-title{
+                margin-right: 20px;
+            }
+        }
+        h2.title-main{
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin: 5px;
+            text-align: center;
+            font-size: 2.4rem;
+            line-height: 1.6;
+            font-weight: 400;
+            color: white;
+            &::before{
+                content: "";
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                width: 100%;
+                height: 2px;
+                background-color: white;
+            }
+        }
+        div.list-seats{
+            margin: 5px auto;
+            border: 5px solid white;
+            padding: 52px 255px;
+            width: 95%;
+            min-height: 80%;
+            background-color: white;
+            div.list-seats-detail{
+                // a.seat{
+                //     display: inline-block;
+                //     width: 40px;
+                //     height: 28px;
+                //     margin: 5px;
+                //     background-color: #dbdee1;;
+                //     font-size: 1.4rem;
+                //     line-height: 28px;
+                //     text-align: center;
+                //     font-weight: 400;
+                //     &:hover{
+                //         opacity: 0.8;
+                //         cursor: pointer;
+                //     }
+                // }
+            }
+            div.screen{
+                width: 100%;
+                min-height: 50px;
+                margin: 12px auto 20px auto;
+                p.derc{
+                    position: relative;
+                    width: 100%;
+                    text-align: center;
+                    font-size: 1.6rem;
+                    line-height: 1.6;
+                    font-weight: 400;
+                    &::before{
+                        content: "";
+                        position: absolute;
+                        top: -24px;
+                        left: 104px;
+                        width: 300px;
+                        height: 3px;
+                        background-color: #999;
+                    }
+                }
+            }
+            div.derc{
+                display: flex;
+                margin: 40px auto;
+                div.sub-derc{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-right: 40px;
+                }
+            }
+        }
+    }
+}
+a.seat{
+    display: inline-block;
+    width: 40px;
+    height: 28px;
+    margin: 5px;
+    background-color: #dbdee1;;
+    font-size: 1.4rem;
+    line-height: 28px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+    &:hover{
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}
+a.red{
+    background-color: red;
+}
+a.blue{
+    background-color: rgb(17, 98, 219);
+}

@@ -1,0 +1,94 @@
+div.wrapper{
+    width: 300px;
+    margin: 20px 0;
+    h3.content{
+        position: relative;
+        font-size: 2.2rem;
+        font-weight: 500;
+        margin-bottom: 30px;
+        &::before{
+            content: "";
+            display: block;
+            position: absolute;
+            top: 36px;
+            left: 0px;
+            width: 68px;
+            height: 3px;
+            background-color: #e26435;
+            border-radius: 4px;
+        }
+    }
+}
+
+.image-hover{
+    position: relative;
+    width: 100%;
+    height: 242px;
+}
+.item-image{
+    width: 70%;
+    height: 100%;
+    object-fit: cover;
+    border:12px;
+}
+.image-hover:hover .group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.group{
+    display: none;
+    position: absolute;
+    top: 0px;
+    width: 70%;
+    height: 242px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.group .btn-MuaVe{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 46px;
+    border: 1px solid white;
+    text-decoration: none;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    font-weight: 500;
+}
+.group .btn-MuaVe:hover{
+    background-color: #f26b38;
+    border: 1px solid #f26b38;
+}
+.name-movie,
+.sub-name{
+    margin-top: 4px;
+    // color: white;
+    width: 70%;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.name-movie{
+    margin-top: 10px;
+}
+.sub-name{
+    color: #a0a3a7;
+}
+.btn-continue{
+    color: #f26b38;
+    width: 200px;
+    padding: 8px 30px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #f26b38;
+    &:hover{
+      color: white;
+      background-color: #f26b38;
+    }
+  }

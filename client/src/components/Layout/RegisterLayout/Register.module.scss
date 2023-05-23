@@ -1,0 +1,110 @@
+div.wrapper{
+    display:flex;
+    width:100%;
+    height: 100vh;
+    background-image: url("https://previews.123rf.com/images/peshkov/peshkov2211/peshkov221100220/193732408-blogging-and-streaming-concept-with-many-digital-life-style-screens-on-abstract-blue-background.jpg");
+    background-color: #cccccc;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    div.imgBx{
+      position: relative;
+      margin:20px 20px;
+      width: 40%;
+      max-height: 800px;
+    }
+  }
+.bgrImg{
+    height: 94vh;
+    margin: 0 12%;
+    object-fit: fill;
+  }
+.form .heading {
+    font-family: cursive;
+    font-size: 5.2rem;
+    text-align: center;
+    }
+.form .desc {
+      text-align: center;
+      color: #636d77;
+      font-size: 1.6rem;
+      font-weight: lighter;
+      line-height: 2.4rem;
+      margin-top: 16px;
+      font-weight: 300;
+    }
+    
+.form-group {
+      display: flex;
+      margin-bottom: 16px;
+      margin-left: 10%;
+      flex-direction: column;
+      width: 80%;
+    }
+    
+.form-label,
+.form-message {
+      text-align: left;
+    }
+    
+.form-label {
+      font-weight: 700;
+      padding-bottom: 6px;
+      line-height: 1.8rem;
+      font-size: 1.4rem;
+    }
+    
+.form-control {
+      height: 40px;
+      padding: 8px 12px;
+      border: 1px solid #b3b3b3;
+      border-radius: 3px;
+      outline: none;
+      font-size: 1.4rem;
+    }
+    
+.form-control:hover {
+      border-color: #1dbfaf;
+    }
+    
+.form-group.invalid .form-control {
+      border-color: #f33a58;
+    }
+    
+.form-message {
+      display: none;
+      color: #f33a58;
+    }
+    
+.form-message {
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      padding: 4px 0 0;
+    }
+.group_btn{
+    width: 100%;
+    text-align: center;
+}    
+.btn {
+      height: 40px;
+      outline: none;
+      background-color: #1dbfaf;
+      margin: 10px auto;
+      font-weight: 500;
+      color: #fff;
+      border: none;
+      width: 60%;
+      font-size: 1.8rem;
+      border-radius: 999px;
+    }
+    
+.form-submit:hover {
+      opacity: 0.7;
+    }
+.form{
+    text-align: start;
+    width: 50%;
+    margin: 10px auto;
+    padding: 20px 20px;
+    background-color: #fff;
+  }

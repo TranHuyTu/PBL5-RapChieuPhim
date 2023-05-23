@@ -1,0 +1,16 @@
+export { default as DefaultLayout } from './DefaultLayout';
+export { default as LichChieuLayout } from './LichChieuLayout';
+export { default as DSPhimLayout } from './DSPhimLayout';
+export { default as DatVeLayout } from './DatVeLayout';
+export { default as CinemaCornerLayout } from './CinemaCornerLayout';
+export { default as DatDoAnLayout } from './DatDoAnLayout';
+export { default as LoginLayout } from './LoginLayout';
+export { default as ListSeatLayout } from './ListSeatLayout';
+export { default as ThanhToanLayout } from './ThanhToanLayout';
+export { default as AdminLayout } from './AdminLayout';
+export { default as RegisterLayout } from './RegisterLayout';
+export { default as PlayingLayout } from './PlayingLayout';
+export { default as BlogLayout } from './BlogLayout';
+export { default as PromotionLayout } from './PromotionLayout';
+export { default as CinemaLayout } from './CinemaLayout';
+export { default as ProfileLayout } from './ProfileLayout';

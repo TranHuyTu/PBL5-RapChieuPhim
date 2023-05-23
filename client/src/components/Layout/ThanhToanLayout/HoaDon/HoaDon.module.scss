@@ -1,0 +1,56 @@
+div.wrapper{
+    width: 75%;
+    div.content{
+        margin: 20px auto;
+        padding: 20px;
+        width: 60%;
+        background-color: white;
+        border: 20px solid #f26b38;;
+        div.title{
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 120px;
+            width: 100%;
+            div.derc{
+                margin: 0 50px;
+            }
+            div.logo{
+                position: absolute;
+                top: 10px;
+                right: 0;
+                width: 120px;
+                height: 100px;
+                img.img-logo{
+                    height: 100%;
+                }
+            }
+        }
+        div.table-container{
+            margin-top: 50px;
+            width: 100%;
+            table.table-main{
+                width: 100%;
+                border: 2px solid #ccc;
+                th{
+                    text-align: center; 
+                }
+                td{
+                    text-align: center;
+                }
+            }
+        }
+        div.User-Detail{
+            div.img-Avatar{
+                display: flex;
+                align-items: center;
+                img.Avatar{
+                margin: 20px auto;
+                width: 100px;
+                height: 100px;
+                border-radius: 999px;
+            }
+        }
+        }
+    }
+}

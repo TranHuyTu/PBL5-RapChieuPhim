@@ -1,0 +1,37 @@
+.wrapper{
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    margin: 80px 52px 0;
+}
+.wrapper>a{
+    position: relative;
+    color: #a0a3a7;
+    text-decoration: none;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    margin-right:20px ;
+}
+.wrapper>a:hover{
+    color: #f26b38;
+}
+.wrapper>a::before{
+    position: absolute;
+    top: 4px;
+    right: -20px;
+    padding: 0 5px;
+    color: #a0a3a7;
+    font-weight: 500;
+    line-height: 1;
+    content: ">";
+}
+.wrapper>h5{
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.6;
+}
+.title{
+    display: inline;
+}

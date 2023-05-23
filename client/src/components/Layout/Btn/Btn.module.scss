@@ -1,0 +1,36 @@
+span.Error{
+    display: none;
+    margin-top: 10px;
+    color: red;
+    width: 100%;
+    text-align: center;
+}
+span.CheckError{
+    display: inline-block;
+}
+a.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 5px 10px 5px;
+    width: 200px;
+    height: 40px;
+    background-color: #f26b38;
+    font-size: 1.8rem;
+    line-height: 1.6;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+    &:hover{
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}
+div.wrapper{
+    margin-top:40px;
+}
+div.btn-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

@@ -1,0 +1,190 @@
+.active{
+    padding: 10px 20px;
+}
+.sub-item-wrapper{
+  display: none;
+}
+.sub-item-wrapper.activeimg{
+  display: inline-block;
+  padding: 18px 15px;
+  width: 100%;
+  // height: 520px;
+}
+.sub-item-wrapper1{
+  display: none;
+}
+.sub-item-wrapper .sub-title {
+    height: 37px;
+    padding: 0 15px;
+}
+.sub-item-wrapper .sub-title:hover>h3>a{
+    color: #f26b38;
+}
+.sub-item-wrapper .sub-title h3 > a {
+    position: relative;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    color: black;
+    text-decoration: none;
+}
+.sub-item-wrapper .sub-title h3 > a::before {
+    position: absolute;
+    top: 26px;
+    content: '';
+    display: inline-block;
+    width: 48px;
+    height: 1.5px;
+    background: orange;
+    border-radius: 12px;
+}
+.sub-item-wrapper .sub-movies {
+    margin: 12px 0;
+}
+.sub-movies .movies-item {
+}
+.sub-movies .movies-item .item{
+    position: relative;
+    display: inline-block;
+    padding: 0 15px;
+    padding-left: 52px;
+    width:300px;
+}
+.image-hover{
+    width: 300px;
+}
+.item-image{
+    width: 100%;
+    // height: 100%;
+    object-fit: cover;
+    border:12px;
+}
+.image-hover:hover .group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.group{
+    display: none;
+    position: absolute;
+    top: 0px;
+    width: 340px;
+    height: 269px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.btn-MuaVe{
+    color: white;
+    background-color: #f26b38;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.8rem;
+    width: 100px;
+    height: 40px;
+    border: 1px solid white;
+}
+.btn-MuaVe:hover{
+  color: black;
+    background-color: white;
+    border: 1px solid #f26b38;
+}
+.sub-movies .movies-item .name-movie,
+.sub-movies .movies-item .sub-name{
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: #43464b;
+    text-transform: capitalize;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.sub-movies .movies-item .sub-name{
+    color: #a0a3a7;
+}
+.body {
+    display: flex;
+    font-family: "Poppins", sans-serif;
+  }
+.body > div {
+    margin: 5% auto 0;
+    max-width: 720px;
+  }
+.tabs {
+    display: flex;
+    position: relative;
+  }
+.tabs .line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 6px;
+    border-radius: 15px;
+    background-color: #c23564;
+    transition: all 0.2s ease;
+  }
+.tab-item {
+    min-width: 80px;
+    padding: 16px 20px 11px 20px;
+    font-size: 20px;
+    text-align: center;
+    color: #c23564;
+    background-color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 5px solid transparent;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all 0.5s ease;
+  }
+.tab-icon {
+    font-size: 24px;
+    width: 32px;
+    position: relative;
+    top: 2px;
+  }
+.tab-item:hover {
+    opacity: 1;
+    background-color: rgba(194, 53, 100, 0.05);
+    border-color: rgba(194, 53, 100, 0.1);
+  }
+.tab-item.active {
+    opacity: 1;
+  }
+.tab-content {
+    padding: 28px 0;
+  }
+.tab-pane {
+    color: #333;
+    display: none;
+  }
+.tab-pane.active {
+    display: block;
+  }
+.tab-pane h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+.row-continue{
+  width: 200px;
+  float: right;
+}
+.btn-continue{
+  color: #f26b38;
+  width: 200px;
+  padding: 8px 30px;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid #f26b38;
+  &:hover{
+    color: white;
+    background-color: #f26b38;
+  }
+}
+  

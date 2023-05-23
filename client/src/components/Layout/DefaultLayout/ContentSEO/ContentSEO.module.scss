@@ -1,0 +1,35 @@
+a{
+  text-decoration: none;
+}
+.wrapper{
+  width: 100%;
+  margin: 0 20px;
+}
+.wrapper_title:hover{
+  color: #f26b38;
+}
+.wrapper_title{
+  position: relative;
+  text-decoration: none;
+}
+.wrapper_title>h3{
+  font-size: 2rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.wrapper_title::before{
+  position: absolute;
+  content: "";
+  display: inline-block;
+  top: 32px;
+  left: 0;
+  width: 54px;
+  height: 2px;
+  background-color: #f26b38;
+  border-radius: 12px;
+}
+.row{
+  display: block;
+  height: 100%;
+  margin: 30px 24px;
+}

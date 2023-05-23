@@ -1,0 +1,174 @@
+.wrapper {
+    background-color: #0f1011;
+    height: 60px;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+}
+
+.wrapper .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.wrapper .sub-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.wrapper .sub-menu > a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    padding: 0px 56px;
+    font-size: 1.6rem;
+    line-height: 1.6;
+}
+.wrapper .sub-menu span {
+    color: white;
+    font-weight: 500;
+    height: 20px;
+}
+.wrapper .sub-menu:hover > a {
+    color: #f26b38;
+}
+.no01:hover .sub-item-wrapper{
+    display: inline-block;
+    z-index: 20;
+}
+.sub-item-wrapper {
+    display: none;
+    position: absolute;
+    top: 58px;
+    left: -4px;
+    padding: 20px 15px;
+    background-color: #0f1011;
+    width: 1050px;
+    height: 520px;
+}
+.sub-item-wrapper .sub-title {
+    height: 37px;
+    padding: 0 15px;
+}
+.sub-item-wrapper .sub-title>a{
+    font-size: 1.6rem;
+    line-height: 1.6;
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
+    text-transform: uppercase;
+}
+.sub-item-wrapper .sub-title:hover>a{
+    color: #f26b38;
+}
+.sub-item-wrapper .sub-title h3 > a::before {
+    position: absolute;
+    top: 26px;
+    content: '';
+    display: inline-block;
+    width: 48px;
+    height: 1.5px;
+    background: orange;
+    border-radius: 12px;
+}
+.sub-item-wrapper .sub-movies {
+    margin: 12px 0;
+    height: 182px;
+}
+.sub-movies .movies-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    wigth: 100%
+}
+.sub-movies .movies-item .item{
+    position: relative;
+    display: inline-block;
+    padding: 0 15px;
+}
+.image-hover{
+    position: relative;
+    width: 220px;
+    height: 140px;
+}
+.item-image{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border:12px;
+}
+.image-hover:hover .group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.group{
+    display: none;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    width: 220px;
+    height: 144px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.group .btn-MuaVe{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    width: 90px;
+    height: 36px;
+    border: 1px solid white;
+}
+.group .btn-MuaVe:hover{
+    background-color: #f26b38;
+    border: 1px solid #f26b38;
+}
+.sub-movies .movies-item .name-movie,
+.sub-movies .movies-item .sub-name{
+    margin-top: 4px;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.sub-movies .movies-item .sub-name{
+    color: rgba(255, 255, 255, 0.7);
+}
+.sub-menu .sub-menu-wrapper{
+    display: none;
+    position: absolute;
+    top: 58px;
+    background: #0f1011;  
+    padding: 4px 20px;
+    min-width: 240px;
+}
+.no02:hover>.sub-menu-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+.sub-menu-wrapper .sub-menu-item{
+    font-family: "Roboto", sans-serif;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    padding: 10px;
+}
+.sub-menu-hover:hover>.sub-menu-item{
+    color: #f26b38;
+}
+
+.row-movie{
+    width: 100%;
+}

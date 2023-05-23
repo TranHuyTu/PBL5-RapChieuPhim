@@ -1,0 +1,177 @@
+@mixin dfCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    display: inline-block;
+    width: 850px;
+    margin: 0 52px;
+    div.row{
+        display: flex;
+        div.img-movie{
+            position: relative;
+            img{
+            display: block;
+            // width: 250px;
+            height: 380px;
+            object-fit: cover;
+            }
+            div.icon-Play{
+                @include dfCenter();
+                position: absolute;
+                cursor: pointer;
+                top:140px;
+                left: 100px;
+                width: 70px;
+                height: 70px;
+                background-color: black;
+                opacity: 0.6;
+                border-radius: 999px;
+                border: 1px solid white;
+                &:hover{
+                    opacity: 0.4;
+                }
+            }
+            div.bgr{
+                display: none;
+            }
+            div.bgr-active{
+                // display: none;
+                position: absolute;
+                top: -50px;
+                left: -100px;
+                width: 9999px;
+                height: 1444px;
+                z-index:1;
+                background-color: rgba(0, 0, 0, 0.2);
+                div.modal-dialog{
+                    position: absolute;
+                    background-color: white;
+                    z-index:1;
+                    top: -32px;
+                    left: 350px;
+                    width: 720px;
+                    padding-bottom: 20px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    border-radius: 8px;
+                    div.title{
+                        display: flex;
+                        h4.title-dialog{
+                            @include dfCenter();
+                            width: 90%;
+                            margin: auto 10px;
+                        }
+                        div.close-dialog{
+                            margin-left: auto;
+                            padding: 10px;
+                        }
+                    }
+                    div.trailer{
+                        margin: 20px;
+                    }
+                }
+            }
+        }
+        div.detail-movie{
+            display: inline-block;
+            width: 60%;
+            margin: 0 52px;
+            h2{
+                font-size: 2.6rem;
+                color: #43464b;
+                font-weight: 400;
+                line-height: 1.4;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            h2.sub-title{
+                color: #a0a3a7;
+            }
+            div.detail-ratting{
+                display: flex;
+                align-items: center;
+                margin:10px 0;
+                line-height: 20px;
+                div.icon-C{
+                    @include dfCenter();
+                    margin-right: 20px;
+                    width: 40px;
+                    height: 25px;
+                    background-color: #e26435;
+                    border-radius: 4px;
+                    p{
+                        padding-top: 10px
+                    }
+                }
+                div.time-movie{
+                    @include dfCenter();
+                    margin-right: 20px;
+                    p{padding-top: 10px}
+                }
+                div.like-share{
+                    @include dfCenter();
+                    a.like, a.share{
+                        @include dfCenter();
+                        margin-right: 10px;
+                        width: 80px;
+                        height: 20px;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        background-color: #1877f2;
+                        color: white;
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                        &:hover{
+                            opacity: 0.8;
+                        }
+                    }
+                }
+            }
+            div.detail-info{
+                div.info{
+                    display: flex;
+                    margin-bottom: 10px;
+                    line-height: 20px;
+                    p.sub-info{
+                        color: #a0a3a7;
+                        min-width: 150px;
+                    }
+                    a.desc{
+                        text-decoration: none;
+                        color: #43464b;
+                        &:hover{
+                            color: #e26435;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    div.movie-content{
+        h2.movie-title{
+            position: relative;
+            margin-top: 40px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            &::before{
+                content: "";
+                display: block;
+                position: absolute;
+                top: 40px;
+                left: 0px;
+                width: 68px;
+                height: 2px;
+                background-color: #e26435;
+                border-radius: 4px;
+            }
+        }
+        p.desc{
+            margin-top: 50px;
+            font-size: 1.6rem;
+            line-height: 1.6;
+        }
+    }
+}

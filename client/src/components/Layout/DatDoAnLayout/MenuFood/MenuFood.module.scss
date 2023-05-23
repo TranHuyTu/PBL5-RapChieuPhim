@@ -1,0 +1,116 @@
+div.wrapper{
+    display: flex;
+    position: relative;
+    width: 95%;
+    margin: 80px auto;
+    div.content{
+        width: 100%;
+        background-color: #f26b38;;
+        padding: 20px;
+    }
+    button.btnContinue{
+        margin-top: 20px;
+        width: 200px;
+        height: 40px;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-weight: 400;
+        border: 1px solid white;
+        background-color: aliceblue;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+    div.bgrError{
+        display: none;
+        position: absolute;
+        z-index: 3;
+        top: -20px;
+        left: -52px;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 107.5%;
+        height: 105%;
+    }
+    div.messTB{
+        display: none;
+        position: fixed;
+        z-index: 4;
+        top:28%;
+        left: 36%;
+        background-color: whitesmoke;
+        opacity: 1;
+        width: 500px;
+        height: 200px;
+        h1.title-notification{  
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            // min-width: 100%;
+        }
+        p.desc{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            // min-width: 100%
+        }
+        a.btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            float: right;
+            margin: 40px 20px 10px 20px;
+            width: 80px;
+            height: 40px;
+            background-color: #f26b38;
+            font-size: 1.8rem;
+            line-height: 1.6;
+            font-weight: 500;
+            color: white;
+            &:hover{
+                opacity: 0.8;
+                cursor: pointer;
+            }
+        }
+    }  
+    div.CancelError{
+        display: block;
+    } 
+}
+
+.table-ve{
+    width: 100%;
+}
+.header-table{
+    margin-right: 20px;
+}
+.title{
+    width: 400px;
+}
+.icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{padding-top: 12px;}
+}
+.row-table{
+}
+.table-ve{
+    background-color: aliceblue;
+}
+.head-table{
+    height: 40px;
+    background-color: brown;
+}
+.body-table{
+    background-color: aliceblue;
+    height: 40px;
+}
+.body-row{
+    height: 40px;
+}
+.desc{
+    font-size: 1.6rem;
+    font-weight: 500;
+}

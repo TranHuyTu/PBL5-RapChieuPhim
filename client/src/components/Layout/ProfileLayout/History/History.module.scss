@@ -1,0 +1,84 @@
+.wrapper{
+    padding: 0;
+    margin: 0;
+}
+.title{
+    font-size: 4rem;
+    text-align: center;
+    line-height: 1.6;
+    font-weight: 600;
+    font-family: cursive;
+}
+.table-row{
+    position: relative;
+    .bill-detail{
+        display: none;
+        position: absolute;
+        top: -20vh;
+        left: 50vh;
+        width: 680px;
+        background-color: #444;
+        .bill_title{
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.6;
+            font-weight: 500;
+            font-family: cursive;
+        }
+        .bill_date{
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.6;
+            font-weight: 500;
+            font-family: cursive;
+        }
+        .cancel{
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            cursor: pointer;
+        }
+    }
+    .check_detail{
+        display: block;
+    }
+}
+.ticket_detail{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    .ticket_value{
+        width: 25%;
+        color: white;
+        margin: 0 10px;
+        text-align: center;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+}
+.food_detail{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    .food_value{
+        color: white;
+        width: 25%;
+        margin: 0 10px;
+        text-align: center;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+    .food_img{
+        width: 40px;
+        height: 40px;
+    }
+}
