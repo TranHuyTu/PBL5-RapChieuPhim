@@ -2,6 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames/bind';
 import SearchIcon from '@mui/icons-material/Search';
 import styles from './Header.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
@@ -15,9 +16,12 @@ const cx = classNames.bind(styles);
 function DangNhap() {
     const [checklogin, setCheckLogin] = useState('');
     const [User, setUser] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
-        if (localStorage.getItem('token-login')) {
+        if (localStorage.getItem('token-login') && JSON.parse(localStorage.getItem('CheckAcc')) == 0) {
             setCheckLogin(localStorage.getItem('token-login'));
+        } else if (localStorage.getItem('token-login') && JSON.parse(localStorage.getItem('CheckAcc')) == 1) {
+            navigate('/Admin');
         }
         const fetchData = async () => {
             if (localStorage.getItem('token-login')) {

@@ -40,11 +40,11 @@ function TableDetail(props) {
                     </thead>
                     <tbody>
                         {props.data.map((value, index) => (
-                            <tr>
-                                <td>{value.ID}</td>
-                                <td>{value.MovieName}</td>
-                                <td>{value.TimeMovie} Phút</td>
-                                <td>{ConverTime(value.ReleaseYear)[2]}</td>
+                            <tr key={index}>
+                                <td>{value[props.Key[0]]}</td>
+                                <td>{value[props.Key[1]]}</td>
+                                <td>{value[props.Key[2]]} Phút</td>
+                                <td>{ConverTime(value[props.Key[3]])[2]}</td>
                                 <td>
                                     <a href={value.LinkReview} target="_blank">
                                         {value.LinkReview}

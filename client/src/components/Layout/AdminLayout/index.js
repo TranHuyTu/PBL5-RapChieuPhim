@@ -10,7 +10,6 @@ import axios from 'axios';
 
 import Header from './Header';
 import Controller from './Controller';
-import Main from './Main';
 
 const cx = classNames.bind(styles);
 
@@ -20,10 +19,7 @@ function AdminLayout({ chilren }) {
             <Container fluid="xxl">
                 <div className="content">
                     <Header />
-                    <div className={cx('main')}>
-                        <Controller />
-                        <Main />
-                    </div>
+                    <Controller />
                 </div>
             </Container>
         </div>

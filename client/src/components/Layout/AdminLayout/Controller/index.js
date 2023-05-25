@@ -7,24 +7,93 @@ import Col from 'react-bootstrap/Col';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
+import Main from '../Main';
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 const cx = classNames.bind(styles);
 
 function Controller() {
+    const [typeMain, setTypeMain] = useState('');
     return (
         <div className={cx('wrapper')}>
-            <ul className={cx('wrapper-ul')}>
-                <li className={cx('controler-value')}>TRANG CHỦ</li>
-                <li className={cx('controler-value')}>PHIM</li>
-                <li className={cx('controler-value')}>LỊCH CHIẾU</li>
-                <li className={cx('controler-value')}>ĐẠO DIỄN</li>
-                <li className={cx('controler-value')}>DIỄN VIÊN</li>
-                <li className={cx('controler-value')}>NGƯỜI DÙNG</li>
-                <li className={cx('controler-value')}>GIÁ VÉ</li>
-                <li className={cx('controler-value')}>RẠP</li>
-                <li className={cx('controler-value')}>BLOG</li>
-            </ul>
+            <div className={cx('controller')}>
+                <ul className={cx('wrapper-ul')}>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('TrangChu');
+                        }}
+                    >
+                        TRANG CHỦ
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('Phim');
+                        }}
+                    >
+                        PHIM
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('LichChieu');
+                        }}
+                    >
+                        LỊCH CHIẾU
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('DaoDien');
+                        }}
+                    >
+                        ĐẠO DIỄN
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('DienVien');
+                        }}
+                    >
+                        DIỄN VIÊN
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('NguoiDung');
+                        }}
+                    >
+                        NGƯỜI DÙNG
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('GiaVe');
+                        }}
+                    >
+                        GIÁ VÉ
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('Rap');
+                        }}
+                    >
+                        RẠP
+                    </li>
+                    <li
+                        className={cx('controler-value')}
+                        onClick={() => {
+                            setTypeMain('Blog');
+                        }}
+                    >
+                        BLOG
+                    </li>
+                </ul>
+            </div>
+            <Main typeMain={typeMain} />
         </div>
     );
 }

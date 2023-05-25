@@ -13,38 +13,58 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 const cx = classNames.bind(styles);
 
-function Main() {
-    const [movies, setMovies] = useState([]);
+function Main(props) {
+    const [data, setData] = useState([]);
+    const [Label, setLabel] = useState([]);
+    const [Key, setKey] = useState([]);
+    const fetchData = async (API) => {
+        try {
+            await axios.post(API).then((response) => {
+                setData(response.data.result);
+                console.log(response.data.result);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await axios.post('http://localhost:8080/TrangChu').then((response) => {
-                    setMovies(response.data.result);
-                });
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
+        if (props.typeMain == 'TrangChu' || props.typeMain == 'Phim' || props.typeMain == '') {
+            fetchData('http://localhost:8080/TrangChu');
+            setLabel(['ID', 'Tên Phim', 'Thời lượng', 'Ngày khởi chiếu', 'LinkReview']);
+            setKey(['ID', 'MovieName', 'TimeMovie', 'ReleaseYear']);
+        }
     }, []);
-    const Lable = ['ID', 'Tên Phim', 'Thời lượng', 'Ngày khởi chiếu', 'LinkReview'];
-    return (
-        <div className={cx('wrapper')}>
-            <Container className={cx('container')}>
-                <Row>
-                    <Col>
-                        <Chart />
-                    </Col>
-                    <Col>
-                        <Chart />
-                    </Col>
-                </Row>
-                <Row>
-                    <TableDetail Label={Lable} data={movies} />
-                </Row>
-            </Container>
-        </div>
-    );
+    if (Label != [] && Key != [] && data != []) {
+        if (props.typeMain == 'TrangChu' || props.typeMain == '') {
+            return (
+                <div className={cx('wrapper')}>
+                    <Container className={cx('container')}>
+                        <Row>
+                            <Col>
+                                <Chart />
+                            </Col>
+                            <Col>
+                                <Chart />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <TableDetail Label={Label} Key={Key} data={data} />
+                        </Row>
+                    </Container>
+                </div>
+            );
+        } else if (props.typeMain == 'Phim') {
+            return (
+                <div className={cx('wrapper')}>
+                    <Container className={cx('container')}>
+                        <Row>
+                            <TableDetail Label={Label} Key={Key} data={data} />
+                        </Row>
+                    </Container>
+                </div>
+            );
+        }
+    }
 }
 
 export default Main;
