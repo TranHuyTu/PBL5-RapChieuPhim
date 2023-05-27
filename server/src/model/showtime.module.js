@@ -7,15 +7,27 @@ let Showtime = function (showtime) {
     this.CinemaName = showtime.CinemaName;
     this.ShowtimeDateTime = showtime.ShowtimeDateTime;
 };
-//Chưa sửa
-Showtime.get_all = function (result) {
-    db.query("SELECT * FROM showtimes", function (err, showtime) {
-        if (err) {
-            result(null);
-        } else {
-            result(showtime);
-        }
-    });
+let ShowtimeAll = function (showtime) {
+    this.ID = showtime.ID;
+    this.MovieID = showtime.MovieID;
+    this.MovieName = showtime.MovieName;
+    this.HallID = showtime.HallID;
+    this.Class = showtime.Class;
+    this.NumSeats = showtime.NumSeats;
+    this.CinemaID = showtime.CinemaID;
+    this.ShowtimeDateTime = showtime.ShowtimeDateTime;
+};
+ShowtimeAll.get_all = function (result) {
+    db.query(
+        "SELECT showtime.ShowtimeID,showtime.MovieID,movie.MovieName,showtime.HallID,halls.Class,halls.NumSeats,halls.CinemaID,showtime.ShowtimeDateTime FROM showtime,movie,halls WHERE showtime.MovieID = movie.ID AND showtime.HallID=halls.HallID;",
+        function (err, showtime) {
+            if (err) {
+                result(null);
+            } else {
+                result(showtime);
+            }
+        },
+    );
 };
 
 Showtime.get_showtime_movie = function (id, result) {
@@ -98,4 +110,4 @@ Showtime.update = function (data, result) {
     );
 };
 
-module.exports = Showtime;
+module.exports = { Showtime: Showtime, ShowtimeAll: ShowtimeAll };
