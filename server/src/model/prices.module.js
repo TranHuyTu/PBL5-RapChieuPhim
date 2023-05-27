@@ -53,6 +53,16 @@ Prices.get_all = function (result) {
     );
 };
 
+Prices.get_ticket = function (result) {
+    db.query("SELECT * FROM price_listing", function (err, Prices) {
+        if (err) {
+            result(null);
+        } else {
+            result(Prices);
+        }
+    });
+};
+
 Prices.create = function (data, result) {
     db.query("INSERT INTO fooditem SET ?", data, function (err, Prices) {
         if (err) {

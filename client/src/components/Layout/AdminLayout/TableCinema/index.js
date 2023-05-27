@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
-import styles from './TableShowTime.module.scss';
+import styles from './TableCinema.module.scss';
 import Container from 'react-bootstrap/Container';
 
 import { useState, useEffect } from 'react';
@@ -9,7 +9,7 @@ import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 const cx = classNames.bind(styles);
 
-function TableShowTime(props) {
+function TableCinema(props) {
     const [data, setData] = useState([]);
     const [Label, setLabel] = useState([]);
     const [Key, setKey] = useState([]);
@@ -24,17 +24,10 @@ function TableShowTime(props) {
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/showtime');
-        setLabel(['ID', 'Tên Phim', 'Phòng', 'Loại Phòng', 'Thời Gian']);
-        setKey(['ShowtimeID', 'MovieName', 'HallID', 'Class', 'ShowtimeDateTime']);
+        fetchData('http://localhost:8080/cinema');
+        setLabel(['ID', 'Tên Rạp', 'Đian chỉ', 'SDT']);
+        setKey(['ID', 'CinemaName', 'Address', 'Phone']);
     }, []);
-    function ConverTime(DATETIME) {
-        let datetime = [];
-        let DT = DATETIME.split('T');
-        let time = DT[1].split(':');
-        datetime.push(time[0], time[1], moment(DATETIME).format('DD/MM/YYYY'));
-        return datetime;
-    }
     if (data && Label && Key) {
         return (
             <div className={cx('wrapper')}>
@@ -65,10 +58,6 @@ function TableShowTime(props) {
                                     <td>{value[Key[2]]}</td>
                                     <td>{value[Key[3]]}</td>
                                     <td>
-                                        {ConverTime(value[Key[4]])[0]} : {ConverTime(value[Key[4]])[1]} --{' '}
-                                        {ConverTime(value[Key[4]])[2]}
-                                    </td>
-                                    <td>
                                         <a className={cx('btn', 'show')}>Xem</a>
                                     </td>
                                     <td>
@@ -88,4 +77,4 @@ function TableShowTime(props) {
     }
 }
 
-export default TableShowTime;
+export default TableCinema;

@@ -61,7 +61,7 @@ function DangNhap() {
                 <div className={cx('login')}>
                     <img
                         className={cx('avatar')}
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqt6ww0fR2ENknaKd8Xy_bStSsKcVXfdoIzA&usqp=CAU"
+                        src="https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png"
                         alt=""
                     />
                     <a href="" className={cx('btn-login')}>
@@ -71,8 +71,6 @@ function DangNhap() {
             );
         }
     } else {
-        // localStorage.clear();
-        // window.location.reload();
         return (
             <div className={cx('login')}>
                 <img href="" alt="" />

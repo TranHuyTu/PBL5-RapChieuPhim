@@ -5,6 +5,20 @@
         overflow-y: auto;
     }
 }
+.AddNew{
+    position: fixed;
+    bottom: 38px;
+    right: 38px;
+    padding: 32px 32px;
+    background-image: url('https://res.cloudinary.com/dbaul3mwo/image/upload/v1685210364/learn_nodejs/images_tdcl21.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 999px;
+    &:hover{
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}
 a.btn{
     padding: 5px 10px;
     color: black;

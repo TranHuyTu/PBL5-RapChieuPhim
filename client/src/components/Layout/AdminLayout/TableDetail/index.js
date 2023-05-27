@@ -116,6 +116,7 @@ function TableDetail(props) {
                             </thead>
                             <TableMovie Key={Key} data={data} />,
                         </Table>
+                        <a className={cx('AddNew')}></a>
                     </Container>
                 </div>
             );

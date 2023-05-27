@@ -9,6 +9,13 @@ import Tab from 'react-bootstrap/Tab';
 import Chart from '../Chart';
 import TableDetail from '../TableDetail';
 import TableShowTime from '../TableShowTime';
+import TableCinema from '../TableCinema';
+import TableDirector from '../TableDirector';
+import TableNSX from '../TableNSX';
+import TableFood from '../TableFood';
+import TableTicket from '../TableTicket';
+import TablePromotion from '../TablePromotion';
+import TableBlog from '../TableBlog';
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -23,37 +30,69 @@ function Controller() {
                         <Col sm={2}>
                             <Nav variant="pills" className="flex-column">
                                 <Nav.Item>
-                                    <Nav.Link eventKey="trangchu">Trang Chủ</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="trangchu">
+                                        Trang Chủ
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="phim">Phim</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="phim">
+                                        Phim
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="lichchieu">Lịch Chiếu</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="lichchieu">
+                                        Lịch Chiếu
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="rap">Rạp</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="rap">
+                                        Rạp
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="daodien">Đạo Diễn</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="daodien">
+                                        Đạo Diễn
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="dienvien">Diễn Viên</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="dienvien">
+                                        Diễn Viên
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="NSX">Nhà Sản Xuất</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="NSX">
+                                        Nhà Sản Xuất
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="khuyenmai">Khuyến Mãi</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="Food">
+                                        Đồ ăn
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="blog">Blog</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="Ticket">
+                                        Giá vé
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="TKDT">Thống kê doanh thu</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="khuyenmai">
+                                        Khuyến Mãi
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="TKND">Thông Tin Người Dùng</Nav.Link>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="blog">
+                                        Blog
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="TKDT">
+                                        Thống kê doanh thu
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="TKND">
+                                        Thông Tin Người Dùng
+                                    </Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Col>
@@ -88,12 +127,58 @@ function Controller() {
                                         </Row>
                                     </Container>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="rap">Second tab content</Tab.Pane>
-                                <Tab.Pane eventKey="daodien">Second tab content</Tab.Pane>
-                                <Tab.Pane eventKey="dienvien">Second tab content</Tab.Pane>
-                                <Tab.Pane eventKey="NSX">Second tab content</Tab.Pane>
-                                <Tab.Pane eventKey="khuyenmai">Second tab content</Tab.Pane>
-                                <Tab.Pane eventKey="blog">Second tab content</Tab.Pane>
+                                <Tab.Pane eventKey="rap">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TableCinema />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="daodien">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TableDirector TypeActor={'Director'} />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="dienvien">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TableDirector TypeActor={'Actor'} />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="NSX">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TableNSX />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="Food">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TableFood />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="Ticket">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TableTicket />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="khuyenmai">
+                                    <Container className={cx('container')}>
+                                        <Row>
+                                            <TablePromotion />
+                                        </Row>
+                                    </Container>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="blog">
+                                    <TableBlog />
+                                </Tab.Pane>
                                 <Tab.Pane eventKey="TKDT">Second tab content</Tab.Pane>
                                 <Tab.Pane eventKey="TKND">Second tab content</Tab.Pane>
                             </Tab.Content>

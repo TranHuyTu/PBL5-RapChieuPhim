@@ -5,6 +5,9 @@
         overflow-y: auto;
     }
 }
+img.avatar{
+    width: 80px;
+}
 .AddNew{
     position: fixed;
     bottom: 38px;
@@ -45,4 +48,12 @@ a.delete{
     top: -1px;
     background-color: #f8f8f8;
     z-index: 1;
+}
+.derc{
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 620px;
 }

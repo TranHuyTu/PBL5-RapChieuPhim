@@ -5,6 +5,11 @@ exports.get_list = function (req, res) {
         res.send({ result: data });
     });
 };
+exports.get_list_all = function (req, res) {
+    Prices.get_ticket(function (data) {
+        res.send({ result: data });
+    });
+};
 exports.addPrices = function (req, res) {
     var data = req.body;
     Prices.create(data, function (repon) {

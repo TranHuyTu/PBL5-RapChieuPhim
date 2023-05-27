@@ -4,6 +4,7 @@ import styles from './Login.module.scss';
 import Carousel from 'react-bootstrap/Carousel';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import axios from 'axios';
 
 const cx = classNames.bind(styles);
@@ -35,6 +36,58 @@ function LoginLayout({ chilren }) {
             localStorage.clear();
         }
     }, []);
+    const Submit = function () {
+        const account = {
+            user: user,
+            password: password,
+        };
+
+        try {
+            axios
+                .post('http://localhost:8080/login', account, {
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                })
+                .then((response) => {
+                    localStorage.setItem('token-login', JSON.stringify(response.data.result));
+                    const _token = response.data.result;
+                    try {
+                        axios
+                            .post(
+                                'http://localhost:8080/login/check_token',
+                                { x: 1 },
+                                {
+                                    headers: {
+                                        'content-type': 'application/x-www-form-urlencoded',
+                                        authorization: _token,
+                                    },
+                                },
+                            )
+                            .then((response) => {
+                                localStorage.setItem('CheckAcc', JSON.stringify(response.data.data.data.CheckAdmin));
+                                if (response.data.data.data.CheckAdmin == 0) {
+                                    history('/');
+                                    Swal.fire(
+                                        'Logged in successfully!',
+                                        'Bạn muốn đặt vé xem phim hãy chọn OK để tiếp tục',
+                                        'success',
+                                    );
+                                } else if (response.data.data.data.CheckAdmin == 1) {
+                                    history('/Admin');
+                                    Swal.fire('Logged in successfully!', 'Chào mừng Admin đến với hệ thống', 'success');
+                                } else {
+                                }
+                            });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('imgBx')}>
@@ -67,6 +120,7 @@ function LoginLayout({ chilren }) {
                                 setMess1('error');
                             } else {
                                 setMess1('');
+                                document.querySelector('#span-login').style.display = 'none';
                             }
                             setUser(e.target.value);
                         }}
@@ -89,63 +143,25 @@ function LoginLayout({ chilren }) {
                                 setMess2('error');
                             } else {
                                 setMess2('');
+                                document.querySelector('#span-login').style.display = 'none';
                             }
                             setPassword(e.target.value);
                         }}
                     />
                     <span className={cx('form-message', mess2)}>*Mật khẩu chưa hợp lệ</span>
                 </div>
-                <span className={cx('loginError', mess3)}>*Thông tin tài khoản hoặc mật khẩu không chính xác</span>
+                <span id="span-login" className={cx('loginError', mess3)}>
+                    *Thông tin tài khoản hoặc mật khẩu không chính xác
+                </span>
                 <button
                     className={cx('form-submit')}
                     onClick={() => {
-                        const account = {
-                            user: user,
-                            password: password,
-                        };
-
-                        try {
-                            axios
-                                .post('http://localhost:8080/login', account, {
-                                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                                })
-                                .then((response) => {
-                                    localStorage.setItem('token-login', JSON.stringify(response.data.result));
-                                    // let token = localStorage.getItem('token-login');
-                                    const _token = response.data.result;
-                                    try {
-                                        axios
-                                            .post(
-                                                'http://localhost:8080/login/check_token',
-                                                { x: 1 },
-                                                {
-                                                    headers: {
-                                                        'content-type': 'application/x-www-form-urlencoded',
-                                                        authorization: _token,
-                                                    },
-                                                },
-                                            )
-                                            .then((response) => {
-                                                localStorage.setItem(
-                                                    'CheckAcc',
-                                                    JSON.stringify(response.data.data.data.CheckAdmin),
-                                                );
-                                                if (response.data.data.data.CheckAdmin == 0) {
-                                                    history('/');
-                                                } else if (response.data.data.data.CheckAdmin == 1) {
-                                                    history('/Admin');
-                                                } else {
-                                                }
-                                            });
-                                    } catch (error) {
-                                        console.log(error);
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.log(error);
-                                });
-                        } catch (error) {
-                            console.error(error);
+                        if (document.querySelectorAll('.form-message').length != 0) {
+                            console.log('TK ko hợp lệ');
+                            console.log(document.querySelectorAll('.form-message'));
+                            document.querySelector('#span-login').style.display = 'block';
+                        } else {
+                            Submit();
                         }
                     }}
                 >

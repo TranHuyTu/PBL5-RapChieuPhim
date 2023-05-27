@@ -39,7 +39,9 @@ function PlayingLayout({ chilren }) {
     const modules = [
         <Header />,
         <Controller movies={movies} />,
-        <Main movies={movies} w={'100%'} />,
+        <div className={cx('wrapper-main')}>
+            <Main movies={movies} w={'100%'} />
+        </div>,
         <ContentSEO />,
         <Footer />,
     ];

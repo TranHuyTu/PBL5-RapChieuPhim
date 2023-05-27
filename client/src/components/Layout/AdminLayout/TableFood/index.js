@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
-import styles from './TableShowTime.module.scss';
+import styles from './TableFood.module.scss';
 import Container from 'react-bootstrap/Container';
 
 import { useState, useEffect } from 'react';
@@ -9,32 +9,38 @@ import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 const cx = classNames.bind(styles);
 
-function TableShowTime(props) {
+function TableFood(props) {
     const [data, setData] = useState([]);
     const [Label, setLabel] = useState([]);
     const [Key, setKey] = useState([]);
+    const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
     const fetchData = async (API) => {
+        const token = localStorage.getItem('token-login');
+        const _token = token.substring(1, token.length - 1);
         try {
-            await axios.post(API).then((response) => {
-                setData(response.data.result);
-                console.log(response.data.result);
-            });
+            await axios
+                .post(
+                    API,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    setData(response.data.result);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         } catch (error) {
             console.error(error);
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/showtime');
-        setLabel(['ID', 'Tên Phim', 'Phòng', 'Loại Phòng', 'Thời Gian']);
-        setKey(['ShowtimeID', 'MovieName', 'HallID', 'Class', 'ShowtimeDateTime']);
+        fetchData('http://localhost:8080/foods');
+        setLabel(['ID', 'Tên món ăn', 'Giá', 'Hình ảnh']);
+        setKey(['ID', 'ItemName', 'Price', 'AvatarLink']);
     }, []);
-    function ConverTime(DATETIME) {
-        let datetime = [];
-        let DT = DATETIME.split('T');
-        let time = DT[1].split(':');
-        datetime.push(time[0], time[1], moment(DATETIME).format('DD/MM/YYYY'));
-        return datetime;
-    }
     if (data && Label && Key) {
         return (
             <div className={cx('wrapper')}>
@@ -63,10 +69,12 @@ function TableShowTime(props) {
                                     <td>{value[Key[0]]}</td>
                                     <td>{value[Key[1]]}</td>
                                     <td>{value[Key[2]]}</td>
-                                    <td>{value[Key[3]]}</td>
                                     <td>
-                                        {ConverTime(value[Key[4]])[0]} : {ConverTime(value[Key[4]])[1]} --{' '}
-                                        {ConverTime(value[Key[4]])[2]}
+                                        <img
+                                            className={cx('avatar')}
+                                            src={value[Key[3]] ? value[Key[3]] : AvatarError}
+                                            alt={value[Key[1]]}
+                                        />
                                     </td>
                                     <td>
                                         <a className={cx('btn', 'show')}>Xem</a>
@@ -88,4 +96,4 @@ function TableShowTime(props) {
     }
 }
 
-export default TableShowTime;
+export default TableFood;

@@ -39,6 +39,7 @@ require("./route/cinema")(app);
 require("./route/promotions")(app);
 require("./route/showtime")(app);
 app.use(_AuthMiddleware.isAuth);
+require("./route/nsx")(app);
 require("./route/prices")(app);
 require("./route/foods")(app);
 require("./route/halls")(app);

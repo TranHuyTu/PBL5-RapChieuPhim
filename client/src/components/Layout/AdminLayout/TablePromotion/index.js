@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
-import styles from './TableShowTime.module.scss';
+import styles from './TablePromotion.module.scss';
 import Container from 'react-bootstrap/Container';
 
 import { useState, useEffect } from 'react';
@@ -9,10 +9,11 @@ import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 const cx = classNames.bind(styles);
 
-function TableShowTime(props) {
+function TablePromotion(props) {
     const [data, setData] = useState([]);
     const [Label, setLabel] = useState([]);
     const [Key, setKey] = useState([]);
+    const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
     const fetchData = async (API) => {
         try {
             await axios.post(API).then((response) => {
@@ -24,9 +25,9 @@ function TableShowTime(props) {
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/showtime');
-        setLabel(['ID', 'Tên Phim', 'Phòng', 'Loại Phòng', 'Thời Gian']);
-        setKey(['ShowtimeID', 'MovieName', 'HallID', 'Class', 'ShowtimeDateTime']);
+        fetchData('http://localhost:8080/promotion');
+        setLabel(['ID', 'Tên Khuyến mãi', 'Ngày bắt đầu', 'Ngày kết thúc', 'Hình ảnh']);
+        setKey(['ID', 'Title', 'Start_time', 'End_time', 'AvatarLink']);
     }, []);
     function ConverTime(DATETIME) {
         let datetime = [];
@@ -46,15 +47,9 @@ function TableShowTime(props) {
                                     <th key={index}>{value}</th>
                                 ))}
 
-                                <th>
-                                    <p className={cx('btn')}>Xem</p>
-                                </th>
-                                <th>
-                                    <p className={cx('btn')}>Sửa</p>
-                                </th>
-                                <th>
-                                    <p className={cx('btn')}>Xóa</p>
-                                </th>
+                                <th>Xem</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,11 +57,14 @@ function TableShowTime(props) {
                                 <tr key={index}>
                                     <td>{value[Key[0]]}</td>
                                     <td>{value[Key[1]]}</td>
-                                    <td>{value[Key[2]]}</td>
-                                    <td>{value[Key[3]]}</td>
+                                    <td>{ConverTime(value[Key[2]])[2]}</td>
+                                    <td>{ConverTime(value[Key[3]])[2]}</td>
                                     <td>
-                                        {ConverTime(value[Key[4]])[0]} : {ConverTime(value[Key[4]])[1]} --{' '}
-                                        {ConverTime(value[Key[4]])[2]}
+                                        <img
+                                            className={cx('avatar')}
+                                            src={value[Key[4]] ? value[Key[4]] : AvatarError}
+                                            alt={value[Key[1]]}
+                                        />
                                     </td>
                                     <td>
                                         <a className={cx('btn', 'show')}>Xem</a>
@@ -88,4 +86,4 @@ function TableShowTime(props) {
     }
 }
 
-export default TableShowTime;
+export default TablePromotion;
