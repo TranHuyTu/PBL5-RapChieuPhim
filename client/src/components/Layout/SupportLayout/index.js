@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
-import styles from './CinemaLayout.module.scss';
+import styles from './SupportLayout.module.scss';
 import Header from '~/components/Layout/DefaultLayout/Header';
 import Controller from '~/components/Layout/DefaultLayout/Controller';
 import Footer from '~/components/Layout/DefaultLayout/Footer';
-import CinemaMain from './CinemaMain';
+import SupportMain from './SupportMain';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const cx = classNames.bind(styles);
 
-function CinemaLayout({ chilren }) {
+function SupportLayout({ chilren }) {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ function CinemaLayout({ chilren }) {
         };
         fetchData();
     }, []);
-    const modules = [<Header />, <Controller movies={movies} />, <CinemaMain />, <Footer />];
+    const modules = [<Header />, <Controller movies={movies} />, <SupportMain />, <Footer />];
     return (
         <div>
             <Container fluid="xxl">
@@ -44,4 +44,4 @@ function CinemaLayout({ chilren }) {
     );
 }
 
-export default CinemaLayout;
+export default SupportLayout;

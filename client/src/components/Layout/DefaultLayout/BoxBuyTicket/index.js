@@ -134,7 +134,7 @@ function BoxBuyTicket(props) {
         IDCinema: '',
         IDShowtime: '',
     };
-    const handleBuy = (Ticket) => {
+    const handleBuy = function (Ticket) {
         let Ve = [];
         if (props.TimKiem[Ticket.chonphim]) {
             ChiTietVe.IDMovie = props.TimKiem[Ticket.chonphim].ID;
@@ -208,11 +208,10 @@ function BoxBuyTicket(props) {
                             } catch (error) {
                                 console.log(error);
                             }
-                            // navigate('../DatDoAn');
                         } else {
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'Do you want to continue',
+                                text: 'Bạn chưa đăng nhập vui lòng đằng nhập rồi thực hiện lại',
                                 icon: 'error',
                                 confirmButtonText: 'Cool',
                             });
@@ -524,7 +523,7 @@ function BoxBuyTicket(props) {
                         </Box>
                     </Box>
                     <div className={cx('btn-Buy')}>
-                        <a href="/DatDoAn" className={cx('btn-muave')} onClick={handleBuy(TicketDetail)}>
+                        <a href="/DatDoAn" className={cx('btn-muave')} onClick={() => handleBuy(TicketDetail)}>
                             MUA VE
                         </a>
                     </div>

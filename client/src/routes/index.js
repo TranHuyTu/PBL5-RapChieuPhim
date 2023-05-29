@@ -16,6 +16,7 @@ import {
     PromotionLayout,
     CinemaLayout,
     ProfileLayout,
+    SupportLayout,
 } from '~/components/Layout';
 import DSPhim from '~/pages/DSPhim';
 import DatVe from '~/pages/DatVe';
@@ -35,6 +36,7 @@ import Blog from '~/pages/Blog';
 import Promotion from '~/pages/Promotion';
 import Cinema from '~/pages/Cinema';
 import Profile from '~/pages/Profile';
+import Support from '~/pages/Support';
 
 const publicRouter = [
     { path: '/', component: Home },
@@ -57,6 +59,7 @@ const publicRouter = [
     { path: '/PromotionDetail', component: Promotion, layout: PromotionLayout },
     { path: '/Cinema', component: Cinema, layout: CinemaLayout },
     { path: '/Profile', component: Profile, layout: ProfileLayout },
+    { path: '/Support', component: Support, layout: SupportLayout },
 ];
 const pritaveRouter = [];
 

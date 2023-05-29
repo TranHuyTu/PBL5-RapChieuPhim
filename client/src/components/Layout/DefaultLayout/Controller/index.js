@@ -30,7 +30,7 @@ function Controller(props) {
                     <span>|</span>
                 </div>
                 <div className={cx('sub-menu', 'no01')}>
-                    <a href="">
+                    <a className={cx('btn-controller')}>
                         {pages[1]}
                         <KeyboardArrowDownIcon fontSize="inherit"></KeyboardArrowDownIcon>
                     </a>
@@ -140,7 +140,7 @@ function Controller(props) {
                     </div>
                 </div>
                 <div className={cx('sub-menu', 'no02')}>
-                    <a href="">
+                    <a className={cx('btn-controller')}>
                         {pages[2]}
                         <KeyboardArrowDownIcon fontSize="inherit"></KeyboardArrowDownIcon>
                     </a>
@@ -176,7 +176,7 @@ function Controller(props) {
                     </div>
                 </div>
                 <div className={cx('sub-menu', 'no02')}>
-                    <a href="">
+                    <a className={cx('btn-controller')}>
                         {pages[3]}
                         <KeyboardArrowDownIcon fontSize="inherit"></KeyboardArrowDownIcon>
                     </a>
@@ -201,7 +201,9 @@ function Controller(props) {
                     <span>|</span>
                 </div>
                 <div className={cx('sub-menu')}>
-                    <a href="">{pages[5]}</a>
+                    <a href="/Support" className={cx('btn-controller')}>
+                        {pages[5]}
+                    </a>
                     <span>|</span>
                 </div>
                 <div className={cx('sub-menu')}>

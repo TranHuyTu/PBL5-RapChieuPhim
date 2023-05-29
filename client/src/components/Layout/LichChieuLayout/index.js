@@ -5,17 +5,17 @@ import Main from './Main';
 
 import Container from 'react-bootstrap/Container';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 
 function LichChieuLayout({ chilren }) {
     const [movies, setMovies] = useState([]);
-    useEffect(() => {
+    useLayoutEffect(() => {
         let token = '';
         if (localStorage.getItem('token-login')) {
-            token = JSON.parse(localStorage.getItem('token-login'));
-            localStorage.clear();
-            localStorage.setItem('token-login', JSON.stringify(token));
+            // token = JSON.parse(localStorage.getItem('token-login'));
+            // localStorage.clear();
+            // localStorage.setItem('token-login', JSON.stringify(token));
         } else {
             localStorage.clear();
         }

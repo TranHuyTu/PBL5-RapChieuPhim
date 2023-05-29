@@ -60,8 +60,13 @@
     font-weight: 500;
     color: white;
     text-transform: uppercase;
+    &:hover{
+        cursor: pointer;
+        color: #f26b38;
+    }
 }
 .sub-item-wrapper .sub-title:hover>a{
+    cursor: pointer;
     color: #f26b38;
 }
 .sub-item-wrapper .sub-title h3 > a::before {
@@ -171,4 +176,9 @@
 
 .row-movie{
     width: 100%;
+}
+a{
+    &:hover{
+        cursor: pointer;
+    }
 }

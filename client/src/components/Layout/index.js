@@ -14,3 +14,4 @@ export { default as BlogLayout } from './BlogLayout';
 export { default as PromotionLayout } from './PromotionLayout';
 export { default as CinemaLayout } from './CinemaLayout';
 export { default as ProfileLayout } from './ProfileLayout';
+export { default as SupportLayout } from './SupportLayout';
