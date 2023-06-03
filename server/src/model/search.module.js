@@ -12,7 +12,7 @@ let Search = function (search) {
 
 Search.get_all_list = function (result) {
     db.query(
-        "SELECT movie.ID, movie.MovieName,showtime.ShowtimeID,showtime.ShowtimeDateTime,cinema.ID as CinemaID,cinema.CinemaName,cinema.Address FROM movie,showtime,halls,cinema WHERE movie.ID=showtime.MovieID AND showtime.HallID=halls.HallID AND halls.CinemaID=cinema.ID",
+        "SELECT movie.ID, movie.MovieName,showtime.ShowtimeID,showtime.ShowtimeDateTime,cinema.ID as CinemaID,cinema.CinemaName,cinema.Address FROM movie,showtime,halls,cinema WHERE movie.ID=showtime.MovieID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID",
         function (err, movie) {
             if (err) {
                 result(null);

@@ -2,7 +2,6 @@ import * as React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -95,9 +94,9 @@ function ProfileLayout({ chilren }) {
         return datetime;
     }
     const SEX = (value) => {
-        if (value == 1) {
+        if (value === 1) {
             return 'Nam';
-        } else if (value == 2) {
+        } else if (value === 2) {
             return 'Nữ';
         } else return 'Khác';
     };
@@ -131,7 +130,6 @@ function ProfileLayout({ chilren }) {
                         },
                     )
                     .then((response) => {
-                        console.log(response.data);
                         setPreviewImage(response.data);
                         ProfileChang.Avatar = response.data;
                     })
@@ -151,8 +149,8 @@ function ProfileLayout({ chilren }) {
                 : (ProfileChang.DateOfBirth = ConverTimeData(Profile.DateOfBirth)[2] + 'T00:00:00.000Z');
             ProfileChang.CheckAdmin = 0;
             if (document.querySelector('.BtnChangPassword input').checked) {
-                if (document.querySelector('#MKHT').value == Profile.Password) {
-                    if (document.querySelector('#MKM').value == document.querySelector('#XNMK').value) {
+                if (document.querySelector('#MKHT').value === Profile.Password) {
+                    if (document.querySelector('#MKM').value === document.querySelector('#XNMK').value) {
                         ProfileChang.Password = document.querySelector('#MKM').value;
                     } else {
                         ProfileChang.Password = Profile.Password;
@@ -196,8 +194,8 @@ function ProfileLayout({ chilren }) {
                 : (ProfileChang.DateOfBirth = ConverTimeData(Profile.DateOfBirth)[2] + 'T00:00:00.000Z');
             ProfileChang.CheckAdmin = 0;
             if (document.querySelector('.BtnChangPassword input').checked) {
-                if (document.querySelector('#MKHT').value == Profile.Password) {
-                    if (document.querySelector('#MKM').value == document.querySelector('#XNMK').value) {
+                if (document.querySelector('#MKHT').value === Profile.Password) {
+                    if (document.querySelector('#MKM').value === document.querySelector('#XNMK').value) {
                         ProfileChang.Password = document.querySelector('#MKM').value;
                     } else {
                         ProfileChang.Password = Profile.Password;
@@ -208,7 +206,6 @@ function ProfileLayout({ chilren }) {
             } else {
                 ProfileChang.Password = Profile.Password;
             }
-            console.log(ProfileChang);
             try {
                 const token = localStorage.getItem('token-login');
                 const _token = token.substring(1, token.length - 1);
@@ -232,10 +229,10 @@ function ProfileLayout({ chilren }) {
             }
         }
     };
-    if (onClickType == '1') {
+    if (onClickType === '1') {
         document.querySelectorAll('.btn').forEach((value, index) => {
             value.disabled = false;
-            if (index == 0) {
+            if (index === 0) {
                 value.addEventListener('click', () => {
                     window.location.reload();
                 });
@@ -249,13 +246,13 @@ function ProfileLayout({ chilren }) {
         setSelectedFile(file);
         setPreviewImage(URL.createObjectURL(file));
 
-        if (onClickType == '') {
+        if (onClickType === '') {
             setOnClickType('1');
         }
     };
 
     const onChange = function (e) {
-        if (onClickType == '') {
+        if (onClickType === '') {
             setOnClickType('1');
         }
     };
@@ -321,7 +318,7 @@ function ProfileLayout({ chilren }) {
                                     className={cx('show-password')}
                                     src="https://www.clipartmax.com/png/full/217-2178237_open-eye-vector-show-hide-password-icon.png"
                                     onClick={() => {
-                                        if (document.querySelector('#password').type == 'password') {
+                                        if (document.querySelector('#password').type === 'password') {
                                             document.querySelector('#password').type = 'text';
                                         } else {
                                             document.querySelector('#password').type = 'password';
@@ -336,7 +333,7 @@ function ProfileLayout({ chilren }) {
                                     id="custom-switch"
                                     label="ĐỔI MẬT KHẨU"
                                     onChange={(e) => {
-                                        if (onClickType == '') {
+                                        if (onClickType === '') {
                                             setOnClickType('1');
                                         }
                                         if (e.target.checked) {

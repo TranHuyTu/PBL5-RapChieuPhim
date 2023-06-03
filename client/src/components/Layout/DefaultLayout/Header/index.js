@@ -18,10 +18,8 @@ function DangNhap() {
     const [User, setUser] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        if (localStorage.getItem('token-login') && JSON.parse(localStorage.getItem('CheckAcc')) == 0) {
+        if (localStorage.getItem('token-login')) {
             setCheckLogin(localStorage.getItem('token-login'));
-        } else if (localStorage.getItem('token-login') && JSON.parse(localStorage.getItem('CheckAcc')) == 1) {
-            navigate('/Admin');
         }
         const fetchData = async () => {
             if (localStorage.getItem('token-login')) {
@@ -38,6 +36,9 @@ function DangNhap() {
                         )
                         .then((response) => {
                             setUser(response.data.data.data);
+                            if (response.data.data.data.CheckAdmin !== 0) {
+                                navigate('/Admin');
+                            }
                         });
                 } catch (error) {
                     console.error(error);
@@ -69,6 +70,15 @@ function DangNhap() {
                     </a>
                 </div>
             );
+        } else {
+            return (
+                <div className={cx('login')}>
+                    <img href="" alt="" />
+                    <a className={cx('btn-login')} href="/login">
+                        Đăng nhập
+                    </a>
+                </div>
+            );
         }
     } else {
         return (
@@ -83,18 +93,48 @@ function DangNhap() {
 }
 
 function DangXuat() {
+    const [User, setUser] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const fetchData = async () => {
+            if (localStorage.getItem('token-login')) {
+                try {
+                    const token = localStorage.getItem('token-login');
+                    const _token = token.substring(1, token.length - 1);
+                    await axios
+                        .postForm(
+                            'http://localhost:8080/login/check_token',
+                            { x: 1 },
+                            {
+                                headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                            },
+                        )
+                        .then((response) => {
+                            setUser(response.data.data.data);
+                            if (response.data.data.data.CheckAdmin !== 0) {
+                                navigate('/Admin');
+                            }
+                        });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        };
+        fetchData();
+    }, []);
     function handleLogout() {
         localStorage.clear();
         window.location.reload();
     }
-    if (localStorage.getItem('token-login')) {
-        return (
-            <div className={cx('logout')}>
-                <a href="./" className={cx('btn-logout')} onClick={handleLogout}>
-                    Đăng Xuất
-                </a>
-            </div>
-        );
+    if (User !== []) {
+        if (localStorage.getItem('token-login'))
+            return (
+                <div className={cx('logout')}>
+                    <a href="./" className={cx('btn-logout')} onClick={handleLogout}>
+                        Đăng Xuất
+                    </a>
+                </div>
+            );
     }
 }
 

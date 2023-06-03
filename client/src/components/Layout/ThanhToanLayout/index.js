@@ -35,9 +35,10 @@ function ThanhToanLayout({ chilren }) {
         let Foods = JSON.parse(localStorage.getItem('Foods'));
         if (SL) {
             SL.map((value, index) => {
-                if (value != 0) {
+                if (value !== 0) {
                     ListFoods.push(Foods[index].ItemName);
                 }
+                return ListFoods;
             });
         }
 
@@ -48,10 +49,12 @@ function ThanhToanLayout({ chilren }) {
         const foods = JSON.parse(localStorage.getItem('Foods'));
         JSON.parse(localStorage.getItem('SLFood')).map((value, index) => {
             Sum += value * foods[index].Price;
+            return Sum;
         });
         const tickets = JSON.parse(localStorage.getItem('Tickets'));
         JSON.parse(localStorage.getItem('SLTicket')).map((value, index) => {
             Sum += value * tickets[index].Price;
+            return Sum;
         });
         return Sum;
     }

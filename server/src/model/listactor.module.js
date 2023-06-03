@@ -16,15 +16,15 @@ ListActor.create = function (data, result) {
     });
 };
 
-ListActor.remove = function (id, result) {
+ListActor.remove = function (data, result) {
     db.query(
-        "DELETE FROM listactor WHERE ID = ?",
-        id,
-        function (err, listactor) {
+        "DELETE FROM listactor WHERE IDMovie = ? AND IDActor=?",
+        [data.IDMovie, data.IDActor],
+        function (err) {
             if (err) {
                 result(null);
             } else {
-                result("Xoa du lieu co id " + id + " thanh cong");
+                result(data);
             }
         },
     );

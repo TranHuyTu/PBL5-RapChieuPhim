@@ -8,6 +8,8 @@ exports.login = function (req, res) {
         if (repon) {
             const _token = await JWT.make(repon);
             res.send({ result: _token });
+        } else {
+            res.send({ result: null });
         }
     });
 };

@@ -17,7 +17,6 @@ function TableCinema(props) {
         try {
             await axios.post(API).then((response) => {
                 setData(response.data.result);
-                console.log(response.data.result);
             });
         } catch (error) {
             console.error(error);

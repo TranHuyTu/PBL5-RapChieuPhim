@@ -20,7 +20,7 @@ Hall.get_all = function (result) {
 
 Hall.get_halls_showtime = function (id, result) {
     db.query(
-        "SELECT halls.HallID,halls.Class,halls.NumSeats,halls.CinemaID,seat.ID,seat.CheckSeat FROM halls,seat WHERE HallID=? AND seat.IDHalls=halls.HallID;",
+        "SELECT halls.HallID,halls.HallNumber,halls.Class,halls.NumSeats,halls.CinemaID,seat.ID,seat.CheckSeat FROM halls,seat WHERE HallID=? AND seat.IDHalls=halls.HallID;",
         id,
         function (err, hall) {
             if (err || hall.length == 0) {

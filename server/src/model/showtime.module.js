@@ -3,6 +3,7 @@ const db = require("../common/connect");
 let Showtime = function (showtime) {
     this.ID = showtime.ID;
     this.HallID = showtime.HallID;
+    this.HallNumber = showtime.HallNumber;
     this.CinemaID = showtime.CinemaID;
     this.CinemaName = showtime.CinemaName;
     this.ShowtimeDateTime = showtime.ShowtimeDateTime;
@@ -19,7 +20,7 @@ let ShowtimeAll = function (showtime) {
 };
 ShowtimeAll.get_all = function (result) {
     db.query(
-        "SELECT showtime.ShowtimeID,showtime.MovieID,movie.MovieName,showtime.HallID,halls.Class,halls.NumSeats,halls.CinemaID,showtime.ShowtimeDateTime FROM showtime,movie,halls WHERE showtime.MovieID = movie.ID AND showtime.HallID=halls.HallID;",
+        "SELECT showtime.ShowtimeID,showtime.MovieID,movie.MovieName,halls.HallID,halls.HallNumber,halls.Class,halls.NumSeats,halls.CinemaID,showtime.ShowtimeDateTime FROM showtime,movie,halls WHERE showtime.MovieID = movie.ID AND showtime.ShowtimeID=halls.IDShowtime;",
         function (err, showtime) {
             if (err) {
                 result(null);
@@ -32,7 +33,7 @@ ShowtimeAll.get_all = function (result) {
 
 Showtime.get_showtime_movie = function (id, result) {
     db.query(
-        "SELECT showtime.ShowtimeID, halls.HallID, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.HallID=halls.HallID AND halls.CinemaID=cinema.ID AND movie.ID=? ORDER BY cinema.ID;",
+        "SELECT showtime.ShowtimeID, halls.HallID, halls.HallNumber, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND movie.ID=? ORDER BY cinema.ID;",
         id,
         function (err, showtime) {
             if (err || showtime.length == 0) {
@@ -45,7 +46,7 @@ Showtime.get_showtime_movie = function (id, result) {
 };
 Showtime.get_showtime_movie_cinema = function (data, result) {
     db.query(
-        "SELECT showtime.ShowtimeID, halls.HallID, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.HallID=halls.HallID AND halls.CinemaID=cinema.ID AND movie.ID=? AND cinema.ID=? ORDER BY cinema.ID;",
+        "SELECT showtime.ShowtimeID, halls.HallID, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND movie.ID=? AND cinema.ID=? ORDER BY cinema.ID;",
         [data.MovieID, data.CinemaID],
         function (err, showtime) {
             if (err) {
@@ -59,7 +60,7 @@ Showtime.get_showtime_movie_cinema = function (data, result) {
 
 Showtime.get_detail_showtime = function (data, result) {
     db.query(
-        "SELECT showtime.ShowtimeID, halls.HallID, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.HallID=halls.HallID AND halls.CinemaID=cinema.ID AND showtime.ShowtimeID=? AND cinema.ID=?;",
+        "SELECT showtime.ShowtimeID, halls.HallID,cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND showtime.ShowtimeID=? AND cinema.ID=?;",
         [data.ShowtimeID, data.CinemaID],
         function (err, showtime) {
             if (err) {

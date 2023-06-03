@@ -45,6 +45,7 @@ div.wrapper{
             min-height: 80%;
             background-color: white;
             div.list-seats-detail{
+                text-align: center;
                 // a.seat{
                 //     display: inline-block;
                 //     width: 40px;
@@ -76,7 +77,7 @@ div.wrapper{
                         content: "";
                         position: absolute;
                         top: -24px;
-                        left: 104px;
+                        left: 5%;
                         width: 300px;
                         height: 3px;
                         background-color: #999;

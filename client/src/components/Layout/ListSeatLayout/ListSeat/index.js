@@ -91,7 +91,7 @@ function ListSeat(props) {
                             Rạp : {JSON.parse(localStorage.getItem('showtime')).CinemaName}
                         </h3>
                         <h3 className={cx('hall-title')}>
-                            Phòng Số : {JSON.parse(localStorage.getItem('showtime')).HallID}
+                            Phòng Số : {JSON.parse(localStorage.getItem('showtime')).HallNumber}
                         </h3>
                     </div>
                     <h2 className={cx('title-main')}>Danh sách ghế ngồi</h2>

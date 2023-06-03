@@ -50,16 +50,15 @@ function HoaDon({ chilren }) {
         setTickets(JSON.parse(localStorage.getItem('Tickets')));
         setFoods(JSON.parse(localStorage.getItem('Foods')));
     }, []);
-    const STT = 0;
     const Tong = () => {
         let tong = 0;
         SLFood.map((value, index) => {
-            if (value != 0) {
+            if (value !== 0) {
                 tong += value * Foods[index].Price;
             }
         });
         SLTicket.map((value, index) => {
-            if (value != 0) {
+            if (value !== 0) {
                 tong += value * Tickets[index].Price;
             }
         });
@@ -90,7 +89,7 @@ function HoaDon({ chilren }) {
                         </thead>
                         <tbody>
                             {SLTicket.map((value, index) => {
-                                if (value != 0) {
+                                if (value !== 0) {
                                     return (
                                         <tr key={index}>
                                             <td>{Tickets[index].TicketType}</td>
@@ -102,7 +101,7 @@ function HoaDon({ chilren }) {
                                 }
                             })}
                             {SLFood.map((value, index) => {
-                                if (value != 0) {
+                                if (value !== 0) {
                                     return (
                                         <tr key={index}>
                                             <td>{Foods[index].ItemName}</td>

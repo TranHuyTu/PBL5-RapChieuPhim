@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import moment from 'moment';
 const cx = classNames.bind(styles);
 
 function TableBlog(props) {

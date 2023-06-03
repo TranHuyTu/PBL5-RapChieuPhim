@@ -1,6 +1,14 @@
 .wrapper{
     height: 54vh;
     .container{
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+    }
+}
+.wrapper-movie{
+    height: 90vh;
+    .container{
         height: 100%;
         overflow-y: auto;
     }
@@ -44,5 +52,39 @@ a.delete{
     position: sticky;
     top: -1px;
     background-color: #f8f8f8;
-    z-index: 1;
+    z-index: 0;
+}
+.bgr{
+    position: absolute;
+    top: 0;
+    width: 82%;
+    height: 100vh;
+    background-color:rgba(136, 133, 133, 0.3);
+}
+.movie-detail{
+    position: absolute;   
+    top: 5vh;
+    left: 10%;
+    width: 80%;
+    height: 90vh;
+    background-color: white;
+    overflow-y: auto;
+    text-align: center;
+    padding: 10px 0;
+}
+.cancel{
+    position: fixed;
+    top: 6vh;
+    right: 10%;
+    width: 38px;
+    height: 38px;
+    background-image: url('https://res.cloudinary.com/dbaul3mwo/image/upload/v1685435681/learn_nodejs/1024px-Crystal_button_cancel.svg_onwo8l.png');
+    background-size: 30px 30px;
+    border: 4px solid #AAA;
+    border-radius: 4px;
+    &:hover{
+        background-color: #AAA;
+        cursor: pointer;
+        opacity: 0.8;
+    }
 }

@@ -21,11 +21,6 @@ let imgBGR = [
     'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/tvVVdUf7GuUGpCYg10Sj5RIz0cf.jpg',
     'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/wDWwtvkRRlgTiUr6TyLSMX8FCuZ.jpg',
 ];
-// function hasVietnameseCharacter(str) {
-//     var vietnamese =
-//         /[\u00C0-\u1EF9\u1EA0-\u1EF9\u00D2-\u1ED3\u1ECC-\u1EEF\u00D4-\u1ED7\u1EDC-\u1EE3\u01A0-\u1EDF\u1EEA-\u1EEF\u0110\u0111]/;
-//     return vietnamese.test(str);
-// }
 const initFormValue = {
     Username: '',
     Password: '',
@@ -170,13 +165,13 @@ function RegisterLayout({ chilren }) {
                         className={cx('btn')}
                         onClick={() => {
                             if (
-                                formValue.Username != '' &&
-                                formValue.Password != '' &&
-                                formValue.Name != '' &&
-                                formValue.Email != '' &&
-                                formValue.SDT != '' &&
-                                formValue.SEX != '' &&
-                                formValue.DateOfBirth != ''
+                                formValue.Username !== '' &&
+                                formValue.Password !== '' &&
+                                formValue.Name !== '' &&
+                                formValue.Email !== '' &&
+                                formValue.SDT !== '' &&
+                                formValue.SEX !== '' &&
+                                formValue.DateOfBirth !== ''
                             ) {
                                 try {
                                     axios

@@ -48,37 +48,47 @@ function LoginLayout({ chilren }) {
                     headers: { 'content-type': 'application/x-www-form-urlencoded' },
                 })
                 .then((response) => {
-                    localStorage.setItem('token-login', JSON.stringify(response.data.result));
-                    const _token = response.data.result;
-                    try {
-                        axios
-                            .post(
-                                'http://localhost:8080/login/check_token',
-                                { x: 1 },
-                                {
-                                    headers: {
-                                        'content-type': 'application/x-www-form-urlencoded',
-                                        authorization: _token,
+                    if (response.data.result) {
+                        localStorage.setItem('token-login', JSON.stringify(response.data.result));
+                        const _token = response.data.result;
+                        try {
+                            axios
+                                .post(
+                                    'http://localhost:8080/login/check_token',
+                                    { x: 1 },
+                                    {
+                                        headers: {
+                                            'content-type': 'application/x-www-form-urlencoded',
+                                            authorization: _token,
+                                        },
                                     },
-                                },
-                            )
-                            .then((response) => {
-                                localStorage.setItem('CheckAcc', JSON.stringify(response.data.data.data.CheckAdmin));
-                                if (response.data.data.data.CheckAdmin == 0) {
-                                    history('/');
-                                    Swal.fire(
-                                        'Logged in successfully!',
-                                        'Bạn muốn đặt vé xem phim hãy chọn OK để tiếp tục',
-                                        'success',
+                                )
+                                .then((response) => {
+                                    localStorage.setItem(
+                                        'CheckAcc',
+                                        JSON.stringify(response.data.data.data.CheckAdmin),
                                     );
-                                } else if (response.data.data.data.CheckAdmin == 1) {
-                                    history('/Admin');
-                                    Swal.fire('Logged in successfully!', 'Chào mừng Admin đến với hệ thống', 'success');
-                                } else {
-                                }
-                            });
-                    } catch (error) {
-                        console.log(error);
+                                    if (response.data.data.data.CheckAdmin == 0) {
+                                        history('/');
+                                        Swal.fire(
+                                            'Logged in successfully!',
+                                            'Bạn muốn đặt vé xem phim hãy chọn OK để tiếp tục',
+                                            'success',
+                                        );
+                                    } else if (response.data.data.data.CheckAdmin == 1) {
+                                        history('/Admin');
+                                        Swal.fire(
+                                            'Logged in successfully!',
+                                            'Chào mừng Admin đến với hệ thống',
+                                            'success',
+                                        );
+                                    }
+                                });
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    } else {
+                        document.querySelector('#span-login').style.display = 'block';
                     }
                 })
                 .catch((error) => {

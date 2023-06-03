@@ -8,8 +8,8 @@ exports.addActorToList = function (req, res) {
 };
 
 exports.removeListActor = function (req, res) {
-    var id = req.params.id;
-    ListActor.remove(id, function (repon) {
+    var data = req.body;
+    ListActor.remove(data, function (repon) {
         res.send({ result: repon });
     });
 };

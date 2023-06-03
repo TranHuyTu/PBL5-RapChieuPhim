@@ -1,8 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
 import styles from './History.module.scss';
-import { useState, useLayoutEffect, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -16,7 +15,6 @@ const cx = classNames.bind(styles);
 function History({ chilren }) {
     const [ListTicket, setListTicket] = useState('');
     const [ListFood, setListFood] = useState('');
-    const [CheckDetail, setCheckDetail] = useState('');
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -86,13 +84,13 @@ function History({ chilren }) {
         }
         return datetime;
     }
-    const SEX = (value) => {
-        if (value == 1) {
-            return 'Nam';
-        } else if (value == 2) {
-            return 'Nữ';
-        } else return 'Khác';
-    };
+    // const SEX = (value) => {
+    //     if (value == 1) {
+    //         return 'Nam';
+    //     } else if (value == 2) {
+    //         return 'Nữ';
+    //     } else return 'Khác';
+    // };
     const LoadList = function (ListTicket, ListFood) {
         let listID = [];
         let ListBill = [];
@@ -100,6 +98,7 @@ function History({ chilren }) {
             if (!listID.includes(value.ID)) {
                 listID.push(value.ID);
             }
+            return 0;
         });
         listID.map((value, index) => {
             let BillDetail = {
@@ -108,16 +107,19 @@ function History({ chilren }) {
                 Foods: [],
             };
             ListTicket.map((val, ind) => {
-                if (val.ID == value) {
+                if (val.ID === value) {
                     BillDetail.Tickets.push(val);
                 }
+                return 0;
             });
             ListFood.map((val, ind) => {
-                if (val.ID == value) {
+                if (val.ID === value) {
                     BillDetail.Foods.push(val);
                 }
+                return 0;
             });
             ListBill.push(BillDetail);
+            return 0;
         });
         return ListBill;
     };

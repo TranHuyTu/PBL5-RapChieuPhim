@@ -17,7 +17,6 @@ function TableShowTime(props) {
         try {
             await axios.post(API).then((response) => {
                 setData(response.data.result);
-                console.log(response.data.result);
             });
         } catch (error) {
             console.error(error);
@@ -35,6 +34,52 @@ function TableShowTime(props) {
         datetime.push(time[0], time[1], moment(DATETIME).format('DD/MM/YYYY'));
         return datetime;
     }
+    const HandleCancel = function () {
+        let element = document.querySelector('.container').nextElementSibling;
+        element.remove();
+    };
+    const HandlerShow = async function (value) {
+        await document
+            .querySelector('.container')
+            .insertAdjacentHTML(
+                'afterend',
+                '<div class="' +
+                    cx('bgr') +
+                    '"><div class="' +
+                    cx('movie-detail') +
+                    '"><a class="' +
+                    cx('cancel') +
+                    '"></a><img src="' +
+                    value.AvatarMovie +
+                    '" alt="' +
+                    value.MovieName +
+                    '" />' +
+                    '<h1>' +
+                    value.MovieName +
+                    '</h1>' +
+                    '<p><b>Thời lượng :</b>' +
+                    value.TimeMovie +
+                    '</p>' +
+                    '<p><b>Thể loại : </b>' +
+                    value.TypeMovie +
+                    '</p>' +
+                    '<p><b>Ngày khởi chiếu : </b>' +
+                    value.ReleaseYear +
+                    '</p>' +
+                    '<p><b>Tóm Tắt : </b>' +
+                    value.TomTat +
+                    '</p>' +
+                    '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +
+                    value.LinkReview.split('/')[3] +
+                    '" frameborder="0"' +
+                    'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"' +
+                    'allowfullscreen></iframe>' +
+                    '<p><b>Giới thiệu : </b>' +
+                    value.GioiThieu +
+                    '</p></div></div>',
+            );
+        document.querySelector('.TableDetail_cancel__mYvns').addEventListener('click', HandleCancel);
+    };
     if (data && Label && Key) {
         return (
             <div className={cx('wrapper')}>
@@ -69,7 +114,9 @@ function TableShowTime(props) {
                                         {ConverTime(value[Key[4]])[2]}
                                     </td>
                                     <td>
-                                        <a className={cx('btn', 'show')}>Xem</a>
+                                        <a className={cx('btn', 'show')} onClick={() => HandlerShow(value)}>
+                                            Xem
+                                        </a>
                                     </td>
                                     <td>
                                         <a className={cx('btn', 'edit')}>Sửa</a>

@@ -10,11 +10,15 @@ let Movie = function (movie) {
     this.LinkReview = movie.LinkReview;
     this.GioiThieu = movie.GioiThieu;
     this.ReleaseYear = movie.ReleaseYear;
+    this.Language = movie.Language;
+    this.IDDirector = movie.IDDirector;
+    this.IDRevew = movie.IDRevew;
+    this.IDNSX = movie.IDNSX;
 };
 
 Movie.get_all_movie = function (result) {
     db.query(
-        "SELECT movie.ID,movie.MovieName,movie.TimeMovie,movie.TypeMovie,movie.AvatarMovie,movie.ReleaseYear,reviews.TomTat,reviews.LinkReview,reviews.GioiThieu FROM movie,reviews WHERE movie.IDRevew = reviews.ID;",
+        "SELECT movie.ID,movie.MovieName,movie.TimeMovie,movie.TypeMovie,movie.AvatarMovie,movie.ReleaseYear,movie.Language,reviews.TomTat,reviews.LinkReview,reviews.GioiThieu,movie.IDDirector,movie.IDRevew,movie.IDNSX FROM movie,reviews WHERE movie.IDRevew = reviews.ID;",
         function (err, movie) {
             if (err) {
                 result(null);
@@ -26,7 +30,7 @@ Movie.get_all_movie = function (result) {
 };
 Movie.get_detail_movie = function (id, result) {
     db.query(
-        "SELECT movie.ID,movie.MovieName,movie.TimeMovie,movie.TypeMovie,movie.AvatarMovie,movie.ReleaseYear,reviews.TomTat,reviews.LinkReview,reviews.GioiThieu FROM movie,reviews WHERE movie.IDRevew = reviews.ID AND movie.ID=?;",
+        "SELECT movie.ID,movie.MovieName,movie.TimeMovie,movie.TypeMovie,movie.AvatarMovie,movie.ReleaseYear,movie.Language,reviews.TomTat,reviews.LinkReview,reviews.GioiThieu,movie.IDDirector,movie.IDRevew,movie.IDNSX FROM movie,reviews WHERE movie.IDRevew = reviews.ID AND movie.ID=?;",
         id,
         function (err, movie) {
             if (err || movie.length == 0) {
