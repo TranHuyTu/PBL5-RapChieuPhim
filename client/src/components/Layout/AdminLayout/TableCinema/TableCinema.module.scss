@@ -46,3 +46,33 @@ a.delete{
     background-color: #f8f8f8;
     z-index: 1;
 }
+.wrapper_detail{
+    text-align: center;
+    padding-top:40px
+}
+.ListSeats{
+    margin: 20px auto;
+    width: 500px;
+}
+.seats{
+    font-size: 1.6rem;
+    line-height: 1.6;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    width: 40px;
+    background-color: #AAA;
+    margin: 20px 10px 10px 0;
+}
+.Check{
+    background-color: red;
+}
+.Cancel{
+    margin: 20px auto;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+}

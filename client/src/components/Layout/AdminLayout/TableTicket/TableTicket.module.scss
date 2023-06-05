@@ -2,7 +2,6 @@
     height: 90vh;
     .container{
         height: 100%;
-        overflow-y: auto;
     }
 }
 .AddNew{
@@ -45,4 +44,31 @@ a.delete{
     top: -1px;
     background-color: #f8f8f8;
     z-index: 1;
+}
+.wrapper_detail{
+    background-image: url("https://res.cloudinary.com/dbaul3mwo/image/upload/v1685864808/learn_nodejs/anh-khung-vien-co-dien-doc-dao_032407840_pp7qlf.png");
+    background-repeat: no-repeat;
+    background-size: 100% 80vh;
+    text-align: center;
+    padding-top:10%;
+    margin: 10px auto;
+    width:400px;
+    height: 100%;
+}
+.Cancel{
+    position: absolute;
+    bottom: 10%;
+    right: 34%;
+    margin: 20px auto;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+}
+.Avatar{
+    display: block;
+    margin: 20px auto;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
 }

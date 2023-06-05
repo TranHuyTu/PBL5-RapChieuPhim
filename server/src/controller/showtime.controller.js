@@ -12,8 +12,8 @@ exports.get_list_movie = function (req, res) {
 };
 exports.get_list_time = function (req, res) {
     var data = req.body;
-    Showtime.Showtime.get_showtime_movie_cinema(data, function (data) {
-        res.send({ result: data });
+    Showtime.Showtime.get_showtime_movie_cinema(data, function (repon) {
+        res.send({ result: repon });
     });
 };
 exports.get_Detail_Showtime = function (req, res) {
@@ -22,6 +22,13 @@ exports.get_Detail_Showtime = function (req, res) {
         res.send({ result: data });
     });
 };
+exports.get_Showtime_by_id = function (req, res) {
+    var id = req.params.id;
+    Showtime.ShowtimeAll.get_showtime_id(id, function (repon) {
+        res.send({ result: repon });
+    });
+};
+
 //Chưa sửa
 exports.addShowtime = function (req, res) {
     var data = req.body;

@@ -7,7 +7,6 @@ let Hall = function (hall) {
     this.IDSeat = hall.IDSeat;
     this.CheckSeat = this.CheckSeat;
 };
-//Chưa sửa
 Hall.get_all = function (result) {
     db.query("SELECT * FROM halls", function (err, hall) {
         if (err) {
@@ -21,6 +20,19 @@ Hall.get_all = function (result) {
 Hall.get_halls_showtime = function (id, result) {
     db.query(
         "SELECT halls.HallID,halls.HallNumber,halls.Class,halls.NumSeats,halls.CinemaID,seat.ID,seat.CheckSeat FROM halls,seat WHERE HallID=? AND seat.IDHalls=halls.HallID;",
+        id,
+        function (err, hall) {
+            if (err || hall.length == 0) {
+                result(null);
+            } else {
+                result(hall);
+            }
+        },
+    );
+};
+Hall.get_halls_cinema = function (id, result) {
+    db.query(
+        "SELECT * FROM halls WHERE halls.CinemaID=?",
         id,
         function (err, hall) {
             if (err || hall.length == 0) {

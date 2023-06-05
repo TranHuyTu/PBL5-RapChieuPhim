@@ -31,6 +31,20 @@ ShowtimeAll.get_all = function (result) {
     );
 };
 
+ShowtimeAll.get_showtime_id = function (id, result) {
+    db.query(
+        "SELECT showtime.ShowtimeID,showtime.MovieID,movie.MovieName,halls.HallID,halls.HallNumber,halls.Class,halls.NumSeats,halls.CinemaID,showtime.ShowtimeDateTime FROM showtime,movie,halls WHERE showtime.MovieID = movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND showtime.ShowtimeID=?;",
+        id,
+        function (err, showtime) {
+            if (err) {
+                result(null);
+            } else {
+                result(showtime);
+            }
+        },
+    );
+};
+
 Showtime.get_showtime_movie = function (id, result) {
     db.query(
         "SELECT showtime.ShowtimeID, halls.HallID, halls.HallNumber, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND movie.ID=? ORDER BY cinema.ID;",
@@ -44,9 +58,10 @@ Showtime.get_showtime_movie = function (id, result) {
         },
     );
 };
+
 Showtime.get_showtime_movie_cinema = function (data, result) {
     db.query(
-        "SELECT showtime.ShowtimeID, halls.HallID, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND movie.ID=? AND cinema.ID=? ORDER BY cinema.ID;",
+        "SELECT showtime.ShowtimeID, halls.HallID, cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND movie.ID=? AND cinema.ID=? ORDER BY cinema.ID",
         [data.MovieID, data.CinemaID],
         function (err, showtime) {
             if (err) {
@@ -60,7 +75,7 @@ Showtime.get_showtime_movie_cinema = function (data, result) {
 
 Showtime.get_detail_showtime = function (data, result) {
     db.query(
-        "SELECT showtime.ShowtimeID, halls.HallID,cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND showtime.ShowtimeID=? AND cinema.ID=?;",
+        "SELECT showtime.ShowtimeID, halls.HallID,cinema.ID as CinemaID, cinema.CinemaName,showtime.ShowtimeDateTime FROM showtime,movie,halls,cinema WHERE showtime.MovieID=movie.ID AND showtime.ShowtimeID=halls.IDShowtime AND halls.CinemaID=cinema.ID AND showtime.ShowtimeID=? AND cinema.ID=?",
         [data.ShowtimeID, data.CinemaID],
         function (err, showtime) {
             if (err) {

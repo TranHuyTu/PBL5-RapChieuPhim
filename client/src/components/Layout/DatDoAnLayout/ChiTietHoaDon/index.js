@@ -49,7 +49,7 @@ function ChiTietHoaDon(props) {
             <div className={cx('suat-chieu', 'info')}>
                 <h5 className={cx('title')}>Suất Chiếu :&nbsp;</h5>
                 <p className={cx('desc')}>
-                    {Time[0]} : {Time[1]}
+                    {Time[0]} : {Time[1]} &diams; {Time[2]}
                 </p>
             </div>
             <div className={cx('combo', 'info')}>

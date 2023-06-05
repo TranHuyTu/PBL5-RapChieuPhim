@@ -49,3 +49,21 @@ a.delete{
     background-color: #f8f8f8;
     z-index: 1;
 }
+.wrapper_detail{
+    padding: 20px 10%;
+    margin-bottom: 40px;
+}
+.Content{
+    display: flex;
+}
+.Image{
+    width: 40%;
+    margin-right: 10%;
+}
+.Cancel{
+    margin: 20px 40%;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+}

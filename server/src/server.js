@@ -6,6 +6,8 @@ const _AuthMiddleware = require("./common/_AuthMiddleWare");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+require("dotenv").config();
+
 const cors = require("cors");
 const corsOptions = {
     origin: "*",
@@ -38,6 +40,7 @@ require("./route/directors")(app);
 require("./route/cinema")(app);
 require("./route/promotions")(app);
 require("./route/showtime")(app);
+require("./route/showtimeall")(app);
 require("./route/listactor")(app);
 require("./route/review")(app);
 require("./route/movie")(app);
@@ -53,7 +56,7 @@ require("./route/seat")(app);
 require("./route/account")(app);
 require("./route/history")(app);
 
-let port = process.env.PORT || 8080;
+let port = process.env.PORT || 8081;
 app.listen(port, () => {
-    console.log("Backend Node Js Runing the port : " + port);
+    console.log("Server connect successfully Runing the port : " + port);
 });

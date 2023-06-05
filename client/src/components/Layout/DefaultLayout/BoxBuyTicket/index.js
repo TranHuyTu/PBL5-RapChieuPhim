@@ -42,6 +42,7 @@ function BoxBuyTicket(props) {
     const [activeTP, setActiveTP] = useState('activeSearch');
     const [activeTN, setActiveTN] = useState('');
     const [activeTR, setActiveTR] = useState('');
+    const [Movie, setMovie] = useState([]);
     const navigate = useNavigate();
     const handleChange1 = (event, newValue) => {
         setValue(newValue);
@@ -64,6 +65,13 @@ function BoxBuyTicket(props) {
     };
     useLayoutEffect(() => {
         setDSTimKiem(props.TimKiem);
+        try {
+            axios.post('http://localhost:8080/movie').then((response) => {
+                setMovie(response.data.result);
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }, []);
     const handleChange = (e) => {
         const { value, name } = e.target;
@@ -135,13 +143,13 @@ function BoxBuyTicket(props) {
         IDShowtime: '',
     };
     const handleBuy = function (Ticket) {
+        console.log(Ticket);
         let Ve = [];
-        if (props.TimKiem[Ticket.chonphim]) {
-            ChiTietVe.IDMovie = props.TimKiem[Ticket.chonphim].ID;
-        }
+
+        ChiTietVe.IDMovie = Movie[Ticket.chonphim].ID;
 
         props.TimKiem.map((value, index) => {
-            if (ChiTietVe.IDMovie && ChiTietVe.IDMovie == value.ID) {
+            if (ChiTietVe.IDMovie && ChiTietVe.IDMovie === value.MovieID) {
                 Ve.push(value);
             }
         });
@@ -161,10 +169,8 @@ function BoxBuyTicket(props) {
             if (index == Ticket.chonngay) {
                 ChiTietVe.IDShowtime = value.ShowtimeID;
             }
-            if (ChiTietVe.IDShowtime && ChiTietVe.IDShowtime == value.ShowtimeID) {
-                Ve.push(value);
-            }
         });
+        console.log(ChiTietVe);
         if (localStorage.getItem('token-login')) {
             const token = localStorage.getItem('token-login');
             const _token = token.substring(1, token.length - 1);
@@ -194,6 +200,7 @@ function BoxBuyTicket(props) {
                                     ShowtimeID: ChiTietVe.IDShowtime,
                                     CinemaID: ChiTietVe.IDCinema,
                                 };
+                                console.log(ShowtimeDetail);
                                 axios
                                     .post('http://localhost:8080/showtime/detail', ShowtimeDetail, {
                                         headers: {
@@ -202,6 +209,7 @@ function BoxBuyTicket(props) {
                                     })
                                     .then((response) => {
                                         if (response.data.result) {
+                                            console.log(response.data.result);
                                             localStorage.setItem('showtime', JSON.stringify(response.data.result[0]));
                                         }
                                     });
@@ -232,7 +240,7 @@ function BoxBuyTicket(props) {
         //     navigate('../login');
         // }
     };
-    if (DSTimKiem) {
+    if (DSTimKiem && Movie) {
         return (
             <div className={cx('box-buy-ticket')}>
                 <div className={cx('wrapper')}>
@@ -298,7 +306,7 @@ function BoxBuyTicket(props) {
                                     onChange={handleChange}
                                 >
                                     <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
+                                    {Movie.map((item, index) => (
                                         <option className={cx('sub-option')} key={index} value={index}>
                                             {item.MovieName}
                                         </option>
