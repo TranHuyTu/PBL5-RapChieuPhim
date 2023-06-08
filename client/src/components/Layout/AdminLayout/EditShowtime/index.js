@@ -5,53 +5,102 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-import moment from 'moment';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import axiosClient from '~/api/axiosClient';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function EditShowtime(props) {
     const [Showtime, setShowtime] = useState([]);
     const [ListSeat, setListSeat] = useState([]);
+    const [ListSeatNew, setListSeatNew] = useState([]);
     const [ListHall, setListHall] = useState([]);
     const [ListMovie, setListMovie] = useState([]);
-    const [dateTimeValue, setDateTimeValue] = useState('');
 
     const navigate = useNavigate();
-    const fetchData = async (API, setAPI) => {
-        try {
-            const token = localStorage.getItem('token-login');
-            const _token = token.substring(1, token.length - 1);
-            await axios
-                .post(
-                    API,
-                    { x: 1 },
-                    {
-                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
-                    },
-                )
-                .then((response) => {
-                    setAPI(response.data.result);
-                });
-        } catch (error) {
-            console.error(error);
-        }
-    };
+
     useEffect(() => {
         setShowtime(JSON.parse(localStorage.getItem('showtime')));
-        fetchData(
-            'http://localhost:8080/halls/showtime/' + JSON.parse(localStorage.getItem('showtime')).HallID,
-            setListSeat,
-        );
-        fetchData('http://localhost:8080/halls', setListHall);
-        fetchData('http://localhost:8080/TrangChu', setListMovie);
+        const FetchAPI = async function () {
+            try {
+                const token = localStorage.getItem('token-login');
+                const _token = token.substring(1, token.length - 1);
+                await axiosClient
+                    .post(
+                        '/halls/showtime/' + JSON.parse(localStorage.getItem('showtime')).HallID,
+                        { a: 1 },
+                        {
+                            headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                        },
+                    )
+                    .then((response) => {
+                        setListSeat(response.result);
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi nếu yêu cầu thất bại
+                        console.error(error);
+                    });
+                await axiosClient
+                    .post(
+                        '/halls',
+                        { a: 1 },
+                        {
+                            headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                        },
+                    )
+                    .then((response) => {
+                        setListHall(response.result);
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi nếu yêu cầu thất bại
+                        console.error(error);
+                    });
+                await axiosClient
+                    .post(
+                        '/TrangChu',
+                        { a: 1 },
+                        {
+                            headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                        },
+                    )
+                    .then((response) => {
+                        setListMovie(response.result);
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi nếu yêu cầu thất bại
+                        console.error(error);
+                    });
+                await axiosClient
+                    .post(
+                        '/halls/showtime/' + JSON.parse(localStorage.getItem('showtime')).HallID,
+                        { a: 1 },
+                        {
+                            headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                        },
+                    )
+                    .then((response) => {
+                        const List = [];
+                        response.result.map((value, index) => {
+                            if (value.CheckSeat !== 0) {
+                                List.push(value);
+                            }
+                        });
+                        setListSeatNew(List);
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi nếu yêu cầu thất bại
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        FetchAPI();
     }, []);
 
     const { Formik } = formik;
@@ -62,33 +111,104 @@ function EditShowtime(props) {
         HallID: yup.string().required(),
         HallNumber: yup.string().required(),
         MovieName: yup.string().required(),
-        HallNumber: yup.string().required(),
         ShowtimeDateTime: yup.date().required(),
         terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
     });
-    const handleSubmit = async (values, actions) => {
-        const dateString = values.ShowtimeDateTime;
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần +1
-        const day = date.getDate();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        const formattedDate = `${year}-${month}-${day}` + 'T' + `${hours}:${minutes}:${seconds}` + '.000Z';
-        console.log(formattedDate);
-        values.ShowtimeDateTime = formattedDate;
-        console.log(values.ShowtimeDateTime);
-        // Xử lý dữ liệu form
-        // Gửi dữ liệu đến server
-        // ...
-        // Reset form sau khi submit
-        actions.resetForm();
+    const ValueEdit = {
+        ShowtimeID: Showtime.ShowtimeID,
+        MovieID: Showtime.MovieID,
+        HallID: Showtime.HallID,
+        HallNumber: Showtime.HallNumber,
+        ShowtimeDateTime: Showtime.ShowtimeDateTime,
     };
-    const handleDateTimeChange = (event) => {
-        setDateTimeValue(event.target.value);
+    const handleClick = () => {
+        try {
+            const token = localStorage.getItem('token-login');
+            const _token = token.substring(1, token.length - 1);
+            axiosClient
+                .put('/showtime/update', ValueEdit, {
+                    headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                })
+                .then((response) => {
+                    console.log('Update Success');
+                })
+                .catch((error) => {
+                    // Xử lý lỗi nếu yêu cầu thất bại
+                    console.error(error);
+                });
+            let Hall = {
+                HallID: '',
+                Class: '',
+                NumSeats: '',
+                CinemaID: '',
+                IDShowtime: '',
+                HallNumber: ValueEdit.HallNumber,
+            };
+
+            if (ListHall) {
+                ListHall.map((value, index) => {
+                    if (value.HallID === ValueEdit.HallID) {
+                        Hall.IDShowtime = value.IDShowtime;
+                        Hall.HallID = value.HallID;
+                        Hall.Class = value.Class;
+                        Hall.NumSeats = value.NumSeats;
+                        Hall.CinemaID = value.CinemaID;
+                    }
+                });
+            }
+
+            axiosClient
+                .put('/halls/update', Hall, {
+                    headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                })
+                .then((response) => {})
+                .catch((error) => {
+                    // Xử lý lỗi nếu yêu cầu thất bại
+                    console.error(error);
+                });
+            ListSeat.map((value, index) => {
+                let val = {
+                    ID: value.ID,
+                    CheckSeat: 0,
+                    IDHalls: value.HallID,
+                };
+                axiosClient
+                    .put('/Seat/update', val, {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    })
+                    .then((response) => {
+                       
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi nếu yêu cầu thất bại
+                        console.error(error);
+                    });
+            });
+            ListSeatNew.map((value, index) => {
+                let val = {
+                    ID: value.ID,
+                    CheckSeat: 1,
+                    IDHalls: value.HallID,
+                };
+                axiosClient
+                    .put('/Seat/update', val, {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    })
+                    .then((response) => {
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi nếu yêu cầu thất bại
+                        console.error(error);
+                    });
+            });
+            localStorage.removeItem('showtime');
+            localStorage.removeItem('EditShowtime');
+            navigate('/Admin');
+        } catch (error) {
+            console.error(error);
+        }
     };
-    if (ListSeat !== [] && ListMovie !== [] && ListHall !== [] && Showtime !== []) {
+    if (ListMovie && ListHall && ListMovie && Showtime) {
         return (
             <div className={cx('wrapper')}>
                 <Container className={cx('container')}>
@@ -97,31 +217,28 @@ function EditShowtime(props) {
                         validationSchema={schema}
                         onSubmit={console.log}
                         initialValues={{
-                            ShowtimeID: '',
-                            MovieID: '',
-                            HallID: '',
-                            HallNumber: '',
-                            MovieName: '',
-                            ShowtimeDateTime: '',
+                            ShowtimeID: Showtime.ShowtimeID,
+                            MovieID: Showtime.MovieID,
+                            HallID: Showtime.HallID,
+                            HallNumber: Showtime.HallNumber,
+                            MovieName: Showtime.MovieName,
+                            ShowtimeDateTime: Showtime.ShowtimeDateTime,
                             terms: false,
                         }}
                     >
                         {({ handleSubmit, handleChange, values, touched, errors }) => (
                             <Form noValidate onSubmit={handleSubmit}>
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} md="3" controlId="validationFormik03">
+                                    <Form.Group as={Col} md="3">
                                         <Form.Label>Lịch Chiếu</Form.Label>
                                         <Form.Control
+                                            id="ShowtimeDateTime"
                                             size="lg"
                                             type="datetime-local"
-                                            placeholder="Lịch chiếu"
                                             name="ShowtimeDateTime"
-                                            value={
-                                                Showtime.ShowtimeDateTime
-                                                    ? Showtime.ShowtimeDateTime.substring(0, 16)
-                                                    : ''
-                                            }
-                                            onChange={handleChange}
+                                            onChange={(e) => {
+                                                ValueEdit.ShowtimeDateTime = e.target.value + ':00.000Z';
+                                            }}
                                             isInvalid={!!errors.ReleaseYear}
                                         />
 
@@ -131,9 +248,16 @@ function EditShowtime(props) {
                                     </Form.Group>
                                 </Row>
                                 <Row>
-                                    <Form.Group as={Col} md="3" controlId="validationFormik05">
+                                    <Form.Group as={Col} md="3">
                                         <Form.Label>Tên Phim</Form.Label>
-                                        <Form.Select size="lg" name="IDNSX" onChange={handleChange}>
+                                        <Form.Select
+                                            id="MovieName"
+                                            size="lg"
+                                            name="MovieName"
+                                            onChange={(e) => {
+                                                ValueEdit.MovieID = e.target.value;
+                                            }}
+                                        >
                                             <option>{Showtime.MovieName}</option>
                                             {ListMovie.map((value, index) => (
                                                 <option value={value.ID} key={index}>
@@ -142,24 +266,49 @@ function EditShowtime(props) {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col} md="3" controlId="validationFormik04">
+                                    <Form.Group as={Col} md="3">
                                         <Form.Label>Chọn phòng chiếu</Form.Label>
-                                        <Form.Select size="lg" name="IDDirector" onChange={handleChange}>
+                                        <Form.Select
+                                            id="HallID"
+                                            size="lg"
+                                            name="HallID"
+                                            onChange={(e) => {
+                                                ValueEdit.HallNumber = e.target.value;
+                                            }}
+                                        >
                                             <option>{Showtime.HallNumber}</option>
                                             {ListHall.map((value, index) => (
-                                                <option value={value.ID} key={index}>
+                                                <option value={value.HallNumber} key={value.HallID}>
                                                     {value.HallNumber}
                                                 </option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col} md="6" controlId="validationFormik04">
+                                    <Form.Group as={Col} md="6">
                                         <Form.Label>Ghế được đặt</Form.Label>
                                         <Form.Select
                                             size="lg"
                                             name="ListSeat"
                                             onChange={(e) => {
-                                                console.log(e.target.value);
+                                                let checkExist = false;
+                                                if (ListSeatNew) {
+                                                    ListSeatNew.map((seat) => {
+                                                        if (seat.ID == e.target.value) {
+                                                            checkExist = true;
+                                                        }
+                                                    });
+                                                }
+                                                if (checkExist == false) {
+                                                    ListSeat.map((value) => {
+                                                        if (value.ID == e.target.value) {
+                                                            if (ListSeatNew) {
+                                                                setListSeatNew([value, ...ListSeatNew]);
+                                                            } else {
+                                                                setListSeatNew([value]);
+                                                            }
+                                                        }
+                                                    });
+                                                }
                                             }}
                                         >
                                             <option>Chọn Ghế</option>
@@ -169,27 +318,34 @@ function EditShowtime(props) {
                                                 </option>
                                             ))}
                                         </Form.Select>
-                                        {/* <ul>
-                                            {ListSeat ? (
-                                                ListSeat.map((value, index) => {
-                                                    if (value.CheckSeat) {
-                                                        return (
-                                                            <li key={index}>
-                                                                {value.ID}
-                                                                <a
-                                                                    className={cx('btn_delete_actor')}
-                                                                    onClick={() => {}}
-                                                                >
-                                                                    X
-                                                                </a>
-                                                            </li>
-                                                        );
-                                                    }
+                                        <ul>
+                                            {ListSeatNew ? (
+                                                ListSeatNew.map((value, index) => {
+                                                    return (
+                                                        <li key={index} className={cx('seat')}>
+                                                            {value.ID}
+                                                            <button
+                                                                className={cx('btn_delete_actor')}
+                                                                onClick={() => {
+                                                                    const objectIdToRemove = value.ID;
+                                                                    const newListSeat = [];
+                                                                    ListSeatNew.map((item) => {
+                                                                        if (item.ID !== objectIdToRemove) {
+                                                                            newListSeat.push(item);
+                                                                        }
+                                                                    });
+                                                                    setListSeatNew(newListSeat);
+                                                                }}
+                                                            >
+                                                                X
+                                                            </button>
+                                                        </li>
+                                                    );
                                                 })
                                             ) : (
                                                 <p>Ko co ghế nào được đặt</p>
                                             )}
-                                        </ul> */}
+                                        </ul>
                                     </Form.Group>
                                 </Row>
                                 <Form.Group className="mb-3">
@@ -204,7 +360,7 @@ function EditShowtime(props) {
                                         id="validationFormik0"
                                     />
                                 </Form.Group>
-                                <Button className={cx('Submit')} type="submit" size="lg">
+                                <Button className={cx('Submit')} type="submit" size="lg" onClick={() => handleClick()}>
                                     Sửa Phim
                                 </Button>
                             </Form>
@@ -213,10 +369,6 @@ function EditShowtime(props) {
                 </Container>
             </div>
         );
-    } else {
-        localStorage.removeItem('showtime');
-        localStorage.removeItem('EditShowtime');
-        navigate('/');
     }
 }
 

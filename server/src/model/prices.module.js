@@ -1,7 +1,7 @@
 const db = require("../common/connect");
 
 let Prices = function (food) {
-    this.ID = food.ID;
+    this.PriceID = food.ID;
     this.TicketType = food.TicketType;
     this.DayOfWeek = food.DayOfWeek;
     this.Price = food.Price;
@@ -64,7 +64,7 @@ Prices.get_ticket = function (result) {
 };
 
 Prices.create = function (data, result) {
-    db.query("INSERT INTO fooditem SET ?", data, function (err, Prices) {
+    db.query("INSERT INTO price_listing SET ?", data, function (err, Prices) {
         if (err) {
             result(null);
         } else {
@@ -73,18 +73,22 @@ Prices.create = function (data, result) {
     });
 };
 Prices.remove = function (id, result) {
-    db.query("DELETE FROM fooditem WHERE id = ?", id, function (err, Prices) {
-        if (err) {
-            result(null);
-        } else {
-            result("Xoa du lieu fooditem co id " + id + " thanh cong");
-        }
-    });
+    db.query(
+        "DELETE FROM price_listing WHERE id = ?",
+        id,
+        function (err, Prices) {
+            if (err) {
+                result(null);
+            } else {
+                result("Xoa du lieu fooditem co id " + id + " thanh cong");
+            }
+        },
+    );
 };
 Prices.update = function (data, result) {
     db.query(
-        "UPDATE fooditem SET ItemName=?,Price=?,Description=?,AvatarLink=? WHERE ID=?",
-        [data.ItemName, data.Price, data.Description, data.AvatarLink, data.ID],
+        "UPDATE price_listing SET TicketType=?,DayOfWeek=?,Price=? WHERE PriceID=?",
+        [data.TicketType, data.DayOfWeek, data.Price, data.PriceID],
         function (err, Prices) {
             if (err) {
                 result(null);

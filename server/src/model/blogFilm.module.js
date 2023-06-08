@@ -58,7 +58,7 @@ BlogFilm.update = function (data, result) {
             if (err) {
                 result(null);
             } else {
-                result({ id: log.insertID, ...blog });
+                result({ id: blog.insertID, ...blog });
             }
         },
     );

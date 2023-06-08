@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />;
 
@@ -28,15 +28,15 @@ function DangNhap() {
                     const _token = token.substring(1, token.length - 1);
                     await axios
                         .postForm(
-                            'http://localhost:8080/login/check_token',
+                            '/login/check_token',
                             { x: 1 },
                             {
                                 headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                             },
                         )
                         .then((response) => {
-                            setUser(response.data.data.data);
-                            if (response.data.data.data.CheckAdmin !== 0) {
+                            setUser(response.data.data);
+                            if (response.data.data.CheckAdmin !== 0) {
                                 navigate('/Admin');
                             }
                         });
@@ -103,15 +103,15 @@ function DangXuat() {
                     const _token = token.substring(1, token.length - 1);
                     await axios
                         .postForm(
-                            'http://localhost:8080/login/check_token',
+                            '/login/check_token',
                             { x: 1 },
                             {
                                 headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                             },
                         )
                         .then((response) => {
-                            setUser(response.data.data.data);
-                            if (response.data.data.data.CheckAdmin !== 0) {
+                            setUser(response.data.data);
+                            if (response.data.data.CheckAdmin !== 0) {
                                 navigate('/Admin');
                             }
                         });
@@ -139,6 +139,7 @@ function DangXuat() {
 }
 
 function Header() {
+    const navigate = useNavigate();
     return (
         <div className={cx('wrapper')}>
             <div className={cx('headerController')}>
@@ -146,8 +147,11 @@ function Header() {
                     <div className={cx('row')}>
                         <img
                             className={cx('logo-web')}
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLtQRHjRZlYfBxxA73H4WfyIESKEmbK6T1lA&usqp=CAU"
+                            src="https://res.cloudinary.com/dbaul3mwo/image/upload/v1686202031/CinemaReal_vb9wsi.png"
                             alt="Logo"
+                            onClick={() => {
+                                navigate('/');
+                            }}
                         />
                         <div className={cx('search')}>
                             <input

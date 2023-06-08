@@ -43,10 +43,9 @@ exports.removeShowtime = function (req, res) {
         res.send({ result: repon });
     });
 };
-//Chưa sửa
 exports.updateShowtime = function (req, res) {
     var data = req.body;
-    Showtime.update(data, function (repon) {
+    Showtime.Showtime.update(data, function (repon) {
         res.send({ result: repon });
     });
 };

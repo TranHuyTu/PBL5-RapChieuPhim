@@ -29,7 +29,7 @@ exports.removeHalls = function (req, res) {
         res.send({ result: repon });
     });
 };
-//Chưa sửa
+
 exports.updateHalls = function (req, res) {
     var data = req.body;
     Halls.update(data, function (repon) {

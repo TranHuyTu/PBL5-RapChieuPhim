@@ -112,7 +112,6 @@ function AddMovie(props) {
         const month = date.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần +1
         const day = date.getDate();
         const formattedDate = `${year}-${month}-${day}` + 'T17:00:00.000Z';
-        console.log(formattedDate);
         values.ReleaseYear = formattedDate;
 
         if (selectedFile !== null) {

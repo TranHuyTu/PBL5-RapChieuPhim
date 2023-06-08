@@ -6,7 +6,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -43,31 +43,19 @@ function BoxBuyTicket(props) {
     const [activeTN, setActiveTN] = useState('');
     const [activeTR, setActiveTR] = useState('');
     const [Movie, setMovie] = useState([]);
+    const [Showtime, setShowtime] = useState([]);
     const navigate = useNavigate();
     const handleChange1 = (event, newValue) => {
         setValue(newValue);
     };
-    const DeleteRepetition = (Array, val) => {
-        let checkRepetition = false;
-        if (Array) {
-            Array.map((value, index) => {
-                if (value == val) {
-                    checkRepetition = true;
-                }
-            });
-            if (!checkRepetition) {
-                Array.push(val);
-            }
-        } else {
-            Array.push(val);
-        }
-        return Array;
-    };
     useLayoutEffect(() => {
         setDSTimKiem(props.TimKiem);
         try {
-            axios.post('http://localhost:8080/movie').then((response) => {
-                setMovie(response.data.result);
+            axios.post('/movie').then((response) => {
+                setMovie(response.result);
+            });
+            axios.post('/showtime').then((response) => {
+                setShowtime(response.result);
             });
         } catch (error) {
             console.error(error);
@@ -78,13 +66,21 @@ function BoxBuyTicket(props) {
         setTicketDetail({ ...TicketDetail, [name]: value });
         let elementSelect = document.querySelectorAll('select');
         const ListSearchNew = [];
+
         if (name == 'chonphim') {
             props.TimKiem.map((val, index) => {
-                if (val.MovieName == props.TimKiem[value].MovieName) {
+                if (val.MovieID == Movie[value].ID) {
                     ListSearchNew.push(val);
                 }
             });
             setListSearch(ListSearchNew);
+            console.log(ListSearchNew);
+            let ChiTietVe = {
+                IDMovie: Movie[value].ID,
+                IDCinema: '',
+                IDShowtime: '',
+            };
+            localStorage.setItem('ChiTietVe', JSON.stringify(ChiTietVe));
             elementSelect[1].innerHTML = "<option aria-label='None' value='' selected=''></option>";
             ListSearchNew.map((val, index) => {
                 let elementNew = document.createElement('option');
@@ -102,6 +98,10 @@ function BoxBuyTicket(props) {
                 });
             }
             setListSearch(ListSearchNew);
+            let ChiTietVe = JSON.parse(localStorage.getItem('ChiTietVe'));
+            ChiTietVe.IDCinema = ListSearchNew[0].CinemaID;
+            localStorage.setItem('ChiTietVe', JSON.stringify(ChiTietVe));
+            console.log(ListSearchNew);
             elementSelect[2].innerHTML = "<option aria-label='None' value='' selected=''></option>";
             ListSearchNew.map((val, index) => {
                 let elementNew = document.createElement('option');
@@ -124,6 +124,10 @@ function BoxBuyTicket(props) {
                 });
             }
             setListSearch(ListSearchNew);
+            console.log(ListSearchNew);
+            let ChiTietVe = JSON.parse(localStorage.getItem('ChiTietVe'));
+            ChiTietVe.IDShowtime = ListSearchNew[0].ShowtimeID;
+            localStorage.setItem('ChiTietVe', JSON.stringify(ChiTietVe));
             elementSelect[3].innerHTML = "<option aria-label='None' value='' selected=''></option>";
             ListSearchNew.map((val, index) => {
                 let elementNew = document.createElement('option');
@@ -136,48 +140,88 @@ function BoxBuyTicket(props) {
             console.log(TicketDetail);
         }
     };
-    let ListTic = [];
-    let ChiTietVe = {
-        IDMovie: '',
-        IDCinema: '',
-        IDShowtime: '',
+
+    const handleChangeTN = (e) => {
+        const { value, name } = e.target;
+        setTicketDetail({ ...TicketDetail, [name]: value });
+        let elementSelect = document.querySelectorAll('select');
+        const ListSearchNew = [];
+        console.log(props.TimKiem[value].MovieID);
+        let ChiTietVe = {
+            IDMovie: '',
+            IDCinema: '',
+            IDShowtime: '',
+        };
+        ChiTietVe.IDMovie = props.TimKiem[value].MovieID;
+        ChiTietVe.IDCinema = props.TimKiem[value].CinemaID;
+        ChiTietVe.IDShowtime = props.TimKiem[value].ShowtimeID;
+        localStorage.setItem('ChiTietVe', JSON.stringify(ChiTietVe));
+        if (name == 'chonngay') {
+            props.TimKiem.map((val, index) => {
+                if (val.MovieID == props.TimKiem[value].MovieID) {
+                    ListSearchNew.push(val);
+                }
+            });
+            setListSearch(ListSearchNew);
+            elementSelect[5].innerHTML = "<option aria-label='None' value='' selected=''></option>";
+            ListSearchNew.map((val, index) => {
+                let elementNew = document.createElement('option');
+                elementNew.classList.add(cx('sub-option'));
+                elementNew.value = index;
+                elementNew.innerText = val.MovieName;
+                elementSelect[5].appendChild(elementNew);
+            });
+        } else if (name == 'chonphim') {
+            if (ListSearch) {
+                ListSearch.map((val, index) => {
+                    if (val.CinemaID == ListSearch[value].CinemaID) {
+                        ListSearchNew.push(val);
+                    }
+                });
+            }
+            setListSearch(ListSearchNew);
+            elementSelect[6].innerHTML = "<option aria-label='None' value='' selected=''></option>";
+            ListSearchNew.map((val, index) => {
+                let elementNew = document.createElement('option');
+                elementNew.classList.add(cx('sub-option'));
+                elementNew.value = index;
+                elementNew.innerText = val.CinemaName;
+                elementSelect[6].appendChild(elementNew);
+            });
+        } else if (name == 'chonrap') {
+            if (ListSearch) {
+                ListSearch.map((val, index) => {
+                    if (val.CinemaID == ListSearch[value].CinemaID) {
+                        ListSearchNew.push(val);
+                    }
+                });
+            }
+            setListSearch(ListSearchNew);
+            elementSelect[7].innerHTML = "<option aria-label='None' value='' selected=''></option>";
+            ListSearchNew.map((val, index) => {
+                let elementNew = document.createElement('option');
+                elementNew.classList.add(cx('sub-option'));
+                elementNew.value = index;
+                elementNew.innerText = val.Address;
+                elementSelect[7].appendChild(elementNew);
+            });
+        } else {
+            console.log(TicketDetail);
+        }
     };
+
+    let ListTic = [];
+
     const handleBuy = function (Ticket) {
-        console.log(Ticket);
-        let Ve = [];
-
-        ChiTietVe.IDMovie = Movie[Ticket.chonphim].ID;
-
-        props.TimKiem.map((value, index) => {
-            if (ChiTietVe.IDMovie && ChiTietVe.IDMovie === value.MovieID) {
-                Ve.push(value);
-            }
-        });
-        ListTic = Ve;
-        Ve = [];
-        ListTic.map((value, index) => {
-            if (index == Ticket.chonrap) {
-                ChiTietVe.IDCinema = value.CinemaID;
-            }
-            if (ChiTietVe.IDCinema && ChiTietVe.IDCinema == value.CinemaID) {
-                Ve.push(value);
-            }
-        });
-        ListTic = Ve;
-        Ve = [];
-        ListTic.map((value, index) => {
-            if (index == Ticket.chonngay) {
-                ChiTietVe.IDShowtime = value.ShowtimeID;
-            }
-        });
-        console.log(ChiTietVe);
+        const ChiTietVe = JSON.parse(localStorage.getItem('ChiTietVe'));
+        localStorage.removeItem('ChiTietVe');
         if (localStorage.getItem('token-login')) {
             const token = localStorage.getItem('token-login');
             const _token = token.substring(1, token.length - 1);
             try {
                 axios
                     .postForm(
-                        'http://localhost:8080/login/check_token',
+                        '/login/check_token',
                         { x: 1 },
                         {
                             headers: {
@@ -187,30 +231,28 @@ function BoxBuyTicket(props) {
                         },
                     )
                     .then((response) => {
-                        if (response.data.data.data) {
+                        if (response.data.data) {
                             try {
-                                axios
-                                    .post('http://localhost:8080/TrangChu/Movie/' + ChiTietVe.IDMovie)
-                                    .then((response) => {
-                                        if (response.data.result) {
-                                            localStorage.setItem('movie', JSON.stringify(response.data.result[0]));
-                                        }
-                                    });
+                                axios.post('/TrangChu/Movie/' + ChiTietVe.IDMovie).then((response) => {
+                                    if (response.result) {
+                                        console.log('Movie', response.result);
+                                        localStorage.setItem('movie', JSON.stringify(response.result[0]));
+                                    }
+                                });
                                 let ShowtimeDetail = {
                                     ShowtimeID: ChiTietVe.IDShowtime,
                                     CinemaID: ChiTietVe.IDCinema,
                                 };
-                                console.log(ShowtimeDetail);
                                 axios
-                                    .post('http://localhost:8080/showtime/detail', ShowtimeDetail, {
+                                    .post('/showtime/detail', ShowtimeDetail, {
                                         headers: {
                                             'content-type': 'application/x-www-form-urlencoded',
                                         },
                                     })
                                     .then((response) => {
-                                        if (response.data.result) {
-                                            console.log(response.data.result);
-                                            localStorage.setItem('showtime', JSON.stringify(response.data.result[0]));
+                                        if (response.result) {
+                                            console.log(response.result);
+                                            localStorage.setItem('showtime', JSON.stringify(response.result[0]));
                                         }
                                     });
                             } catch (error) {
@@ -230,15 +272,6 @@ function BoxBuyTicket(props) {
                 console.error(error);
             }
         }
-        // else {
-        //     Swal.fire({
-        //         title: 'Error!',
-        //         text: 'Vui lòng đăng nhập để thực hiện bước tiếp theo',
-        //         icon: 'error',
-        //         confirmButtonText: 'OK',
-        //     });
-        //     navigate('../login');
-        // }
     };
     if (DSTimKiem && Movie) {
         return (
@@ -274,17 +307,6 @@ function BoxBuyTicket(props) {
                                         setActiveTN('activeSearch');
                                         setActiveTP('');
                                         setActiveTR('');
-                                    }}
-                                    sx={{ color: 'white', fontSize: '14px' }}
-                                />
-                                <Tab
-                                    className={cx('optionTR')}
-                                    label="Theo Rạp"
-                                    {...a11yProps(2)}
-                                    onClick={() => {
-                                        setActiveTR('activeSearch');
-                                        setActiveTP('');
-                                        setActiveTN('');
                                     }}
                                     sx={{ color: 'white', fontSize: '14px' }}
                                 />
@@ -367,165 +389,78 @@ function BoxBuyTicket(props) {
                         </Box>
                         <Box className={cx('search', activeTN)} sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
+                                <InputLabel sx={{ color: '#333', fontSize: '1.2rem' }} id="demo-simple-select-label">
                                     Chọn Ngày
                                 </InputLabel>
                                 <Select
                                     className={cx('radio-select')}
                                     native
                                     defaultValue=""
-                                    sx={{ background: '#999' }}
+                                    sx={{ background: 'white', fontSize: '1.2rem' }}
                                     id="demo-simple-select"
                                     label="ChonNgay"
+                                    name="chonngay"
+                                    onChange={handleChangeTN}
                                 >
                                     <option aria-label="None" value="" />
                                     {props.TimKiem.map((item, index) => (
                                         <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.ShowtimeDateTime}
+                                            {ConverTime(item.ShowtimeDateTime)[0]}:
+                                            {ConverTime(item.ShowtimeDateTime)[1]}
+                                            {'   '}
+                                            {ConverTime(item.ShowtimeDateTime)[2]}
                                         </option>
                                     ))}
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
-                                    Chọn Rạp
-                                </InputLabel>
-                                <Select
-                                    className={cx('radio-select')}
-                                    native
-                                    defaultValue=""
-                                    sx={{ background: '#999' }}
-                                    id="demo-simple-select"
-                                    label="ChonRap"
-                                >
-                                    <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.CinemaName}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
+                                <InputLabel sx={{ color: '#333', fontSize: '1.2rem' }} id="demo-simple-select-label">
                                     Chọn Phim
                                 </InputLabel>
                                 <Select
                                     className={cx('radio-select')}
                                     native
                                     defaultValue=""
-                                    sx={{ background: '#999' }}
+                                    sx={{ background: 'white', fontSize: '1.2rem' }}
                                     id="demo-simple-select"
                                     label="ChonPhim"
+                                    name="chonphim"
+                                    onChange={handleChangeTN}
                                 >
                                     <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.MovieName}
-                                        </option>
-                                    ))}
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
-                                    Chọn Theo Địa Chỉ
-                                </InputLabel>
-                                <Select
-                                    className={cx('radio-select')}
-                                    native
-                                    defaultValue=""
-                                    sx={{ background: '#999' }}
-                                    id="demo-simple-select"
-                                    label="ChonDiaChi"
-                                >
-                                    <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.Address}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-                        <Box className={cx('search', activeTR)} sx={{ minWidth: 120 }}>
-                            <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
+                                <InputLabel sx={{ color: '#333', fontSize: '1.2rem' }} id="demo-simple-select-label">
                                     Chọn Rạp
                                 </InputLabel>
                                 <Select
                                     className={cx('radio-select')}
                                     native
                                     defaultValue=""
-                                    sx={{ background: '#999' }}
+                                    sx={{ background: 'white', fontSize: '1.2rem' }}
                                     id="demo-simple-select"
                                     label="ChonRap"
+                                    name="chonrap"
+                                    onChange={handleChangeTN}
                                 >
                                     <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.CinemaName}
-                                        </option>
-                                    ))}
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
-                                    Chọn Ngày
-                                </InputLabel>
-                                <Select
-                                    className={cx('radio-select')}
-                                    native
-                                    defaultValue=""
-                                    sx={{ background: '#999' }}
-                                    id="demo-simple-select"
-                                    label="ChonNgay"
-                                >
-                                    <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.ShowtimeDateTime}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
-                                    Chọn Phim
-                                </InputLabel>
-                                <Select
-                                    className={cx('radio-select')}
-                                    native
-                                    defaultValue=""
-                                    sx={{ background: '#999' }}
-                                    id="demo-simple-select"
-                                    label="ChonPhim"
-                                >
-                                    <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.MovieName}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormControl fullWidth>
-                                <InputLabel sx={{ color: 'white' }} id="demo-simple-select-label">
+                                <InputLabel sx={{ color: '#333', fontSize: '1.2rem' }} id="demo-simple-select-label">
                                     Chọn Theo Địa Chỉ
                                 </InputLabel>
                                 <Select
                                     className={cx('radio-select')}
                                     native
                                     defaultValue=""
-                                    sx={{ background: '#999' }}
+                                    sx={{ background: 'white', fontSize: '1.2rem' }}
                                     id="demo-simple-select"
                                     label="ChonDiaChi"
+                                    name="chondiachi"
                                 >
                                     <option aria-label="None" value="" />
-                                    {props.TimKiem.map((item, index) => (
-                                        <option className={cx('sub-option')} key={index} value={index}>
-                                            {item.Address}
-                                        </option>
-                                    ))}
                                 </Select>
                             </FormControl>
                         </Box>

@@ -36,9 +36,16 @@ function TableShowTimeDetail() {
     function ConverTime(DATETIME) {
         let datetime = [];
         if (DATETIME) {
-            let DT = DATETIME.split('T');
-            let time = DT[1].split(':');
-            datetime.push(time[0], time[1], moment(DATETIME).format('DD-MM-YYYY'));
+            const date = new Date(DATETIME);
+
+            // Lấy thông tin ngày và giờ từ đối tượng Date
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1; // Tháng được đếm từ 0, vì vậy cần cộng thêm 1
+            const day = date.getDate();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = date.getSeconds();
+            datetime.push(hours, minutes, day + '-' + month + '-' + year);
         } else {
             datetime = ['01', '90', '20-11-2023'];
         }

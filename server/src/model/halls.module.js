@@ -4,8 +4,9 @@ let Hall = function (hall) {
     this.ID = hall.ID;
     this.Class = hall.Class;
     this.NumSeats = hall.NumSeats;
-    this.IDSeat = hall.IDSeat;
-    this.CheckSeat = this.CheckSeat;
+    this.CinemaID = hall.CinemaID;
+    this.IDShowtime = this.IDShowtime;
+    this.HallNumber = this.HallNumber;
 };
 Hall.get_all = function (result) {
     db.query("SELECT * FROM halls", function (err, hall) {
@@ -63,11 +64,18 @@ Hall.remove = function (id, result) {
         }
     });
 };
-//Chưa sửa
+
 Hall.update = function (data, result) {
     db.query(
-        "UPDATE halls SET Name=?,Country=?,AvatarLink=? WHERE ID=?",
-        [data.Name, data.Country, data.AvatarLink, data.ID],
+        "UPDATE halls SET Class=?,NumSeats=?,CinemaID=?,IDShowtime=?,HallNumber=? WHERE HallID=?",
+        [
+            data.Class,
+            data.NumSeats,
+            data.CinemaID,
+            data.IDShowtime,
+            data.HallNumber,
+            data.HallID,
+        ],
         function (err, hall) {
             if (err) {
                 result(null);

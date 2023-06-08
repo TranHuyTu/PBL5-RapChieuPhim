@@ -10,7 +10,6 @@ import TableSeats from '../TableSeats';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import moment from 'moment';
 const cx = classNames.bind(styles);
 
 function TableCinemaDetail(props) {
@@ -64,7 +63,7 @@ function TableCinemaDetail(props) {
         setCinema(value);
         setEditCinema('0');
     };
-    if (localStorage.getItem('Cinema') && localStorage.getItem('EditCinema')) {
+    if (Cinema && EditCinema) {
         return (
             <div className={cx('')}>
                 <EditCinemaComponent />
@@ -137,17 +136,17 @@ function TableCinemaDetail(props) {
                                         <td>{value[Key[2]]}</td>
                                         <td>{value[Key[3]]}</td>
                                         <td>
-                                            <a className={cx('btn', 'show')} onClick={() => HandlerShow(value)}>
+                                            <button className={cx('btn', 'show')} onClick={() => HandlerShow(value)}>
                                                 Xem
-                                            </a>
+                                            </button>
                                         </td>
                                         <td>
-                                            <a className={cx('btn', 'edit')} onClick={() => HandlerEdit(value)}>
+                                            <button className={cx('btn', 'edit')} onClick={() => HandlerEdit(value)}>
                                                 Sửa
-                                            </a>
+                                            </button>
                                         </td>
                                         <td>
-                                            <a className={cx('btn', 'delete')}>Xóa</a>
+                                            <button className={cx('btn', 'delete')}>Xóa</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -164,7 +163,7 @@ function TableCinema(props) {
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableCinemaDetail />
-                <a className={cx('AddNew')}></a>
+                <button className={cx('AddNew')}></button>
             </Container>
         </div>
     );

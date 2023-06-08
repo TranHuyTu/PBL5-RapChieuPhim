@@ -57,7 +57,7 @@ Promotions.remove = function (id, result) {
 };
 Promotions.update = function (data, result) {
     db.query(
-        "UPDATE actors SET Title=?,Content=?,Start_time=?,End_time=?,AvatarLink=? WHERE ID=?",
+        "UPDATE promotions SET Title=?,Content=?,Start_time=?,End_time=?,AvatarLink=? WHERE ID=?",
         [
             data.Title,
             data.Content,

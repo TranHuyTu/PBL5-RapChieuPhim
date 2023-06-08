@@ -52,9 +52,9 @@ function Controller(props) {
                                             const dateObject = new Date(year, month, day);
                                             if (currentDate > dateObject) {
                                                 numberPlaying.push(index);
-                                                if (numberPlaying.length < 5) {
+                                                if (numberPlaying.length < 7) {
                                                     return (
-                                                        <Col xs={2} sm={2} md={2} lg={2} xl={3} xxl={2} key={index}>
+                                                        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} key={index}>
                                                             <div className={cx('image-hover')}>
                                                                 <img
                                                                     className={cx('item-image')}
@@ -101,9 +101,9 @@ function Controller(props) {
                                             const dateObject = new Date(year, month, day);
                                             if (currentDate < dateObject) {
                                                 numberComing.push(index);
-                                                if (numberComing.length < 5) {
+                                                if (numberComing.length < 7) {
                                                     return (
-                                                        <Col xs={2} sm={2} md={2} lg={2} xl={3} xxl={2} key={index}>
+                                                        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={1} key={index}>
                                                             <div className={cx('image-hover')}>
                                                                 <img
                                                                     className={cx('item-image')}

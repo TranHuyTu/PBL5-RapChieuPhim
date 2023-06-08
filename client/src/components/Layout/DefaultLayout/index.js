@@ -10,7 +10,7 @@ import Promotion from './Promotion';
 import ContentSEO from './ContentSEO';
 import Footer from './Footer';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosClient from '~/api/axiosClient';
 
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,14 +24,14 @@ function DefaultLayout({ chilren }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.post('http://localhost:8080/TrangChu').then((response) => {
-                    setMovies(response.data.result);
+                await axiosClient.post('/TrangChu').then((response) => {
+                    setMovies(response.result);
                 });
-                await axios.post('http://localhost:8080/TrangChu/Search').then((response) => {
-                    setSearch(response.data.result);
+                await axiosClient.post('/TrangChu/Search').then((response) => {
+                    setSearch(response.result);
                 });
-                await axios.post('http://localhost:8080/promotion').then((response) => {
-                    setPromotions(response.data.result);
+                await axiosClient.post('/promotion').then((response) => {
+                    setPromotions(response.result);
                 });
             } catch (error) {
                 console.error(error);

@@ -28,7 +28,7 @@ NSX.create = function (data, result) {
     });
 };
 NSX.remove = function (id, result) {
-    db.query("DELETE FROM actors WHERE id = ?", id, function (err, nsx) {
+    db.query("DELETE FROM nsx WHERE id = ?", id, function (err, nsx) {
         if (err) {
             result(null);
         } else {
@@ -38,7 +38,7 @@ NSX.remove = function (id, result) {
 };
 NSX.update = function (data, result) {
     db.query(
-        "UPDATE actors SET Name=?,QuocGia=?,GioiThieu=?,Logo=? WHERE ID=?",
+        "UPDATE nsx SET Name=?,QuocGia=?,GioiThieu=?,Logo=? WHERE ID=?",
         [data.Name, data.QuocGia, data.GioiThieu, data.Logo, data.ID],
         function (err, nsx) {
             if (err) {

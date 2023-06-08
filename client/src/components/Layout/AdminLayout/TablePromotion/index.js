@@ -4,7 +4,8 @@ import styles from './TablePromotion.module.scss';
 import Container from 'react-bootstrap/Container';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import EditPromotionComponent from '../EditPromotion';
+import axiosClient from '~/api/axiosClient';
 import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 const cx = classNames.bind(styles);
@@ -18,15 +19,15 @@ function TablePromotionDetail(props) {
     const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
     const fetchData = async (API) => {
         try {
-            await axios.post(API).then((response) => {
-                setData(response.data.result);
+            await axiosClient.post(API).then((response) => {
+                setData(response.result);
             });
         } catch (error) {
             console.error(error);
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/promotion');
+        fetchData('/promotion');
         setLabel(['ID', 'Tên Khuyến mãi', 'Ngày bắt đầu', 'Ngày kết thúc', 'Hình ảnh']);
         setKey(['ID', 'Title', 'Start_time', 'End_time', 'AvatarLink']);
     }, []);
@@ -50,6 +51,7 @@ function TablePromotionDetail(props) {
     if (localStorage.getItem('Promotion') && localStorage.getItem('EditPromotion')) {
         return (
             <div className={cx('')}>
+                <EditPromotionComponent />
                 <button
                     className={cx('Cancel')}
                     onClick={() => {

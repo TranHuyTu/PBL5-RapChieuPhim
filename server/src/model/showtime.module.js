@@ -111,16 +111,16 @@ Showtime.remove = function (id, result) {
         },
     );
 };
-//Chưa sửa
+
 Showtime.update = function (data, result) {
     db.query(
-        "UPDATE showtimes SET Name=?,Country=?,AvatarLink=? WHERE ID=?",
-        [data.Name, data.Country, data.AvatarLink, data.ID],
+        "UPDATE showtime SET MovieID=?,ShowtimeDateTime=? WHERE ShowtimeID=?",
+        [data.MovieID, data.ShowtimeDateTime, data.ShowtimeID],
         function (err, showtime) {
             if (err) {
                 result(null);
             } else {
-                result({ id: showtime.insertID, ...data });
+                result(showtime);
             }
         },
     );

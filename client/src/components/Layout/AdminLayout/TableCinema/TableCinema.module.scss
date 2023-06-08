@@ -19,10 +19,12 @@
         opacity: 0.8;
     }
 }
-a.btn{
-    padding: 5px 10px;
+button.btn{
+    display: inline-block;
+    width: 80px;
+    height: 40px;
     color: black;
-    font-weight: 500;
+    font-weight: 900;
     text-decoration: none;
     border-radius: 4px;
     border: 1px solid #999;
@@ -31,13 +33,13 @@ a.btn{
         background-color: white;
     }
 }
-a.show{
+button.show{
     background-color: antiquewhite;
 }
-a.edit{
+button.edit{
     background-color: rgb(24, 132, 221);
 }
-a.delete{
+button.delete{
     background-color: red;
 }
 .thead{
@@ -47,6 +49,7 @@ a.delete{
     z-index: 1;
 }
 .wrapper_detail{
+    position: relative;
     text-align: center;
     padding-top:40px
 }
@@ -70,9 +73,11 @@ a.delete{
     background-color: red;
 }
 .Cancel{
-    margin: 20px auto;
+    position: absolute;
+    top: 12vh;
+    right: 8vh;
     text-align: center;
-    width: 200px;
+    width: 100px;
     height: 40px;
     border-radius: 12px;
 }

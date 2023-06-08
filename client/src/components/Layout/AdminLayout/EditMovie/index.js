@@ -106,9 +106,9 @@ function EditMovie(props) {
         const month = date.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần +1
         const day = date.getDate();
         const formattedDate = `${year}-${month}-${day}` + 'T17:00:00.000Z';
-        console.log(formattedDate);
+
         values.ReleaseYear = formattedDate;
-        console.log('B1');
+
         // Xử lý dữ liệu form
         if (selectedFile != null) {
             console.log('Begi-movie');

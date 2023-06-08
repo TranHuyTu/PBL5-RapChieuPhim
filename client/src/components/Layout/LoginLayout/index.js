@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import Carousel from 'react-bootstrap/Carousel';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import axios from 'axios';
@@ -98,6 +98,19 @@ function LoginLayout({ chilren }) {
             console.error(error);
         }
     };
+    const inputRef1 = useRef(null);
+    const inputRef2 = useRef(null);
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            if (e.target === inputRef1.current) {
+                inputRef2.current.focus();
+            } else if (e.target === inputRef2.current) {
+                e.preventDefault(); // Ngăn chặn việc submit form mặc định
+                Submit();
+            }
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('imgBx')}>
@@ -134,6 +147,8 @@ function LoginLayout({ chilren }) {
                             }
                             setUser(e.target.value);
                         }}
+                        ref={inputRef1}
+                        onKeyPress={handleKeyPress}
                     />
                     <span className={cx('form-message', mess1)}>*Tài khoản ko hợp lệ</span>
                 </div>
@@ -157,6 +172,8 @@ function LoginLayout({ chilren }) {
                             }
                             setPassword(e.target.value);
                         }}
+                        ref={inputRef2}
+                        onKeyPress={handleKeyPress}
                     />
                     <span className={cx('form-message', mess2)}>*Mật khẩu chưa hợp lệ</span>
                 </div>

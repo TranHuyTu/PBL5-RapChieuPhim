@@ -1,0 +1,181 @@
+.wrapper{
+    height: 90vh;
+    .container{
+        height: 100%;
+        overflow-y: auto;
+    }
+}
+img.avatar{
+    width: 80px;
+}
+.AddNew{
+    position: fixed;
+    bottom: 38px;
+    right: 38px;
+    padding: 32px 32px;
+    background-image: url('https://res.cloudinary.com/dbaul3mwo/image/upload/v1685210364/learn_nodejs/images_tdcl21.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 999px;
+    &:hover{
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}
+a.btn{
+    padding: 5px 10px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #999;
+    &:hover{
+        color: black;
+        background-color: white;
+    }
+}
+a.show{
+    background-color: antiquewhite;
+}
+a.edit{
+    background-color: rgb(24, 132, 221);
+}
+a.delete{
+    background-color: red;
+}
+.thead{
+    position: sticky;
+    top: -1px;
+    background-color: #f8f8f8;
+    z-index: 1;
+}
+.wrapper_detail{
+    text-align: center;
+    padding-top:10px;
+    text-align: center;
+    background-image: url('https://res.cloudinary.com/dbaul3mwo/image/upload/v1686124381/learn_nodejs/hinh-nen-Powerpoint-34_zuwax8.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.main{
+    display: flex;
+}
+.Cancel{
+    margin: 20px auto;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+}
+.Avatar{
+    display: block;
+    margin: 20px auto;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 999px;
+}
+.row{
+    margin: 5px auto;
+}
+.form_profile{
+    width: 400px;
+    height: 500px;
+    margin-left: 100px;
+}
+.label-title{
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: rgb(229, 39, 39);
+    font-family: cursive;
+}
+.value{
+    margin: 0 5px;
+    color: rgb(21, 17, 17);
+}
+.title{
+    font-size: 4rem;
+    text-align: center;
+    line-height: 1.6;
+    font-weight: 600;
+    font-family: cursive;
+}
+.table-row{
+    position: relative;
+    width: 50%;
+    .bill-detail{
+        display: none;
+        position: absolute;
+        top: 0vh;
+        left: 3vh;
+        width: 600px;
+        background-color: #444;
+        background-image: url();
+        .bill_title{
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.6;
+            font-weight: 500;
+            font-family: cursive;
+        }
+        .bill_date{
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.6;
+            font-weight: 500;
+            font-family: cursive;
+        }
+        .cancel{
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            cursor: pointer;
+        }
+    }
+    .check_detail{
+        display: block;
+    }
+}
+.ticket_detail{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    .ticket_value{
+        width: 25%;
+        color: white;
+        margin: 0 10px;
+        text-align: center;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+}
+.food_detail{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    .food_value{
+        color: white;
+        width: 25%;
+        margin: 0 10px;
+        text-align: center;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+    .food_img{
+        width: 40px;
+        height: 40px;
+    }
+}
+.history{
+    width: 100%;
+}

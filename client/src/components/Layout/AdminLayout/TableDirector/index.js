@@ -83,7 +83,6 @@ function TableDirectorDetail(props) {
         );
     } else {
         if (data && Label && Key) {
-            console.log(data);
             return (
                 <div className={cx('wrapper')}>
                     <Container className={cx('container')}>

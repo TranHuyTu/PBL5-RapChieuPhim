@@ -25,7 +25,6 @@ function TableSeats(props) {
                     )
                     .then((response) => {
                         setShowtime(response.data.result);
-                        console.log(response.data.result);
                     });
                 await axios
                     .post(
@@ -38,17 +37,12 @@ function TableSeats(props) {
                     .then((response) => {
                         setSeats(response.data.result);
                     });
-
-                // await axios.post('http://localhost:8080/showtime/' + props.data.IDShowtime).then((response) => {
-                //     setShowtime(response.data.result);
-                //     console.log(response.data.result);
-                // });
             } catch (error) {
                 console.error(error);
             }
         };
         fetchData();
-    }, []);
+    }, [props.data.IDShowtime, props.data.HallID]);
     function ConverTime(DATETIME) {
         let datetime = [];
         if (DATETIME) {
@@ -73,15 +67,15 @@ function TableSeats(props) {
                 {Seats.map((value, index) => {
                     if (value.CheckSeat) {
                         return (
-                            <a className={cx('seats', 'Check')} key={index}>
+                            <button className={cx('seats', 'Check')} key={index}>
                                 {value.ID}
-                            </a>
+                            </button>
                         );
                     } else {
                         return (
-                            <a className={cx('seats')} key={index}>
+                            <button className={cx('seats')} key={index}>
                                 {value.ID}
-                            </a>
+                            </button>
                         );
                     }
                 })}

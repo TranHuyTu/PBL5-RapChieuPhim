@@ -7,6 +7,8 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Chart from '../Chart';
+import ChartLine from '../ChartLine';
+import ChartPie from '../ChartPie';
 import TableDetail from '../TableDetail';
 import TableShowTime from '../TableShowTime';
 import TableCinema from '../TableCinema';
@@ -16,6 +18,7 @@ import TableFood from '../TableFood';
 import TableTicket from '../TableTicket';
 import TablePromotion from '../TablePromotion';
 import TableBlog from '../TableBlog';
+import TableClient from '../TableClient';
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -50,12 +53,26 @@ function Controller() {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link className={cx('Controller-Title')} eventKey="daodien">
+                                    <Nav.Link
+                                        className={cx('Controller-Title')}
+                                        eventKey="daodien"
+                                        onClick={() => {
+                                            if (localStorage.getItem('Actor')) {
+                                                localStorage.removeItem('Actor');
+                                            }
+                                        }}
+                                    >
                                         Đạo Diễn
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link className={cx('Controller-Title')} eventKey="dienvien">
+                                    <Nav.Link
+                                        className={cx('Controller-Title')}
+                                        eventKey="dienvien"
+                                        onClick={() => {
+                                            localStorage.setItem('Actor', '0');
+                                        }}
+                                    >
                                         Diễn Viên
                                     </Nav.Link>
                                 </Nav.Item>
@@ -85,6 +102,11 @@ function Controller() {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
+                                    <Nav.Link className={cx('Controller-Title')} eventKey="ClientDetail">
+                                        Thông tin khách hàng
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
                                     <Nav.Link className={cx('Controller-Title')} eventKey="TKDT">
                                         Thống kê doanh thu
                                     </Nav.Link>
@@ -102,7 +124,7 @@ function Controller() {
                                     <Container className={cx('container')}>
                                         <Row>
                                             <Col>
-                                                <Chart />
+                                                <ChartLine />
                                             </Col>
                                             <Col>
                                                 <Chart />
@@ -145,6 +167,9 @@ function Controller() {
                                     <Container className={cx('container')}>
                                         <Row>
                                             <TableDirector TypeActor={'Actor'} />
+                                            {() => {
+                                                localStorage.setItem('Actor', '0');
+                                            }}
                                         </Row>
                                     </Container>
                                 </Tab.Pane>
@@ -178,6 +203,9 @@ function Controller() {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="blog">
                                     <TableBlog />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="ClientDetail">
+                                    <TableClient />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="TKDT">Second tab content</Tab.Pane>
                                 <Tab.Pane eventKey="TKND">Second tab content</Tab.Pane>

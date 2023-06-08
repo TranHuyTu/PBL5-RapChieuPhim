@@ -13,20 +13,21 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosClient from '~/api/axiosClient';
 
 const cx = classNames.bind(styles);
 
 function EditFood(props) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewImage, setPreviewImage] = useState('');
+    const [Food, setFood] = useState('');
 
     const navigate = useNavigate();
     const fetchData = async (API, setAPI) => {
         try {
             const token = localStorage.getItem('token-login');
             const _token = token.substring(1, token.length - 1);
-            await axios
+            await axiosClient
                 .post(
                     API,
                     { x: 1 },
@@ -43,32 +44,106 @@ function EditFood(props) {
     };
     useEffect(() => {
         setPreviewImage(JSON.parse(localStorage.getItem('Food')).AvatarLink);
+        setFood(JSON.parse(localStorage.getItem('Food')));
     }, []);
 
     const { Formik } = formik;
 
     const schema = yup.object().shape({
         ID: yup.string().required(),
-        AvatarLink: yup.string().required(),
         Description: yup.string().required(),
         ItemName: yup.string().required(),
         Price: yup.string().required(),
         terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
     });
     const handleSubmit = async (values, actions) => {
+        if (selectedFile != null) {
+            try {
+                if (Food.AvatarLink != '') {
+                    let Url = Food.AvatarLink.split('learn_nodejs/')[1];
+                    const UrlDelete = { imageUrl: 'learn_nodejs/' + Url.split('.')[0] };
+                    await axiosClient
+                        .post('/pathImg', UrlDelete, {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                        })
+                        .then((response) => {
+                            console.log(response);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                    await axiosClient
+                        .post(
+                            '/upload',
+                            { image: selectedFile },
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                            },
+                        )
+                        .then((response) => {
+                            setPreviewImage(response);
+                            values['AvatarLink'] = response;
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                } else {
+                    await axiosClient
+                        .post(
+                            '/upload',
+                            { image: selectedFile },
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                            },
+                        )
+                        .then((response) => {
+                            setPreviewImage(response);
+                            values['AvatarLink'] = response;
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            values['AvatarLink'] = Food.AvatarLink;
+        }
         console.log(values);
+        const token = localStorage.getItem('token-login');
+        const _token = token.substring(1, token.length - 1);
+        await axiosClient
+            .put('/foods/update', values, {
+                headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+            })
+            .then((response) => {
+                console.log('Update Success');
+            })
+            .catch((error) => {
+                // Xử lý lỗi nếu yêu cầu thất bại
+                console.error(error);
+            });
         // Xử lý dữ liệu form
         // Gửi dữ liệu đến server
         // ...
         // Reset form sau khi submit
         actions.resetForm();
+        localStorage.removeItem('Food');
+        localStorage.removeItem('EditFood');
+        navigate('/');
     };
     const onChangeFile = function (e) {
         const file = e.target.files[0];
         setSelectedFile(file);
         setPreviewImage(URL.createObjectURL(file));
     };
-    let Food = JSON.parse(localStorage.getItem('Food'));
     if (Food) {
         return (
             <div className={cx('wrapper')}>
@@ -76,9 +151,8 @@ function EditFood(props) {
                     <h1 className={cx('title')}>Sửa thông tin</h1>
                     <Formik
                         validationSchema={schema}
-                        onSubmit={console.log}
+                        onSubmit={handleSubmit}
                         initialValues={{
-                            AvatarLink: Food.ItemName,
                             Description: Food.Description,
                             ID: Food.ID,
                             ItemName: Food.ItemName,
@@ -150,11 +224,7 @@ function EditFood(props) {
                                             required
                                             name="AvatarLink"
                                             onChange={(e) => onChangeFile(e)}
-                                            isInvalid={!!errors.AvatarLink}
                                         />
-                                        <Form.Control.Feedback type="invalid" tooltip>
-                                            {errors.AvatarLink}
-                                        </Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group className={cx('position-relative')}>
                                         <img className={cx('Avatar')} src={previewImage} alt={values.Name} />
@@ -181,10 +251,6 @@ function EditFood(props) {
                 </Container>
             </div>
         );
-    } else {
-        localStorage.removeItem('Food');
-        localStorage.removeItem('EditFood');
-        navigate('/');
     }
 }
 

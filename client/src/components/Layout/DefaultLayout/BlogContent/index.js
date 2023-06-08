@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames/bind';
 import styles from './BlogContent.module.scss';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 
 const cx = classNames.bind(styles);
 
@@ -12,11 +12,11 @@ function BlogContent(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.post('http://localhost:8080/BlogMovie').then((response) => {
-                    setBlogMovie(response.data.result);
+                await axios.post('/BlogMovie').then((response) => {
+                    setBlogMovie(response.result);
                 });
-                await axios.post('http://localhost:8080/Blog').then((response) => {
-                    setBlog(response.data.result);
+                await axios.post('/Blog').then((response) => {
+                    setBlog(response.result);
                 });
             } catch (error) {
                 console.error(error);

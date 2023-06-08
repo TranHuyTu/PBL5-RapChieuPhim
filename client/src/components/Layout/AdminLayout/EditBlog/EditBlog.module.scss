@@ -57,14 +57,33 @@
     font-weight: 900;
     font-family: cursive;
 }
-.seat{
+.position-relative{
+    position: relative;
+}
+.Avatar{
+    width: 100px;
+    border-radius: 20px;
+}
+.custom-file-input{
+    position: absolute;
+    top: 0px;
+    left: 120px;
+    width:28px;
+    height:28px;
+    border-radius: 8px;
+    z-index: 1;
+}
+.custom-file-input::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     display: inline-block;
-    list-style: none;
-    padding: 4px 5px;
-    font-size: 1.4rem;
-    font-weight: 500;
-    line-height: 1.6;
-    color: white;
-    margin: 5px;
-    background-color: rgb(163, 45, 45);
+    background-image: url("https://res.cloudinary.com/dbaul3mwo/image/upload/v1685651387/learn_nodejs/download_1_fyboiz.jpg");
+    background-size: 28px 28px;
+    background-color: #AAA;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
 }

@@ -19,7 +19,7 @@ exports.removeNSX = async function (req, res) {
 };
 exports.updateNSX = async function (req, res) {
     var data = req.body;
-    await Actor.update(data, function (repon) {
+    await NSX.update(data, function (repon) {
         res.send({ result: repon });
     });
 };

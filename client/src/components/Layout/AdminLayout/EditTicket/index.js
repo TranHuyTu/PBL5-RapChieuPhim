@@ -13,32 +13,16 @@ import * as yup from 'yup';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosClient from '~/api/axiosClient';
 
 const cx = classNames.bind(styles);
 
 function EditTicket(props) {
     const navigate = useNavigate();
-    const fetchData = async (API, setAPI) => {
-        try {
-            const token = localStorage.getItem('token-login');
-            const _token = token.substring(1, token.length - 1);
-            await axios
-                .post(
-                    API,
-                    { x: 1 },
-                    {
-                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
-                    },
-                )
-                .then((response) => {
-                    setAPI(response.data.result);
-                });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    useEffect(() => {}, []);
+    const [Ticket, setTicket] = useState('');
+    useEffect(() => {
+        setTicket(JSON.parse(localStorage.getItem('Ticket')));
+    }, []);
 
     const { Formik } = formik;
 
@@ -50,14 +34,30 @@ function EditTicket(props) {
         terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
     });
     const handleSubmit = async (values, actions) => {
+        const token = localStorage.getItem('token-login');
+        const _token = token.substring(1, token.length - 1);
+        await axiosClient
+            .put('/price/update', values, {
+                headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+            })
+            .then((response) => {
+                console.log('Update Success');
+            })
+            .catch((error) => {
+                // Xử lý lỗi nếu yêu cầu thất bại
+                console.error(error);
+            });
         console.log(values);
         // Xử lý dữ liệu form
         // Gửi dữ liệu đến server
         // ...
         // Reset form sau khi submit
         actions.resetForm();
+        localStorage.removeItem('Ticket');
+        localStorage.removeItem('EditTicket');
+        navigate('/');
     };
-    let Ticket = JSON.parse(localStorage.getItem('Ticket'));
+
     if (Ticket) {
         return (
             <div className={cx('wrapper')}>
@@ -65,7 +65,7 @@ function EditTicket(props) {
                     <h1 className={cx('title')}>Sửa thông tin</h1>
                     <Formik
                         validationSchema={schema}
-                        onSubmit={console.log}
+                        onSubmit={handleSubmit}
                         initialValues={{
                             DayOfWeek: Ticket.DayOfWeek,
                             Price: Ticket.Price,
@@ -152,10 +152,6 @@ function EditTicket(props) {
                 </Container>
             </div>
         );
-    } else {
-        localStorage.removeItem('Ticket');
-        localStorage.removeItem('EditTicket');
-        navigate('/');
     }
 }
 
