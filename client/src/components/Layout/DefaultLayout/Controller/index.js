@@ -148,27 +148,57 @@ function Controller(props) {
                     <div className={cx('sub-menu-wrapper')}>
                         <List sx={{}} component="nav" aria-label="mailbox folders">
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="./DienAnh">
+                                <a
+                                    className={cx('sub-menu-item')}
+                                    href="./DienAnh"
+                                    onClick={() => {
+                                        localStorage.setItem('Blog', '1');
+                                    }}
+                                >
                                     THỂ LOẠI PHIM
                                 </a>
                             </ListItem>
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="./DienVien">
+                                <a
+                                    className={cx('sub-menu-item')}
+                                    href="./DienVien"
+                                    onClick={() => {
+                                        localStorage.setItem('Blog', '2');
+                                    }}
+                                >
                                     DIỄN VIÊN
                                 </a>
                             </ListItem>
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="./DaoDien">
+                                <a
+                                    className={cx('sub-menu-item')}
+                                    href="./DaoDien"
+                                    onClick={() => {
+                                        localStorage.setItem('Blog', '3');
+                                    }}
+                                >
                                     ĐẠO DIỄN
                                 </a>
                             </ListItem>
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="./BinhLuanPhim">
+                                <a
+                                    className={cx('sub-menu-item')}
+                                    href="./BinhLuanPhim"
+                                    onClick={() => {
+                                        localStorage.setItem('Blog', '4');
+                                    }}
+                                >
                                     BÌNH LUẬN PHIM
                                 </a>
                             </ListItem>
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="./MovieBlog">
+                                <a
+                                    className={cx('sub-menu-item')}
+                                    href="./MovieBlog"
+                                    onClick={() => {
+                                        localStorage.setItem('Blog', '5');
+                                    }}
+                                >
                                     BLOG ĐIỆN ẢNH
                                 </a>
                             </ListItem>
@@ -184,12 +214,18 @@ function Controller(props) {
                     <div className={cx('sub-menu-wrapper')}>
                         <List sx={{}} component="nav" aria-label="mailbox folders">
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="">
+                                <a className={cx('sub-menu-item')} href="/Endow">
                                     ƯU ĐÃI
                                 </a>
                             </ListItem>
                             <ListItem className={cx('sub-menu-hover')}>
-                                <a className={cx('sub-menu-item')} href="">
+                                <a
+                                    className={cx('sub-menu-item')}
+                                    href="./MovieBlog"
+                                    onClick={() => {
+                                        localStorage.setItem('Blog', '0');
+                                    }}
+                                >
                                     PHIM HAY THÁNG
                                 </a>
                             </ListItem>

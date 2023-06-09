@@ -64,7 +64,7 @@
 }
 .desc{
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -86,4 +86,17 @@ a.title_content{
     font-weight: 500;
     line-height: 1.6;
     text-decoration: none;
+}
+.btn-z{
+    border-radius: 3px;
+    font-size: 11px;
+    width: 100px;
+    height: 24px;
+    padding: 0 6px;
+    margin: 0 20px 0 0;
+}
+.like{
+    background-color: #4267b2;
+    border: 0;
+    color: white;
 }

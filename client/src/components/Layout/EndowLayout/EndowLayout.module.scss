@@ -1,0 +1,12 @@
+div.content{
+    display: flex;
+    margin-top: 80px;
+    div.content-left{
+        width: 900px;
+        margin: 0 52px;
+    }
+    div.content-right{
+        width: 400px;
+        margin-left: 20px;
+    }
+}

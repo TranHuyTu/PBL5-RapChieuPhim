@@ -4,4 +4,5 @@ module.exports = function (router) {
     router.post("/Blog/add", BlogController.addBlog);
     router.delete("/Blog/remove/:id", BlogController.removeBlog);
     router.put("/Blog/update", BlogController.updateBlog);
+    router.put("/Blog/update/like", BlogController.updateBlogLike);
 };

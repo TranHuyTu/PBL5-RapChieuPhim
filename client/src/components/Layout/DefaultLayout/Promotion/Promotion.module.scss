@@ -85,3 +85,39 @@ a{
 .btn_detail:hover{
   background: #f26b38;
 }
+.image-promption{
+  position: relative;
+  width: 220px;
+  margin: 20px 10px;
+}
+.col_img_promption:hover .img_hover_promotion{
+  display: flex;
+}
+.img_hover_promotion{
+  display: none;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+  left: 18px;
+  width: 220px;
+  height: 330px;
+  z-index: 1;
+  background-color: #444;
+  opacity: 0.8;
+}
+.image{
+  width: 100%;
+}
+.btn_promotion{
+  position: absolute;
+    color: white;
+    font-weight: 500;
+    bottom: 24px;
+    left: 50px;
+    padding: 8px 20px;
+    border: 1px solid white;
+    text-decoration: none;
+    &:hover{
+      color: black;
+    }
+}

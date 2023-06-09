@@ -70,7 +70,9 @@ function ReviewSelect({ chilren }) {
                         onChange={handle[index]}
                         key={index}
                     >
-                        <option value={value.name}>{value.name}</option>
+                        <option className={cx('option')} value={value.name}>
+                            {value.name}
+                        </option>
                         {value.option.map((value, index) => (
                             <option value={value} key={index}>
                                 {value}

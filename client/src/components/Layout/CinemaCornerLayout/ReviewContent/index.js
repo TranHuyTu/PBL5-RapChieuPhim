@@ -1,87 +1,178 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
 import styles from './ReviewSelect.module.scss';
-
-import { useState } from 'react';
-
+import Container from 'react-bootstrap/Container';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Pagination from 'react-bootstrap/Pagination';
+import { useState, useEffect } from 'react';
+import axios from '~/api/axiosClient';
 const cx = classNames.bind(styles);
 
-const SelectOption = [
-    {
-        name: 'Thể Loại',
-        option: ['Phim Hài', ' Phim khoa học viễn tưởng', 'Phim kinh dị', 'Phim Viễn Tây', 'Phim Chiến tranh'],
-    },
-    {
-        name: 'Quốc Gia',
-        option: ['Anh', 'Pháp', 'Đức', 'Mỹ', 'Việt Nam'],
-    },
-    {
-        name: 'Năm',
-        option: ['2023', ' 2022', '2021', '2020', '2019'],
-    },
-    {
-        name: 'Đang Chiếu/Sắp Chiếu',
-        option: ['Đang Chiếu', 'Sắp Chiếu'],
-    },
-    {
-        name: 'Mới Nhất',
-        option: ['Xem Nhiều Nhất', 'Đánh Giá Tốt Nhất'],
-    },
-];
-
-function ReviewSelect({ chilren }) {
-    const [selectedOption, setSelectedOption] = useState('Thể Loại');
-    const [selectedOption1, setSelectedOption1] = useState('Quốc Gia');
-    const [selectedOption2, setSelectedOption2] = useState('Năm');
-    const [selectedOption3, setSelectedOption3] = useState('Đang Chiếu/Sắp Chiếu');
-    const [selectedOption4, setSelectedOption4] = useState('Mới Nhất');
-
-    const select = [selectedOption, selectedOption1, selectedOption2, selectedOption3, selectedOption4];
-
-    const handle = [
-        function handleChange(event) {
-            setSelectedOption(event.target.value);
-            console.log(event.target.value);
-        },
-        function handleChange1(event) {
-            setSelectedOption1(event.target.value);
-            console.log(event.target.value);
-        },
-        function handleChange2(event) {
-            setSelectedOption2(event.target.value);
-            console.log(event.target.value);
-        },
-        function handleChange3(event) {
-            setSelectedOption3(event.target.value);
-            console.log(event.target.value);
-        },
-        function handleChange4(event) {
-            setSelectedOption4(event.target.value);
-            console.log(event.target.value);
-        },
-    ];
+function ListBlog(props) {
+    const [active, setActive] = useState(1);
+    const [like, setLike] = useState([]);
+    const [follow, setFollow] = useState([]);
+    let num = 0;
+    let data = [];
+    props.data.map((value, index) => {
+        if (value.Type == props.index) {
+            data.push(value);
+            num++;
+        }
+    });
+    let items = [];
+    for (let number = 1; number <= num / 7 + 1; number++) {
+        items.push(
+            <Pagination.Item
+                key={number}
+                active={number === active}
+                onClick={() => {
+                    setActive(number);
+                }}
+            >
+                {number}
+            </Pagination.Item>,
+        );
+    }
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('wrapper-select')}>
-                {SelectOption.map((value, index) => (
-                    <select
-                        className={cx('select-option', 'input')}
-                        value={select[index]}
-                        onChange={handle[index]}
-                        key={index}
-                    >
-                        <option value={value.name}>{value.name}</option>
-                        {value.option.map((value, index) => (
-                            <option value={value} key={index}>
-                                {value}
-                            </option>
-                        ))}
-                    </select>
-                ))}
-            </div>
-            <h1>Thông tin</h1>
+            <Container fluid="xxl">
+                <h1 className={cx('title')}>PHIM HAY THÁNG</h1>
+                {data.map((value, index) => {
+                    if ((active - 1) * 7 <= index && active * 7 > index) {
+                        let numLike = value.Like;
+                        let numFollow = value.Follow;
+                        if (like.includes(value)) {
+                            numLike = numLike + 1;
+                        }
+                        if (follow.includes(value)) {
+                            numFollow = numFollow + 1;
+                        }
+                        const ValueUpdate = {
+                            Title: value.Title,
+                            Content: value.Content,
+                            Image: value.Image,
+                            Type: value.Type,
+                            Like: numLike,
+                            Follow: numFollow,
+                            ID: value.ID,
+                        };
+                        try {
+                            axios.put('/Blog/update', ValueUpdate).then((response) => {
+                                console.log(response.result);
+                            });
+                        } catch (error) {
+                            console.error(error);
+                        }
+                        return (
+                            <div className={cx('blog-wrapper')} key={index}>
+                                <a href="" className={cx('a-image')}>
+                                    <img className={cx('blog-image')} src={value.Image} alt={value.ID} />
+                                </a>
+                                <div className={cx('hover')}></div>
+                                <div className={cx('blog_content')}>
+                                    <h2 className={cx('blog_title')}>
+                                        <a
+                                            href="./Blog"
+                                            className={cx('link-image')}
+                                            onClick={() => {
+                                                localStorage.setItem('blog', JSON.stringify(value));
+                                            }}
+                                        >
+                                            {value.Title}
+                                        </a>
+                                    </h2>
+                                    <div className={cx('blog-like')}>
+                                        <button
+                                            className={cx('btn', 'like')}
+                                            onClick={() => {
+                                                if (like == []) {
+                                                    setLike(value);
+                                                } else {
+                                                    if (like.includes(value)) {
+                                                        let listLike = [];
+                                                        like.map((val, ind) => {
+                                                            if (val.ID != value.ID) {
+                                                                listLike.push(val);
+                                                            }
+                                                        });
+                                                        setLike(listLike);
+                                                    } else {
+                                                        setLike([value, ...like]);
+                                                    }
+                                                }
+                                            }}
+                                        >
+                                            <ThumbUpAltIcon />
+                                            Like {numLike}
+                                        </button>
+                                        <button
+                                            className={cx('btn')}
+                                            onClick={() => {
+                                                if (follow == []) {
+                                                    setFollow(value);
+                                                } else {
+                                                    if (follow.includes(value)) {
+                                                        let listfollow = [];
+                                                        follow.map((val, ind) => {
+                                                            if (val.ID != value.ID) {
+                                                                listfollow.push(val);
+                                                            }
+                                                        });
+                                                        setFollow(listfollow);
+                                                    } else {
+                                                        setFollow([value, ...follow]);
+                                                    }
+                                                }
+                                            }}
+                                        >
+                                            <RemoveRedEyeIcon />
+                                            Follow {numFollow}
+                                        </button>
+                                    </div>
+                                    <p className={cx('content')}>{value.Content}</p>
+                                </div>
+                            </div>
+                        );
+                    }
+                })}
+                <div className={cx('next-page')}>
+                    <Pagination size="lg">{items}</Pagination>
+                </div>
+            </Container>
         </div>
     );
+}
+function ReviewSelect() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await axios.post('/Blog').then((response) => {
+                    setData(response.result);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
+    if (data) {
+        if (JSON.parse(localStorage.getItem('Blog')) === 0) {
+            return <ListBlog data={data} index={1} />;
+        } else if (JSON.parse(localStorage.getItem('Blog')) === 1) {
+            return <ListBlog data={data} index={0} />;
+        } else if (JSON.parse(localStorage.getItem('Blog')) === 1) {
+            return <ListBlog data={data} index={2} />;
+        } else if (JSON.parse(localStorage.getItem('Blog')) === 1) {
+            return <ListBlog data={data} index={3} />;
+        } else if (JSON.parse(localStorage.getItem('Blog')) === 1) {
+            return <ListBlog data={data} index={4} />;
+        } else {
+            return <ListBlog data={data} index={5} />;
+        }
+    }
 }
 
 export default ReviewSelect;

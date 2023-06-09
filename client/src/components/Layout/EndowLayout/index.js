@@ -1,21 +1,20 @@
 import * as React from 'react';
 import classNames from 'classnames/bind';
-import styles from './CinemaCornerLayout.module.scss';
+import styles from './EndowLayout.module.scss';
 
 import Header from '~/components/Layout/DefaultLayout/Header';
 import Controller from '~/components/Layout/DefaultLayout/Controller';
 import Footer from '~/components/Layout/DefaultLayout/Footer';
 import BoxBuyTicket from '~/components/Layout/DefaultLayout/BoxBuyTicket';
+import Promotion from '~/components/Layout/DefaultLayout/Promotion';
 import MoviePlaying from '~/components/Layout/DatVeLayout/MoviePlaying';
-import ReviewSelect from './ReviewSelect';
-import ReviewContent from './ReviewContent';
 import { useState, useEffect } from 'react';
 import axiosClient from '~/api/axiosClient';
 import Container from 'react-bootstrap/Container';
 
 const cx = classNames.bind(styles);
 
-function CinemaCornerLayout({ chilren }) {
+function EndowLayout({ chilren }) {
     const [movies, setMovies] = useState([]);
     const [search, setSearch] = useState([]);
 
@@ -39,8 +38,7 @@ function CinemaCornerLayout({ chilren }) {
         <Controller movies={movies} />,
         <div className={cx('content')}>
             <div className={cx('content-left')}>
-                <ReviewSelect />
-                <ReviewContent />
+                <Promotion />
             </div>
             <div className={cx('content-right')}>
                 <BoxBuyTicket TimKiem={search} />,
@@ -64,4 +62,4 @@ function CinemaCornerLayout({ chilren }) {
     );
 }
 
-export default CinemaCornerLayout;
+export default EndowLayout;

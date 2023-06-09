@@ -29,13 +29,16 @@ function PromotionMain(props) {
                     <h1>{Promotion.Title}</h1>
                     <div>
                         <h3>
-                            {ConverTime(Promotion.Start_time)[0]} : {ConverTime(Promotion.Start_time)[1]} *
+                            {ConverTime(Promotion.Start_time)[0]} : {ConverTime(Promotion.Start_time)[1]}
+                            {' * '}
                             {ConverTime(Promotion.Start_time)[2]} Đến {ConverTime(Promotion.End_time)[0]} :
-                            {ConverTime(Promotion.End_time)[1]} *{ConverTime(Promotion.End_time)[2]}
+                            {ConverTime(Promotion.End_time)[1]} * {ConverTime(Promotion.End_time)[2]}
                         </h3>
                     </div>
-                    <img className={cx('img-movie')} src={Promotion.AvatarLink} alt={Promotion.AvatarLink} />
-                    <p>{Promotion.Content}</p>
+                    <div className={cx('content_main')}>
+                        <img className={cx('img-movie')} src={Promotion.AvatarLink} alt={Promotion.AvatarLink} />
+                        <p className={cx('derc')}>{Promotion.Content}</p>
+                    </div>
                 </Container>
             </div>
         );

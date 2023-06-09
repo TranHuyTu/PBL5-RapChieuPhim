@@ -23,3 +23,9 @@ exports.updateBlog = function (req, res) {
         res.send({ result: repon });
     });
 };
+exports.updateBlogLike = function (req, res) {
+    var data = req.body;
+    BlogFilm.updateLike(data, function (repon) {
+        res.send({ result: repon });
+    });
+};

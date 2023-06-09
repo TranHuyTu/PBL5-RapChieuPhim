@@ -35,7 +35,7 @@ function MoviePlaying(props) {
                             numberPlaying.push(index);
                             if (numberPlaying.length < 4) {
                                 return (
-                                    <Col xs={2} sm={2} md={2} lg={2} xl={10} xxl={2}>
+                                    <Col xs={2} sm={2} md={2} lg={2} xl={10} xxl={2} key={index}>
                                         <div className={cx('image-hover')}>
                                             <img
                                                 className={cx('item-image')}

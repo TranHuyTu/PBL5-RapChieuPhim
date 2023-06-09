@@ -11,6 +11,7 @@ let Movie = function (movie) {
     this.IDRevew = movie.IDRevew;
     this.IDNSX = movie.IDNSX;
     this.AvatarMovie = movie.AvatarMovie;
+    this.Like = movie.Like;
 };
 
 Movie.get_all = function (result) {
@@ -43,7 +44,7 @@ Movie.remove = function (id, result) {
 };
 Movie.update = function (data, result) {
     db.query(
-        "UPDATE movie SET MovieName=?,IDDirector=?,TimeMovie=?,ReleaseYear=?,Language=?,TypeMovie=?,IDRevew=?,IDNSX=?,AvatarMovie=? WHERE ID=?",
+        "UPDATE movie SET MovieName=?,IDDirector=?,TimeMovie=?,ReleaseYear=?,Language=?,TypeMovie=?,IDRevew=?,IDNSX=?,AvatarMovie=?,`Like`=? WHERE ID=?",
         [
             data.MovieName,
             data.IDDirector,
@@ -54,6 +55,7 @@ Movie.update = function (data, result) {
             data.IDRevew,
             data.IDNSX,
             data.AvatarMovie,
+            data.Like,
             data.ID,
         ],
         function (err, movie) {

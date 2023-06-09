@@ -16,3 +16,4 @@ export { default as CinemaLayout } from './CinemaLayout';
 export { default as ProfileLayout } from './ProfileLayout';
 export { default as SupportLayout } from './SupportLayout';
 export { default as SearchLayout } from './SearchLayout';
+export { default as EndowLayout } from './EndowLayout';

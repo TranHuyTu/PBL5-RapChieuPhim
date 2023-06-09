@@ -6,6 +6,8 @@ let BlogFilm = function (blogfilm) {
     this.Content = blogfilm.Content;
     this.Image = blogfilm.Image;
     this.Type = blogfilm.Type;
+    this.Like = blogfilm.Like;
+    this.Follow = blogfilm.Follow;
 };
 
 BlogFilm.get_all = function (result) {
@@ -52,11 +54,32 @@ BlogFilm.remove = function (id, result) {
 };
 BlogFilm.update = function (data, result) {
     db.query(
-        "UPDATE blog SET Title = ?, Content = ?, Image=?, Type=? WHERE ID=?",
-        [data.Title, data.Content, data.Image, data.Type, data.ID],
+        "UPDATE blog SET Title = ?, Content = ?, Image= ?, Type= ?,Follow=?,`Like`=? WHERE ID=?",
+        [
+            data.Title,
+            data.Content,
+            data.Image,
+            data.Type,
+            data.Follow,
+            data.Like,
+            data.ID,
+        ],
         function (err, blog) {
             if (err) {
                 result(null);
+            } else {
+                result({ id: blog.insertID, ...blog });
+            }
+        },
+    );
+};
+BlogFilm.updateLike = function (data, result) {
+    db.query(
+        "UPDATE blog SET Title = ?, Content = ?, Image= ?, Type= ?,`Like`=? WHERE ID=?",
+        [data.Title, data.Content, data.Image, data.Type, data.Like, data.ID],
+        function (err, blog) {
+            if (err) {
+                result(err);
             } else {
                 result({ id: blog.insertID, ...blog });
             }
