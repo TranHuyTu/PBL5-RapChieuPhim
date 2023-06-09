@@ -3,12 +3,12 @@ import classNames from 'classnames/bind';
 import styles from './TableShowTime.module.scss';
 import Container from 'react-bootstrap/Container';
 import EditShowtimeComponent from '../EditShowtime';
+import AddShowtimeComponent from '../AddShowtime';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 import Table from 'react-bootstrap/Table';
-import moment from 'moment';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function TableShowTimeDetail() {
@@ -22,14 +22,14 @@ function TableShowTimeDetail() {
     const fetchData = async (API) => {
         try {
             await axios.post(API).then((response) => {
-                setData(response.data.result);
+                setData(response.result);
             });
         } catch (error) {
             console.error(error);
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/TrangChu/Search');
+        fetchData('/TrangChu/Search');
         setLabel(['ID', 'Tên Phim', 'Phòng', 'Loại Phòng', 'Thời Gian']);
         setKey(['ShowtimeID', 'MovieName', 'HallNumber', 'Class', 'ShowtimeDateTime']);
     }, []);
@@ -60,14 +60,14 @@ function TableShowTimeDetail() {
                 const _token = token.substring(1, token.length - 1);
                 await axios
                     .post(
-                        'http://localhost:8080/halls/showtime/' + JSON.parse(localStorage.getItem('showtime')).HallID,
+                        '/halls/showtime/' + JSON.parse(localStorage.getItem('showtime')).HallID,
                         { x: 1 },
                         {
                             headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                         },
                     )
                     .then((response) => {
-                        setSeats(response.data.result);
+                        setSeats(response.result);
                     });
             } catch (error) {
                 console.error(error);
@@ -80,6 +80,49 @@ function TableShowTimeDetail() {
         localStorage.setItem('EditShowtime', '0');
         setShowtime(value);
         setEditShowtime('0');
+    };
+    const HandlerRemove = async function (value) {
+        console.log('Remove', value);
+        try {
+            const token = localStorage.getItem('token-login');
+            const _token = token.substring(1, token.length - 1);
+            await axios
+                .delete(
+                    '/Seat/remove/' + value.HallID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(value.HallID, response);
+                });
+            await axios
+                .delete(
+                    '/halls/remove/' + value.HallID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(value.HallID, response);
+                });
+            await axios
+                .delete(
+                    '/showtime/remove/' + value.ShowtimeID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(value.ShowtimeID, response);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+        navigate('/');
     };
     if (localStorage.getItem('showtime') && localStorage.getItem('EditShowtime')) {
         return (
@@ -140,6 +183,21 @@ function TableShowTimeDetail() {
                 </button>
             </div>
         );
+    } else if (JSON.parse(localStorage.getItem('AddShowtime')) === 0) {
+        return (
+            <div>
+                <AddShowtimeComponent />
+                <button
+                    className={cx('Cancel')}
+                    onClick={() => {
+                        localStorage.removeItem('AddShowtime');
+                        setShowtime([]);
+                    }}
+                >
+                    Cancel
+                </button>
+            </div>
+        );
     } else {
         if (data && Label && Key) {
             return (
@@ -183,7 +241,9 @@ function TableShowTimeDetail() {
                                     </a>
                                 </td>
                                 <td>
-                                    <a className={cx('btn', 'delete')}>Xóa</a>
+                                    <a className={cx('btn', 'delete')} onClick={() => HandlerRemove(value)}>
+                                        Xóa
+                                    </a>
                                 </td>
                             </tr>
                         ))}
@@ -194,11 +254,26 @@ function TableShowTimeDetail() {
     }
 }
 function TableShowTime(props) {
+    const [BtnAddShowtime, setBtnAddShowtime] = useState('');
+    const navigate = useNavigate();
+
     return (
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableShowTimeDetail />
-                <a className={cx('AddNew')}></a>
+                <a
+                    className={cx('AddNew')}
+                    onClick={(e) => {
+                        localStorage.setItem('AddShowtime', '0');
+                        setBtnAddShowtime(0);
+                        navigate('/Admin');
+                        // if (localStorage.getItem('AddShowtime')) {
+                        //     e.target.style.display = 'none';
+                        // } else {
+                        //     e.target.style.display = 'block';
+                        // }
+                    }}
+                ></a>
             </Container>
         </div>
     );

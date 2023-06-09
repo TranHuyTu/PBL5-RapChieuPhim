@@ -5,10 +5,12 @@ import Container from 'react-bootstrap/Container';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import EditCinemaComponent from '../EditCinema';
+import AddCinemaComponent from '../AddCinema';
 import TableSeats from '../TableSeats';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axios from '~/api/axiosClient';
 import Table from 'react-bootstrap/Table';
 const cx = classNames.bind(styles);
 
@@ -19,17 +21,18 @@ function TableCinemaDetail(props) {
     const [Cinema, setCinema] = useState([]);
     const [EditCinema, setEditCinema] = useState('');
     const [Halls, setHalls] = useState([]);
+    const navigate = useNavigate();
     const fetchData = async (API) => {
         try {
             await axios.post(API).then((response) => {
-                setData(response.data.result);
+                setData(response.result);
             });
         } catch (error) {
             console.error(error);
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/cinema');
+        fetchData('/cinema');
         setLabel(['ID', 'Tên Rạp', 'Địa chỉ', 'SDT']);
         setKey(['ID', 'CinemaName', 'Address', 'Phone']);
     }, []);
@@ -42,14 +45,14 @@ function TableCinemaDetail(props) {
                 const _token = token.substring(1, token.length - 1);
                 await axios
                     .post(
-                        'http://localhost:8080/halls/cinema/' + JSON.parse(localStorage.getItem('Cinema')).ID,
+                        '/halls/cinema/' + JSON.parse(localStorage.getItem('Cinema')).ID,
                         { x: 1 },
                         {
                             headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                         },
                     )
                     .then((response) => {
-                        setHalls(response.data.result);
+                        setHalls(response.result);
                     });
             } catch (error) {
                 console.error(error);
@@ -62,6 +65,64 @@ function TableCinemaDetail(props) {
         localStorage.setItem('EditCinema', '0');
         setCinema(value);
         setEditCinema('0');
+    };
+    const HandlerRemove = async function (value) {
+        console.log('Remove', value);
+
+        try {
+            const token = localStorage.getItem('token-login');
+            const _token = token.substring(1, token.length - 1);
+            let IDHall = 0;
+            await axios
+                .post(
+                    '/halls/cinema/' + value.ID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(response.result[0].HallID);
+                    IDHall = response.result[0].HallID;
+                });
+            console.log(IDHall);
+            await axios
+                .delete(
+                    '/Seat/remove/' + IDHall,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(response);
+                });
+            await axios
+                .delete(
+                    '/halls/remove/' + IDHall,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(response);
+                });
+            await axios
+                .delete(
+                    '/cinema/remove/' + value.ID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(response);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+        // navigate('/');
     };
     if (Cinema && EditCinema) {
         return (
@@ -98,6 +159,21 @@ function TableCinemaDetail(props) {
                     className={cx('Cancel')}
                     onClick={() => {
                         localStorage.removeItem('Cinema');
+                        setCinema([]);
+                    }}
+                >
+                    Cancel
+                </button>
+            </div>
+        );
+    } else if (JSON.parse(localStorage.getItem('AddCinema')) === 0) {
+        return (
+            <div>
+                <AddCinemaComponent />
+                <button
+                    className={cx('Cancel')}
+                    onClick={() => {
+                        localStorage.removeItem('AddCinema');
                         setCinema([]);
                     }}
                 >
@@ -146,7 +222,12 @@ function TableCinemaDetail(props) {
                                             </button>
                                         </td>
                                         <td>
-                                            <button className={cx('btn', 'delete')}>Xóa</button>
+                                            <button
+                                                className={cx('btn', 'delete')}
+                                                onClick={() => HandlerRemove(value)}
+                                            >
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -159,11 +240,20 @@ function TableCinemaDetail(props) {
     }
 }
 function TableCinema(props) {
+    const [BtnAddCinema, setBtnAddCinema] = useState('');
+    const navigate = useNavigate();
     return (
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableCinemaDetail />
-                <button className={cx('AddNew')}></button>
+                <button
+                    className={cx('AddNew')}
+                    onClick={(e) => {
+                        localStorage.setItem('AddCinema', '0');
+                        setBtnAddCinema(0);
+                        navigate('/Admin');
+                    }}
+                ></button>
             </Container>
         </div>
     );

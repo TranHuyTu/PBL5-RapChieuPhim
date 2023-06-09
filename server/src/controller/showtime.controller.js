@@ -29,17 +29,16 @@ exports.get_Showtime_by_id = function (req, res) {
     });
 };
 
-//Chưa sửa
 exports.addShowtime = function (req, res) {
     var data = req.body;
-    Showtime.create(data, function (repon) {
+    Showtime.Showtime.create(data, function (repon) {
         res.send({ result: repon });
     });
 };
-//Chưa sửa
+
 exports.removeShowtime = function (req, res) {
     var id = req.params.id;
-    Showtime.remove(id, function (repon) {
+    Showtime.Showtime.remove(id, function (repon) {
         res.send({ result: repon });
     });
 };

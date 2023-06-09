@@ -3,8 +3,6 @@ import classNames from 'classnames/bind';
 import styles from './MainCarouser.module.scss';
 import BoxBuyTicket from '../BoxBuyTicket';
 
-import { useState, useEffect } from 'react';
-
 const cx = classNames.bind(styles);
 
 class CitiesSlider extends React.Component {

@@ -79,6 +79,7 @@ function ReviewSelect({ chilren }) {
                     </select>
                 ))}
             </div>
+            <h1>Thông tin</h1>
         </div>
     );
 }

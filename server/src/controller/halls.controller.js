@@ -15,14 +15,14 @@ exports.get_list_hall = function (req, res) {
         res.send({ result: data });
     });
 };
-//Chưa sửa
+
 exports.addHalls = function (req, res) {
     var data = req.body;
     Halls.create(data, function (repon) {
         res.send({ result: repon });
     });
 };
-//Chưa sửa
+
 exports.removeHalls = function (req, res) {
     var id = req.params.id;
     Halls.remove(id, function (repon) {

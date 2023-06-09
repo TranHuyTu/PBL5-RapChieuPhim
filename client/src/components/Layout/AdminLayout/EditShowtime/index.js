@@ -176,9 +176,7 @@ function EditShowtime(props) {
                     .put('/Seat/update', val, {
                         headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                     })
-                    .then((response) => {
-                       
-                    })
+                    .then((response) => {})
                     .catch((error) => {
                         // Xử lý lỗi nếu yêu cầu thất bại
                         console.error(error);
@@ -194,8 +192,7 @@ function EditShowtime(props) {
                     .put('/Seat/update', val, {
                         headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                     })
-                    .then((response) => {
-                    })
+                    .then((response) => {})
                     .catch((error) => {
                         // Xử lý lỗi nếu yêu cầu thất bại
                         console.error(error);
@@ -273,12 +270,46 @@ function EditShowtime(props) {
                                             size="lg"
                                             name="HallID"
                                             onChange={(e) => {
-                                                ValueEdit.HallNumber = e.target.value;
+                                                ValueEdit.HallNumber = e.target.value.split(',')[0];
+                                                console.log(e.target.value.split(',')[0], e.target.value.split(',')[1]);
+                                                const token = localStorage.getItem('token-login');
+                                                const _token = token.substring(1, token.length - 1);
+                                                try {
+                                                    axiosClient
+                                                        .post(
+                                                            '/halls/showtime/' + e.target.value.split(',')[1],
+                                                            { a: 1 },
+                                                            {
+                                                                headers: {
+                                                                    'content-type': 'application/x-www-form-urlencoded',
+                                                                    authorization: _token,
+                                                                },
+                                                            },
+                                                        )
+                                                        .then((response) => {
+                                                            setListSeat(response.result);
+                                                            const List = [];
+                                                            response.result.map((value, index) => {
+                                                                if (value.CheckSeat !== 0) {
+                                                                    List.push(value);
+                                                                }
+                                                            });
+                                                            setListSeatNew(List);
+                                                        })
+                                                        .catch((error) => {
+                                                            // Xử lý lỗi nếu yêu cầu thất bại
+                                                            console.error(error);
+                                                        });
+                                                } catch (error) {
+                                                    console.log(error);
+                                                }
                                             }}
                                         >
-                                            <option>{Showtime.HallNumber}</option>
+                                            <option value={[Showtime.HallNumber, Showtime.HallID]}>
+                                                {Showtime.HallNumber}
+                                            </option>
                                             {ListHall.map((value, index) => (
-                                                <option value={value.HallNumber} key={value.HallID}>
+                                                <option value={[value.HallNumber, value.HallID]} key={value.HallID}>
                                                     {value.HallNumber}
                                                 </option>
                                             ))}

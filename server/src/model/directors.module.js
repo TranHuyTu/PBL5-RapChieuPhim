@@ -5,6 +5,7 @@ let Directors = function (director) {
     this.Name = director.Name;
     this.Country = director.Country;
     this.AvatarLink = director.AvatarLink;
+    this.Derc = actor.Derc;
 };
 
 Directors.get_all = function (result) {
@@ -55,8 +56,8 @@ Directors.remove = function (id, result) {
 };
 Directors.update = function (data, result) {
     db.query(
-        "UPDATE directors SET Name=?,Country=?,AvatarLink=? WHERE ID=?",
-        [data.Name, data.Country, data.AvatarLink, data.ID],
+        "UPDATE directors SET Name=?,Country=?,AvatarLink=?,Derc=? WHERE ID=?",
+        [data.Name, data.Country, data.AvatarLink, data.Derc, data.ID],
         function (err, directors) {
             if (err) {
                 result(null);

@@ -26,7 +26,7 @@ Seat.create = function (data, result) {
     });
 };
 Seat.remove = function (id, result) {
-    db.query("DELETE FROM seat WHERE id = ?", id, function (err, Seat) {
+    db.query("DELETE FROM seat WHERE IDHalls = ?", id, function (err, Seat) {
         if (err) {
             result(null);
         } else {

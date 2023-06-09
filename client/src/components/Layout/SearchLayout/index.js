@@ -1,31 +1,24 @@
-import * as React from 'react';
-import classNames from 'classnames/bind';
-import styles from './CinemaCornerLayout.module.scss';
-
 import Header from '~/components/Layout/DefaultLayout/Header';
 import Controller from '~/components/Layout/DefaultLayout/Controller';
 import Footer from '~/components/Layout/DefaultLayout/Footer';
-import BoxBuyTicket from '~/components/Layout/DefaultLayout/BoxBuyTicket';
-import MoviePlaying from '~/components/Layout/DatVeLayout/MoviePlaying';
-import ReviewSelect from './ReviewSelect';
+import ContentSEO from '~/components/Layout/DefaultLayout/ContentSEO';
+import SearchMain from './SearchMain';
 import { useState, useEffect } from 'react';
+import * as React from 'react';
+import classNames from 'classnames/bind';
+import styles from './SearchLayout.module.scss';
 import axiosClient from '~/api/axiosClient';
 import Container from 'react-bootstrap/Container';
 
 const cx = classNames.bind(styles);
 
-function CinemaCornerLayout({ chilren }) {
+function SearchLayout({ chilren }) {
     const [movies, setMovies] = useState([]);
-    const [search, setSearch] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await axiosClient.post('/TrangChu').then((response) => {
                     setMovies(response.result);
-                });
-                axiosClient.post('/TrangChu/Search').then((response) => {
-                    setSearch(response.result);
                 });
             } catch (error) {
                 console.error(error);
@@ -33,20 +26,8 @@ function CinemaCornerLayout({ chilren }) {
         };
         fetchData();
     }, []);
-    const modules = [
-        <Header />,
-        <Controller movies={movies} />,
-        <div className={cx('content')}>
-            <div className={cx('content-left')}>
-                <ReviewSelect />
-            </div>
-            <div className={cx('content-right')}>
-                <BoxBuyTicket TimKiem={search} />,
-                <MoviePlaying movies={movies} />
-            </div>
-        </div>,
-        <Footer />,
-    ];
+    const modules = [<Header />, <Controller movies={movies} />, <SearchMain />, <ContentSEO />, <Footer />];
+
     return (
         <div>
             <Container fluid="xxl">
@@ -62,4 +43,4 @@ function CinemaCornerLayout({ chilren }) {
     );
 }
 
-export default CinemaCornerLayout;
+export default SearchLayout;

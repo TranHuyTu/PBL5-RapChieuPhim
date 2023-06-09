@@ -25,6 +25,7 @@ import axios from 'axios';
 const cx = classNames.bind(styles);
 
 function Controller() {
+    const [Actor, setActor] = useState('');
     return (
         <Container fluid="xxl">
             <div className={cx('wrapper')}>
@@ -59,6 +60,8 @@ function Controller() {
                                         onClick={() => {
                                             if (localStorage.getItem('Actor')) {
                                                 localStorage.removeItem('Actor');
+                                                localStorage.removeItem('AddDirector');
+                                                setActor(0);
                                             }
                                         }}
                                     >
@@ -71,6 +74,10 @@ function Controller() {
                                         eventKey="dienvien"
                                         onClick={() => {
                                             localStorage.setItem('Actor', '0');
+                                            if (localStorage.getItem('AddDirector')) {
+                                                localStorage.removeItem('AddDirector');
+                                            }
+                                            setActor(1);
                                         }}
                                     >
                                         Diễn Viên
@@ -156,20 +163,33 @@ function Controller() {
                                         </Row>
                                     </Container>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="daodien">
+                                <Tab.Pane
+                                    eventKey="daodien"
+                                    onClick={() => {
+                                        if (localStorage.getItem('Actor')) {
+                                            localStorage.removeItem('Actor');
+                                            localStorage.removeItem('AddDirector');
+                                        }
+                                    }}
+                                >
                                     <Container className={cx('container')}>
                                         <Row>
                                             <TableDirector TypeActor={'Director'} />
+                                            {}
                                         </Row>
                                     </Container>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="dienvien">
+                                <Tab.Pane
+                                    eventKey="dienvien"
+                                    onClick={() => {
+                                        localStorage.setItem('Actor', '0');
+                                        localStorage.removeItem('AddDirector');
+                                    }}
+                                >
                                     <Container className={cx('container')}>
                                         <Row>
                                             <TableDirector TypeActor={'Actor'} />
-                                            {() => {
-                                                localStorage.setItem('Actor', '0');
-                                            }}
+                                            {}
                                         </Row>
                                     </Container>
                                 </Tab.Pane>

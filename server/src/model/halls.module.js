@@ -44,19 +44,19 @@ Hall.get_halls_cinema = function (id, result) {
         },
     );
 };
-//Chưa sửa
+
 Hall.create = function (data, result) {
     db.query("INSERT INTO halls SET ?", data, function (err, hall) {
         if (err) {
             result(null);
         } else {
-            result({ id: hall.insertID, ...data });
+            result(hall);
         }
     });
 };
-//Chưa sửa
+
 Hall.remove = function (id, result) {
-    db.query("DELETE FROM halls WHERE id = ?", id, function (err, hall) {
+    db.query("DELETE FROM halls WHERE HallID = ?", id, function (err, hall) {
         if (err) {
             result(null);
         } else {

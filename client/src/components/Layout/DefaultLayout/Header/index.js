@@ -160,9 +160,18 @@ function Header() {
                                 type="text"
                                 autoComplete="off"
                             />
-                            <a className={cx('icon-Search')}>
+                            <button
+                                className={cx('icon-Search')}
+                                onClick={() => {
+                                    localStorage.setItem(
+                                        'valueSearch',
+                                        document.querySelector('.Header_input-search__zz1c1').value,
+                                    );
+                                    navigate('/Search');
+                                }}
+                            >
                                 <SearchIcon className={cx('icon')} fontSize="large" color="disabled"></SearchIcon>
-                            </a>
+                            </button>
                         </div>
                         <div className={cx('login-wrapper')}>
                             <div className={cx('user-login')}>

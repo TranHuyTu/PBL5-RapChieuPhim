@@ -5,6 +5,7 @@ let Actor = function (actor) {
     this.Name = actor.Name;
     this.Country = actor.Country;
     this.AvatarLink = actor.AvatarLink;
+    this.Derc = actor.Derc;
 };
 
 Actor.get_all = function (result) {
@@ -19,7 +20,7 @@ Actor.get_all = function (result) {
 
 Actor.get_actors_movie = function (id, result) {
     db.query(
-        "SELECT actors.ID,actors.Name,actors.Country,actors.AvatarLink FROM actors,listactor WHERE actors.ID=listactor.IDActor AND listactor.IDMovie=?",
+        "SELECT actors.ID,actors.Name,actors.Country,actors.AvatarLink,actors.Derc FROM actors,listactor WHERE actors.ID=listactor.IDActor AND listactor.IDMovie=?",
         id,
         function (err, actor) {
             if (err || actor.length == 0) {
@@ -51,8 +52,8 @@ Actor.remove = function (id, result) {
 };
 Actor.update = function (data, result) {
     db.query(
-        "UPDATE actors SET Name=?,Country=?,AvatarLink=? WHERE ID=?",
-        [data.Name, data.Country, data.AvatarLink, data.ID],
+        "UPDATE actors SET Name=?,Country=?,AvatarLink=?,Derc=? WHERE ID=?",
+        [data.Name, data.Country, data.AvatarLink, data.Derc, data.ID],
         function (err, actor) {
             if (err) {
                 result(null);

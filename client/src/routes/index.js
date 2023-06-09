@@ -17,6 +17,7 @@ import {
     CinemaLayout,
     ProfileLayout,
     SupportLayout,
+    SearchLayout,
 } from '~/components/Layout';
 import DSPhim from '~/pages/DSPhim';
 import DatVe from '~/pages/DatVe';
@@ -37,6 +38,7 @@ import Promotion from '~/pages/Promotion';
 import Cinema from '~/pages/Cinema';
 import Profile from '~/pages/Profile';
 import Support from '~/pages/Support';
+import Search from '~/pages/Search';
 
 const publicRouter = [
     { path: '/', component: Home },
@@ -60,6 +62,7 @@ const publicRouter = [
     { path: '/Cinema', component: Cinema, layout: CinemaLayout },
     { path: '/Profile', component: Profile, layout: ProfileLayout },
     { path: '/Support', component: Support, layout: SupportLayout },
+    { path: '/Search', component: Search, layout: SearchLayout },
 ];
 const pritaveRouter = [];
 

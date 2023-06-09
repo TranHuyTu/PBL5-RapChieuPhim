@@ -87,20 +87,19 @@ Showtime.get_detail_showtime = function (data, result) {
     );
 };
 
-//Chưa sửa
 Showtime.create = function (data, result) {
-    db.query("INSERT INTO showtimes SET ?", data, function (err, showtime) {
+    db.query("INSERT INTO showtime SET ?", data, function (err, showtime) {
         if (err) {
             result(null);
         } else {
-            result({ id: showtime.insertID, ...data });
+            result(showtime);
         }
     });
 };
-//Chưa sửa
+
 Showtime.remove = function (id, result) {
     db.query(
-        "DELETE FROM showtimes WHERE id = ?",
+        "DELETE FROM showtime WHERE ShowtimeID = ?",
         id,
         function (err, showtime) {
             if (err) {

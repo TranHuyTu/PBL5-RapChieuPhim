@@ -22,7 +22,7 @@ Cinema.create = function (data, result) {
         if (err) {
             result(null);
         } else {
-            result({ id: cinema.insertID, ...data });
+            result(cinema);
         }
     });
 };
