@@ -19,6 +19,7 @@ import {
     SupportLayout,
     SearchLayout,
     EndowLayout,
+    ForgotPasswordLayout,
 } from '~/components/Layout';
 import DSPhim from '~/pages/DSPhim';
 import DatVe from '~/pages/DatVe';
@@ -41,6 +42,7 @@ import Profile from '~/pages/Profile';
 import Support from '~/pages/Support';
 import Search from '~/pages/Search';
 import Endow from '~/pages/Endow';
+import ForgotPassword from '~/pages/ForgotPassword';
 
 const publicRouter = [
     { path: '/', component: Home },
@@ -66,6 +68,7 @@ const publicRouter = [
     { path: '/Support', component: Support, layout: SupportLayout },
     { path: '/Search', component: Search, layout: SearchLayout },
     { path: '/Endow', component: Endow, layout: EndowLayout },
+    { path: '/ForgotPassword', component: ForgotPassword, layout: ForgotPasswordLayout },
 ];
 const pritaveRouter = [];
 

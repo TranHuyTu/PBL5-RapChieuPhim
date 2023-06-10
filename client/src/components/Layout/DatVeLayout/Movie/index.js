@@ -63,7 +63,7 @@ function Movie(props) {
                             </div>
                             <div className={cx('like-share')}>
                                 <a href="" className={cx('like')}>
-                                    Thích
+                                    Thích {movie.Like}
                                 </a>
                                 <a href="" className={cx('share')}>
                                     Chia sẻ
@@ -119,7 +119,8 @@ function Movie(props) {
                 </div>
                 <div className={cx('movie-content')}>
                     <h2 className={cx('movie-title')}>NỘI DUNG PHIM</h2>
-                    <p className={cx('desc')}>{movie.TomTat}</p>
+                    <h3 className={cx('title')}>{movie.TomTat}</h3>
+                    <p className={cx('desc')}>{movie.GioiThieu}</p>
                 </div>
             </div>
         );
@@ -205,7 +206,8 @@ function Movie(props) {
                 </div>
                 <div className={cx('movie-content')}>
                     <h2 className={cx('movie-title')}>NỘI DUNG PHIM</h2>
-                    <p className={cx('desc')}>{movie.TomTat}</p>
+                    <h3 className={cx('title')}>{movie.TomTat}</h3>
+                    <p className={cx('desc')}>{movie.GioiThieu}</p>
                 </div>
             </div>
         );

@@ -38,11 +38,13 @@ function LichChieu({ chilren }) {
         fetchData();
     }, []);
     let Cinema = [];
-    showtime.map((value) => {
-        if (!Cinema.includes(value.CinemaName)) {
-            Cinema.push(value.CinemaName);
-        }
-    });
+    if (showtime) {
+        showtime.map((value) => {
+            if (!Cinema.includes(value.CinemaName)) {
+                Cinema.push(value.CinemaName);
+            }
+        });
+    }
     function ConverTime(DATETIME) {
         let datetime = [];
         let DT = DATETIME.split('T');

@@ -9,6 +9,7 @@ export { default as ListSeatLayout } from './ListSeatLayout';
 export { default as ThanhToanLayout } from './ThanhToanLayout';
 export { default as AdminLayout } from './AdminLayout';
 export { default as RegisterLayout } from './RegisterLayout';
+export { default as ForgotPasswordLayout } from './ForgotPasswordLayout';
 export { default as PlayingLayout } from './PlayingLayout';
 export { default as BlogLayout } from './BlogLayout';
 export { default as PromotionLayout } from './PromotionLayout';

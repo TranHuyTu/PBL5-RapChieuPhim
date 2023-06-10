@@ -49,7 +49,7 @@ function DatVeLayout({ chilren }) {
         <div className={cx('layout_main')}>
             <div className={cx('layout_left')}>
                 <Movie director={director} actor={actor} />
-                <LichChieu />
+                {/* <LichChieu /> */}
                 <TheaterDetails />
             </div>
             <div className={cx('layout_right')}>

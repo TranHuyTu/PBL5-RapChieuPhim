@@ -48,6 +48,7 @@ require("./route/review")(app);
 require("./route/movie")(app);
 require("./route/nsx")(app);
 require("./route/search")(app);
+require("./route/sendmail")(app);
 app.use(_AuthMiddleware.isAuth);
 require("./route/prices")(app);
 require("./route/foods")(app);

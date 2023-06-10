@@ -186,7 +186,7 @@ function SearchMain({ chilren }) {
                 }
             };
             fetchData();
-            navigator('/');
+            navigate('/Search');
         }
     };
     if (ListSearch && ListDirector && ListMovie) {
@@ -229,7 +229,7 @@ function SearchMain({ chilren }) {
                     <h1>Tìm kiếm theo diễn viên :</h1>
                     <ActorSearch ListSearch={ListSearch} />
                     <h1>Tìm kiếm theo đạo diễn :</h1>
-                    <ActorSearch ListSearch={ListDirector} />
+                    <DirectorSearch ListSearch={ListDirector} />
                     <h1>Tìm kiếm theo tên phim :</h1>
                     <Main movies={ListMovie} w={'100%'} />
                 </Container>
