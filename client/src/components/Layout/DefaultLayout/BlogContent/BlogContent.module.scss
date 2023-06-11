@@ -15,7 +15,7 @@
 .sub_col .blog{
     display: flex;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
     margin: 20px 0;
 }
 .sub_col .blog:hover .sub_movie_thub>h5>a{
@@ -40,7 +40,7 @@
 .movie_thub>img{
     width: 220px;
     height: 148px;
-    object-fit: scale-down;
+    object-fit: cover;
 }
 .sub_movie_thub{
     height: 158px;
@@ -99,4 +99,8 @@ a.title_content{
     background-color: #4267b2;
     border: 0;
     color: white;
+}
+.image-blog{
+    height: 150px;
+    object-fit: cover;
 }

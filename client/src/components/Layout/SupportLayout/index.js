@@ -6,7 +6,7 @@ import Controller from '~/components/Layout/DefaultLayout/Controller';
 import Footer from '~/components/Layout/DefaultLayout/Footer';
 import SupportMain from './SupportMain';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,8 +19,8 @@ function SupportLayout({ chilren }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.post('http://localhost:8080/TrangChu').then((response) => {
-                    setMovies(response.data.result);
+                await axios.post('/TrangChu').then((response) => {
+                    setMovies(response.result);
                 });
             } catch (error) {
                 console.error(error);

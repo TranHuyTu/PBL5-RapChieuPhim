@@ -104,6 +104,7 @@ function Main(props) {
                                                         <Col xl={3} lg={4} md={6} sm={12} key={index}>
                                                             <Card style={{ width: '25rem', margin: '0 0 10px 0' }}>
                                                                 <Card.Img
+                                                                    className={cx('image-top')}
                                                                     variant="top"
                                                                     src={`${item.AvatarMovie}`}
                                                                     alt={item.MovieName}
@@ -137,6 +138,7 @@ function Main(props) {
                                                     <Col xl={3} lg={4} md={6} sm={12} key={index}>
                                                         <Card style={{ width: '25rem', margin: '0 0 10px 0' }}>
                                                             <Card.Img
+                                                                className={cx('image-top')}
                                                                 variant="top"
                                                                 src={`${item.AvatarMovie}`}
                                                                 alt={item.MovieName}
@@ -194,6 +196,7 @@ function Main(props) {
                                                         <Col xl={3} lg={4} md={6} sm={12} key={index}>
                                                             <Card style={{ width: '25rem', margin: '0 0 10px 0' }}>
                                                                 <Card.Img
+                                                                    className={cx('image-top')}
                                                                     variant="top"
                                                                     src={`${item.AvatarMovie}`}
                                                                     alt={item.MovieName}
@@ -227,6 +230,7 @@ function Main(props) {
                                                     <Col xl={3} lg={4} md={6} sm={12} key={index}>
                                                         <Card style={{ width: '25rem', margin: '0 0 10px 0' }}>
                                                             <Card.Img
+                                                                className={cx('image-top')}
                                                                 variant="top"
                                                                 src={`${item.AvatarMovie}`}
                                                                 alt={item.MovieName}

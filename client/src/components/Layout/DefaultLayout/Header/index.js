@@ -36,9 +36,9 @@ function DangNhap() {
                         )
                         .then((response) => {
                             setUser(response.data.data);
-                            if (response.data.data.CheckAdmin !== 0) {
-                                navigate('/Admin');
-                            }
+                            // if (response.data.data.CheckAdmin !== 0) {
+                            //     navigate('/Admin');
+                            // }
                         });
                 } catch (error) {
                     console.error(error);
@@ -111,9 +111,9 @@ function DangXuat() {
                         )
                         .then((response) => {
                             setUser(response.data.data);
-                            if (response.data.data.CheckAdmin !== 0) {
-                                navigate('/Admin');
-                            }
+                            // if (response.data.data.CheckAdmin !== 0) {
+                            //     navigate('/Admin');
+                            // }
                         });
                 } catch (error) {
                     console.error(error);

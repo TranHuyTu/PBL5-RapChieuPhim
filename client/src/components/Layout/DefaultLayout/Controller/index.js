@@ -38,7 +38,7 @@ function Controller(props) {
                     <div className={cx('sub-item-wrapper')}>
                         <div className={cx('submenu-row')}>
                             <div className={cx('sub-title')}>
-                                <a href="./DSPhim">Phim đang chiếu</a>
+                                <a href="./PhimDangChieu">Phim đang chiếu</a>
                             </div>
                             <div className={cx('sub-movies')}>
                                 <div className={cx('movies-item')}>
@@ -87,7 +87,7 @@ function Controller(props) {
                                 </div>
                             </div>
                             <div className={cx('sub-title')}>
-                                <a href="./DSPhim">Phim sắp chiếu</a>
+                                <a href="./PhimDangChieu">Phim sắp chiếu</a>
                             </div>
                             <div className={cx('sub-movies')}>
                                 <div className={cx('movies-item')}>

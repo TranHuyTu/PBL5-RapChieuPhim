@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
@@ -175,21 +175,38 @@ function RegisterLayout({ chilren }) {
                             ) {
                                 try {
                                     axios
-                                        .post('http://localhost:8080/register', formValue, {
+                                        .post('/accountlogin/' + formValue.Email, {
                                             headers: {
                                                 'content-type': 'application/x-www-form-urlencoded',
                                             },
                                         })
                                         .then((response) => {
-                                            if (response.data.result) {
-                                                Swal.fire({
-                                                    position: 'top-end',
-                                                    icon: 'success',
-                                                    title: 'Your work has been saved',
-                                                    showConfirmButton: false,
-                                                    timer: 1500,
-                                                });
-                                                history('/login');
+                                            if (response.result.length == 0) {
+                                                axios
+                                                    .post('/register', formValue, {
+                                                        headers: {
+                                                            'content-type': 'application/x-www-form-urlencoded',
+                                                        },
+                                                    })
+                                                    .then((response) => {
+                                                        if (response.result) {
+                                                            Swal.fire({
+                                                                position: 'top-end',
+                                                                icon: 'success',
+                                                                title: 'Đăng kí thành công',
+                                                                showConfirmButton: false,
+                                                                timer: 1500,
+                                                            });
+                                                            history('/login');
+                                                        } else {
+                                                            Swal.fire({
+                                                                title: 'Error!',
+                                                                text: 'Do you want to continue',
+                                                                icon: 'error',
+                                                                confirmButtonText: 'Cool',
+                                                            });
+                                                        }
+                                                    });
                                             } else {
                                                 Swal.fire({
                                                     title: 'Error!',

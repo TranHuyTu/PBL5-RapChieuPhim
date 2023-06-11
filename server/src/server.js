@@ -30,8 +30,10 @@ app.use(function (req, res, next) {
 });
 
 require("./route/login")(app);
+require("./route/accountlogin")(app);
 require("./route/uploadimage")(app);
 require("./route/PaymentRouter")(app);
+require("./route/thongke")(app);
 require("./route/home")(app);
 require("./route/blogMovie")(app);
 require("./route/blogFilm")(app);

@@ -7,7 +7,7 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 import { useState, useLayoutEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 
 const cx = classNames.bind(styles);
 
@@ -56,11 +56,11 @@ function Btn(props) {
         const _token = token.substring(1, token.length - 1);
         try {
             axios
-                .post('http://localhost:8080/bookedfoods/add', newBoodFoods, {
+                .post('/bookedfoods/add', newBoodFoods, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                 })
                 .then((response) => {
-                    console.log(response.data);
+                    console.log(response);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -74,11 +74,11 @@ function Btn(props) {
         const _token = token.substring(1, token.length - 1);
         try {
             await axios
-                .post('http://localhost:8080/ticket/add', newBoodTickets, {
+                .post('/ticket/add', newBoodTickets, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                 })
                 .then((response) => {
-                    console.log(response.data.result);
+                    console.log(response.result);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -92,11 +92,11 @@ function Btn(props) {
         const _token = token.substring(1, token.length - 1);
         try {
             await axios
-                .post('http://localhost:8080/Bill/add', newBill, {
+                .post('/Bill/add', newBill, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                 })
                 .then((response) => {
-                    localStorage.setItem('IDBill', response.data.result.bill.insertId);
+                    localStorage.setItem('IDBill', response.result.bill.insertId);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -110,11 +110,11 @@ function Btn(props) {
         const _token = token.substring(1, token.length - 1);
         try {
             await axios
-                .put('http://localhost:8080/Seat/update', seat, {
+                .put('/Seat/update', seat, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                 })
                 .then((response) => {
-                    console.log(response.data.result);
+                    console.log(response.result);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -129,14 +129,14 @@ function Btn(props) {
         try {
             await axios
                 .postForm(
-                    'http://localhost:8080/login/check_token',
+                    '/login/check_token',
                     { x: 1 },
                     {
                         headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                     },
                 )
                 .then((response) => {
-                    User.push(response.data.data.data);
+                    User.push(response.data.data);
                 });
         } catch (error) {
             console.error(error);
@@ -156,11 +156,11 @@ function Btn(props) {
         };
         try {
             await axios
-                .put('http://localhost:8080/account/update', NewDetailAccount, {
+                .put('/account/update', NewDetailAccount, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                 })
                 .then((response) => {
-                    console.log(response.data.result);
+                    console.log(response.result);
                 });
         } catch (error) {
             console.error(error);
@@ -184,11 +184,11 @@ function Btn(props) {
         const _token = token.substring(1, token.length - 1);
         try {
             await axios
-                .post('http://localhost:8080/Bill', 1, {
+                .post('/Bill', 1, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
                 })
                 .then((response) => {
-                    console.log(response.data.result);
+                    console.log(response.result);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -304,6 +304,44 @@ function Btn(props) {
                     addBoodFoods(newBoodFood);
                 }
             });
+            if (localStorage.getItem('token-login')) {
+                try {
+                    const token = localStorage.getItem('token-login');
+                    const _token = token.substring(1, token.length - 1);
+                    await axios
+                        .postForm(
+                            '/login/check_token',
+                            { x: 1 },
+                            {
+                                headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                            },
+                        )
+                        .then((response) => {
+                            let email = {
+                                to: response.data.data.Email,
+                                subject: 'Quý khách vừa thanh toán thành công.',
+                                text: 'Số tiền bạn đã thanh toán là : ' + JSON.parse(localStorage.getItem('monney')),
+                            };
+                            axios
+                                .post('/send-email', email, {
+                                    headers: {
+                                        'content-type': 'application/x-www-form-urlencoded',
+                                    },
+                                })
+                                .then((response) => {
+                                    if (response.result) {
+                                        console.log(response);
+                                    }
+                                });
+                            console.log(response.data.data);
+                            // if (response.data.data.CheckAdmin !== 0) {
+                            //     navigate('/Admin');
+                            // }
+                        });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
             console.log('Thanh toán thành công');
             localStorage.clear();
             // localStorage.setItem('token-login', token);

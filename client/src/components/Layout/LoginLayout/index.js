@@ -5,7 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { useState, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 
 const cx = classNames.bind(styles);
 
@@ -38,23 +38,23 @@ function LoginLayout({ chilren }) {
     }, []);
     const Submit = function () {
         const account = {
-            user: user,
+            Email: user,
             password: password,
         };
 
         try {
             axios
-                .post('http://localhost:8080/login', account, {
+                .post('/login', account, {
                     headers: { 'content-type': 'application/x-www-form-urlencoded' },
                 })
                 .then((response) => {
-                    if (response.data.result) {
-                        localStorage.setItem('token-login', JSON.stringify(response.data.result));
-                        const _token = response.data.result;
+                    if (response.result) {
+                        localStorage.setItem('token-login', JSON.stringify(response.result));
+                        const _token = response.result;
                         try {
                             axios
                                 .post(
-                                    'http://localhost:8080/login/check_token',
+                                    '/login/check_token',
                                     { x: 1 },
                                     {
                                         headers: {
@@ -64,24 +64,45 @@ function LoginLayout({ chilren }) {
                                     },
                                 )
                                 .then((response) => {
-                                    localStorage.setItem(
-                                        'CheckAcc',
-                                        JSON.stringify(response.data.data.data.CheckAdmin),
-                                    );
-                                    if (response.data.data.data.CheckAdmin == 0) {
+                                    localStorage.setItem('CheckAcc', JSON.stringify(response.data.data.CheckAdmin));
+                                    if (response.data.data.CheckAdmin == 0) {
                                         history('/');
                                         Swal.fire(
                                             'Logged in successfully!',
                                             'Bạn muốn đặt vé xem phim hãy chọn OK để tiếp tục',
                                             'success',
                                         );
-                                    } else if (response.data.data.data.CheckAdmin == 1) {
-                                        history('/Admin');
-                                        Swal.fire(
-                                            'Logged in successfully!',
-                                            'Chào mừng Admin đến với hệ thống',
-                                            'success',
-                                        );
+                                    } else if (response.data.data.CheckAdmin == 1) {
+                                        Swal.fire({
+                                            title: 'Xin chào quản trị viên bạn muốn đăng nhập vào trang nào?',
+                                            showDenyButton: true,
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Admin',
+                                            denyButtonText: `Trang chủ`,
+                                        }).then((result) => {
+                                            /* Read more about isConfirmed, isDenied below */
+                                            if (result.isConfirmed) {
+                                                history('/Admin');
+                                                Swal.fire(
+                                                    'Logged in successfully!',
+                                                    'Chào mừng Admin đến với hệ thống',
+                                                    'success',
+                                                );
+                                            } else if (result.isDenied) {
+                                                history('/');
+                                                Swal.fire(
+                                                    'Logged in successfully!',
+                                                    'Bạn muốn đặt vé xem phim hãy chọn OK để tiếp tục',
+                                                    'success',
+                                                );
+                                            }
+                                        });
+                                        // history('/Admin');
+                                        // Swal.fire(
+                                        //     'Logged in successfully!',
+                                        //     'Chào mừng Admin đến với hệ thống',
+                                        //     'success',
+                                        // );
                                     }
                                 });
                         } catch (error) {
@@ -130,13 +151,13 @@ function LoginLayout({ chilren }) {
 
                 <div className={cx('form-group')}>
                     <label htmlFor="user" className={cx('form-label')}>
-                        Tài khoản
+                        Email
                     </label>
                     <input
                         id="user"
                         name="user"
                         type="text"
-                        placeholder="Nhâp tài khoản"
+                        placeholder="Email"
                         className={cx('form-control')}
                         onChange={(e) => {
                             if (hasVietnameseCharacter(e.target.value) || e.target.value.length <= 8) {
@@ -150,7 +171,7 @@ function LoginLayout({ chilren }) {
                         ref={inputRef1}
                         onKeyPress={handleKeyPress}
                     />
-                    <span className={cx('form-message', mess1)}>*Tài khoản ko hợp lệ</span>
+                    <span className={cx('form-message', mess1)}>*Email ko hợp lệ</span>
                 </div>
 
                 <div className={cx('form-group')}>

@@ -5,7 +5,8 @@ import Container from 'react-bootstrap/Container';
 import EditTicketComponent from '../EditTicket';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
+import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 const cx = classNames.bind(styles);
@@ -16,6 +17,7 @@ function TableTicketDetail(props) {
     const [Key, setKey] = useState([]);
     const [Ticket, setTicket] = useState([]);
     const [EditTicket, setEditTicket] = useState([]);
+    const navigate = useNavigate();
     const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
     const fetchData = async (API) => {
         const token = localStorage.getItem('token-login');
@@ -30,7 +32,7 @@ function TableTicketDetail(props) {
                     },
                 )
                 .then((response) => {
-                    setData(response.data.result);
+                    setData(response.result);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -40,7 +42,7 @@ function TableTicketDetail(props) {
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/price/all');
+        fetchData('/price/all');
         setLabel(['ID', 'Loại vé', 'Ngày trong tuần', 'Giá vé']);
         setKey(['PriceID', 'TicketType', 'DayOfWeek', 'Price']);
     }, []);
@@ -136,7 +138,6 @@ function TableTicketDetail(props) {
                                 ))}
                             </tbody>
                         </Table>
-                        <a className={cx('AddNew')}></a>
                     </Container>
                 </div>
             );
@@ -148,7 +149,6 @@ function TableTicket(props) {
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableTicketDetail />
-                <a className={cx('AddNew')}></a>
             </Container>
         </div>
     );

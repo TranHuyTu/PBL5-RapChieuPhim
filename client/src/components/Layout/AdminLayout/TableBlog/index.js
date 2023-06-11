@@ -3,11 +3,13 @@ import classNames from 'classnames/bind';
 import styles from './TableBlog.module.scss';
 import Container from 'react-bootstrap/Container';
 import EditBlogComponent from '../EditBlog';
+import AddBlogComponent from '../AddBlog';
 
 import { useState, useEffect } from 'react';
 import axiosClient from '~/api/axiosClient';
 import moment from 'moment';
 import Table from 'react-bootstrap/Table';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function TableBlogDetail(props) {
@@ -16,6 +18,7 @@ function TableBlogDetail(props) {
     const [Key, setKey] = useState([]);
     const [Blog, setBlog] = useState([]);
     const [EditBlog, setEditBlog] = useState([]);
+    const navigate = useNavigate();
     const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
     const fetchData = async (API) => {
         try {
@@ -53,6 +56,48 @@ function TableBlogDetail(props) {
         setBlog(value);
         setEditBlog('0');
     };
+    const HandlerRemove = async function (values) {
+        console.log('Remove', values);
+        try {
+            if (values.Image != '') {
+                let Url = values.Image.split('learn_nodejs/')[1];
+                const UrlDelete = { imageUrl: 'learn_nodejs/' + Url.split('.')[0] };
+                await axiosClient
+                    .post('/pathImg', UrlDelete, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            const token = localStorage.getItem('token-login');
+            const _token = token.substring(1, token.length - 1);
+
+            await axiosClient
+                .delete(
+                    '/Blog/remove/' + values.ID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(response);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+        navigate('/');
+    };
     if (localStorage.getItem('Blog') && localStorage.getItem('EditBlog')) {
         return (
             <div className={cx('')}>
@@ -84,6 +129,21 @@ function TableBlogDetail(props) {
                     className={cx('Cancel')}
                     onClick={() => {
                         localStorage.removeItem('Blog');
+                        setBlog([]);
+                    }}
+                >
+                    Cancel
+                </button>
+            </div>
+        );
+    } else if (JSON.parse(localStorage.getItem('AddBlog')) === 0) {
+        return (
+            <div>
+                <AddBlogComponent />
+                <button
+                    className={cx('Cancel')}
+                    onClick={() => {
+                        localStorage.removeItem('AddBlog');
                         setBlog([]);
                     }}
                 >
@@ -134,7 +194,9 @@ function TableBlogDetail(props) {
                                             </a>
                                         </td>
                                         <td>
-                                            <a className={cx('btn', 'delete')}>Xóa</a>
+                                            <a className={cx('btn', 'delete')} onClick={() => HandlerRemove(value)}>
+                                                Xóa
+                                            </a>
                                         </td>
                                     </tr>
                                 ))}
@@ -148,11 +210,20 @@ function TableBlogDetail(props) {
 }
 
 function TableBlog(props) {
+    const [BtnAddBlog, setBtnAddBlog] = useState('');
+    const navigate = useNavigate();
     return (
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableBlogDetail />
-                <a className={cx('AddNew')}></a>
+                <a
+                    className={cx('AddNew')}
+                    onClick={(e) => {
+                        localStorage.setItem('AddBlog', '0');
+                        setBtnAddBlog(0);
+                        navigate('/Admin');
+                    }}
+                ></a>
             </Container>
         </div>
     );

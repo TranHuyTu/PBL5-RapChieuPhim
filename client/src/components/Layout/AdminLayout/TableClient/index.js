@@ -11,6 +11,8 @@ import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 import axiosClient from '~/api/axiosClient';
+import { useNavigate } from 'react-router-dom';
+
 const cx = classNames.bind(styles);
 
 function TableClientDetail(props) {
@@ -22,6 +24,7 @@ function TableClientDetail(props) {
     const [ListTicket, setListTicket] = useState([]);
     const [ListFood, setListFood] = useState([]);
     const [IDUser, setIDUser] = useState('');
+    const navigate = useNavigate();
     const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
     const fetchData = async (API) => {
         const token = localStorage.getItem('token-login');
@@ -46,7 +49,7 @@ function TableClientDetail(props) {
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/account');
+        fetchData('/account');
         setLabel(['ID', 'Tài khoản', 'Tên đẩy đủ', 'Email', 'Tài khoản shop', 'SDT']);
         setKey(['ID', 'Username', 'Name', 'Email', 'Money', 'SDT']);
     }, []);
@@ -91,6 +94,44 @@ function TableClientDetail(props) {
         localStorage.setItem('EditClient', '0');
         setClient(value);
         setEditClient('0');
+    };
+    const HandlerRemove = async function (values) {
+        console.log('Remove', values);
+        try {
+            if (values.Avatar != '') {
+                let Url = values.Avatar.split('learn_nodejs/')[1];
+                const UrlDelete = { imageUrl: 'learn_nodejs/' + Url.split('.')[0] };
+                await axiosClient
+                    .post('/pathImg', UrlDelete, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            const token = localStorage.getItem('token-login');
+            const _token = token.substring(1, token.length - 1);
+            const ID = values.ID;
+            await axiosClient
+                .delete('/actors/remove/' + ID, {
+                    headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                })
+                .then((response) => {
+                    console.log(response);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+        navigate('/');
     };
     const ConverTime = function (DATETIME) {
         let datetime = [];
@@ -203,7 +244,7 @@ function TableClientDetail(props) {
                                 {data.map((value, index) => (
                                     <tr key={index}>
                                         {Key.map((key, index) => (
-                                            <td>{value[key]}</td>
+                                            <td key={index}>{value[key]}</td>
                                         ))}
                                         <td>
                                             <a className={cx('btn', 'show')} onClick={() => HandlerShow(value)}>
@@ -216,7 +257,9 @@ function TableClientDetail(props) {
                                             </a>
                                         </td>
                                         <td>
-                                            <a className={cx('btn', 'delete')}>Xóa</a>
+                                            <a className={cx('btn', 'delete')} onClick={() => HandlerRemove(value)}>
+                                                Xóa
+                                            </a>
                                         </td>
                                     </tr>
                                 ))}
@@ -233,7 +276,6 @@ function TableClient(props) {
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableClientDetail />
-                <a className={cx('AddNew')}></a>
             </Container>
         </div>
     );

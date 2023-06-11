@@ -3,9 +3,10 @@ import classNames from 'classnames/bind';
 import styles from './TableFood.module.scss';
 import Container from 'react-bootstrap/Container';
 import EditFoodComponent from '../EditFood';
-
+import AddFoodComponent from '../AddFood';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
+import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 const cx = classNames.bind(styles);
@@ -17,6 +18,7 @@ function TableFoodDetail(props) {
     const [Food, setFood] = useState([]);
     const [EditFood, setEditFood] = useState([]);
     const AvatarError = 'https://res.cloudinary.com/dbaul3mwo/image/upload/v1685175578/learn_nodejs/images_z012ea.png';
+    const navigate = useNavigate();
     const fetchData = async (API) => {
         const token = localStorage.getItem('token-login');
         const _token = token.substring(1, token.length - 1);
@@ -30,7 +32,7 @@ function TableFoodDetail(props) {
                     },
                 )
                 .then((response) => {
-                    setData(response.data.result);
+                    setData(response.result);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -40,7 +42,7 @@ function TableFoodDetail(props) {
         }
     };
     useEffect(() => {
-        fetchData('http://localhost:8080/foods');
+        fetchData('/foods');
         setLabel(['ID', 'Tên món ăn', 'Giá', 'Hình ảnh']);
         setKey(['ID', 'ItemName', 'Price', 'AvatarLink']);
     }, []);
@@ -53,6 +55,48 @@ function TableFoodDetail(props) {
         localStorage.setItem('EditFood', '0');
         setFood(value);
         setEditFood('0');
+    };
+    const HandlerRemove = async function (values) {
+        console.log('Remove', values);
+        try {
+            if (values.AvatarLink != '') {
+                let Url = values.AvatarLink.split('learn_nodejs/')[1];
+                const UrlDelete = { imageUrl: 'learn_nodejs/' + Url.split('.')[0] };
+                await axios
+                    .post('/pathImg', UrlDelete, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            const token = localStorage.getItem('token-login');
+            const _token = token.substring(1, token.length - 1);
+
+            await axios
+                .delete(
+                    '/foods/remove/' + values.ID,
+                    { x: 1 },
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded', authorization: _token },
+                    },
+                )
+                .then((response) => {
+                    console.log(response);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+        navigate('/');
     };
     if (localStorage.getItem('Food') && localStorage.getItem('EditFood')) {
         return (
@@ -83,6 +127,21 @@ function TableFoodDetail(props) {
                     className={cx('Cancel')}
                     onClick={() => {
                         localStorage.removeItem('Food');
+                        setFood([]);
+                    }}
+                >
+                    Cancel
+                </button>
+            </div>
+        );
+    } else if (JSON.parse(localStorage.getItem('AddFood')) === 0) {
+        return (
+            <div>
+                <AddFoodComponent />
+                <button
+                    className={cx('Cancel')}
+                    onClick={() => {
+                        localStorage.removeItem('AddFood');
                         setFood([]);
                     }}
                 >
@@ -137,7 +196,9 @@ function TableFoodDetail(props) {
                                             </a>
                                         </td>
                                         <td>
-                                            <a className={cx('btn', 'delete')}>Xóa</a>
+                                            <a className={cx('btn', 'delete')} onClick={() => HandlerRemove(value)}>
+                                                Xóa
+                                            </a>
                                         </td>
                                     </tr>
                                 ))}
@@ -150,11 +211,20 @@ function TableFoodDetail(props) {
     }
 }
 function TableFood(props) {
+    const [BtnAddFood, setBtnAddFood] = useState('');
+    const navigate = useNavigate();
     return (
         <div className={cx('wrapper')}>
             <Container className={cx('container')}>
                 <TableFoodDetail />
-                <a className={cx('AddNew')}></a>
+                <a
+                    className={cx('AddNew')}
+                    onClick={(e) => {
+                        localStorage.setItem('AddFood', '0');
+                        setBtnAddFood(0);
+                        navigate('/Admin');
+                    }}
+                ></a>
             </Container>
         </div>
     );

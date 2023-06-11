@@ -20,10 +20,10 @@ function BlogMain(props) {
             return (
                 <div className={cx('wrapper')}>
                     <Container fluid="xxl">
-                        <h1>{Blog.MovieName}</h1>
-                        <h3>{Blog.TomTat}</h3>
+                        <h1 className={cx('title')}>{Blog.MovieName}</h1>
+                        <h3 className={cx('tomtat')}>{Blog.TomTat}</h3>
                         <img className={cx('img-movie')} src={Blog.AvatarMovie} alt={Blog.AvatarMovie} />
-                        <p>{Blog.GioiThieu}</p>
+                        <p className={cx('derc')}>{Blog.GioiThieu}</p>
                     </Container>
                 </div>
             );
@@ -31,9 +31,9 @@ function BlogMain(props) {
             return (
                 <div className={cx('wrapper')}>
                     <Container fluid="xxl">
-                        <h1>{Blog.Title}</h1>
+                        <h1 className={cx('title')}>{Blog.Title}</h1>
                         <img className={cx('img-movie')} src={Blog.Image} alt={Blog.AvatarMovie} />
-                        <p>{Blog.Content}</p>
+                        <p className={cx('derc')}>{Blog.Content}</p>
                     </Container>
                 </div>
             );

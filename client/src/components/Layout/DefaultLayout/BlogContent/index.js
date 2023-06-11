@@ -65,7 +65,11 @@ function BlogContent(props) {
                                             return (
                                                 <div className={cx('blog')} key={index}>
                                                     <div className={cx('movie_thub')}>
-                                                        <img src={item.Image} alt={item.Title} />
+                                                        <img
+                                                            className={cx('image-blog')}
+                                                            src={item.Image}
+                                                            alt={item.Title}
+                                                        />
 
                                                         <div className={cx('bgr')}></div>
                                                     </div>
@@ -183,7 +187,11 @@ function BlogContent(props) {
                                             return (
                                                 <div className={cx('blog')} key={index}>
                                                     <div className={cx('movie_thub')}>
-                                                        <img src={item.Image} alt={item.title} />
+                                                        <img
+                                                            className={cx('image-blog')}
+                                                            src={item.Image}
+                                                            alt={item.title}
+                                                        />
 
                                                         <div className={cx('bgr')}></div>
                                                     </div>

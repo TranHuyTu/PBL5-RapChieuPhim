@@ -133,9 +133,9 @@ function Controller() {
                                             <Col>
                                                 <ChartLine />
                                             </Col>
-                                            <Col>
+                                            {/* <Col>
                                                 <Chart />
-                                            </Col>
+                                            </Col> */}
                                         </Row>
                                         <Row>
                                             <TableDetail typeTable={'TrangChu'} />

@@ -14,8 +14,8 @@ let Users = function (user) {
 };
 Users.loginModule = function (data, result) {
     db.query(
-        "SELECT * FROM users WHERE Username= ? AND Password= ?",
-        [data.user, data.password],
+        "SELECT * FROM users WHERE Email= ? AND Password= ?",
+        [data.Email, data.password],
         function (err, user) {
             if (err) {
                 result(null);

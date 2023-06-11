@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './SupportMain.module.scss';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '~/api/axiosClient';
 import BoxBuyTicket from '~/components/Layout/DefaultLayout/BoxBuyTicket';
 
 import Container from 'react-bootstrap/Container';
@@ -21,6 +21,10 @@ const cx = classNames.bind(styles);
 function SupportMain({ chilren }) {
     const [search, setSearch] = useState([]);
     const [email, setEmail] = useState('');
+    const [Name, setName] = useState('');
+    const [Phone, setPhone] = useState('');
+    const [Content, setContent] = useState('');
+
     const [validEmail, setValidEmail] = useState(true);
 
     const validateEmail = () => {
@@ -31,19 +35,13 @@ function SupportMain({ chilren }) {
     };
     useEffect(() => {
         try {
-            axios.post('http://localhost:8080/TrangChu/Search').then((response) => {
-                setSearch(response.data.result);
+            axios.post('/TrangChu/Search').then((response) => {
+                setSearch(response.result);
             });
         } catch (error) {
             console.error(error);
         }
     }, []);
-    let Feed = {
-        Name: '',
-        Phone: '',
-        Email: '',
-        Content: '',
-    };
     return (
         <div className={cx('wrapper')}>
             <Container fluid="xxl">
@@ -69,7 +67,7 @@ function SupportMain({ chilren }) {
                                                     type="text"
                                                     placeholder="Họ và Tên"
                                                     onChange={(e) => {
-                                                        Feed.Name = e.target.value;
+                                                        setName(e.target.value);
                                                     }}
                                                 />
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -82,7 +80,7 @@ function SupportMain({ chilren }) {
                                                     type="text"
                                                     placeholder="SDT"
                                                     onChange={(e) => {
-                                                        Feed.Phone = e.target.value;
+                                                        setPhone(e.target.value);
                                                     }}
                                                 />
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -98,7 +96,6 @@ function SupportMain({ chilren }) {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                         onChange={(e) => {
-                                                            Feed.Email = e.target.value;
                                                             setEmail(e.target.value);
                                                         }}
                                                     />
@@ -116,7 +113,7 @@ function SupportMain({ chilren }) {
                                                 as="textarea"
                                                 rows={5}
                                                 onChange={(e) => {
-                                                    Feed.Content = e.target.value;
+                                                    setContent(e.target.value);
                                                 }}
                                             />
                                         </Form.Group>
@@ -125,16 +122,39 @@ function SupportMain({ chilren }) {
                                             // type="submit"
                                             onClick={() => {
                                                 console.log(validateEmail());
+                                                console.log(email);
                                                 if (
-                                                    validateEmail() === false &&
-                                                    Feed.Name !== '' &&
-                                                    Feed.Email !== '' &&
-                                                    Feed.Content !== ''
+                                                    validateEmail() == true &&
+                                                    Name != '' &&
+                                                    email != '' &&
+                                                    Content != ''
                                                 ) {
+                                                    let SendEmail = {
+                                                        to: email,
+                                                        subject:
+                                                            'Cảm ơn bạn ' +
+                                                            Name +
+                                                            ' đã dành thời gian đóng góp ý kiến cho chúng tôi.',
+                                                        text:
+                                                            'Kính gửi Quý khách hàng, Lời đầu tiên xin được thay mặt toàn bộ đội ngũ nhân viên gửi lời cảm ơn chân thành và sâu sắc nhất tới Quý khách hàng đã đồng hành, hợp tác cũng như ủng hộ cửa hàng trong thời gian qua.' +
+                                                            'Chính những sự yêu mến và niềm tin của Quý khách hàng là niềm tự hào và thành công lớn nhất của chúng tôi, đồng thời cũng là động lực để chúng tôi tiếp tục phát triển trong tương lai. ' +
+                                                            'Hy vọng trong thời gian sắp tới, mối quan hệ của hai bên càng lúc càng bên chặt. Chúng tôi sẽ không ngừng phát triển, nâng cao chất lượng dịch vụ để có thể phục vụ Quý khách hàng tốt hơn.' +
+                                                            'Một lần nữa, chúng tôi xin gửi lời cảm ơn chân thành và sự tri ân sâu sắc tới Quý khách hàng. Xin chúc bạn sức khỏe luôn dồi dào, hạnh phục và thành công. ' +
+                                                            'Trân Trọng!',
+                                                    };
+                                                    axios
+                                                        .post('/send-email', SendEmail, {
+                                                            headers: {
+                                                                'content-type': 'application/x-www-form-urlencoded',
+                                                            },
+                                                        })
+                                                        .then((response) => {
+                                                            console.log(response);
+                                                        });
                                                 }
                                             }}
                                         >
-                                            Gửi yêu cầu
+                                            Gửi ý kiến
                                         </Button>
                                     </Form>
                                 </div>

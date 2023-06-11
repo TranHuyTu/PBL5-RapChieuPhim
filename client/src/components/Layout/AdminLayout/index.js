@@ -31,9 +31,9 @@ function AdminLayout({ chilren }) {
                     )
                     .then((response) => {
                         if (response.data.data.data) {
-                            if (response.data.data.data.CheckAdmin === 0) {
-                                navigate('../');
-                            }
+                            // if (response.data.data.data.CheckAdmin === 0) {
+                            //     navigate('../');
+                            // }
                         } else {
                             localStorage.clear();
                             navigate('../');

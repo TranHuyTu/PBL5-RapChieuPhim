@@ -27,6 +27,8 @@ td.movie{
     margin-left: 10px;
     img.img{
       height: 100%;
+      width: 150px;
+      object-fit: cover;
     }
   }
   div.img-desc{
